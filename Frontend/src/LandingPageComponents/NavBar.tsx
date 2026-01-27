@@ -1,0 +1,43 @@
+import { useState, useEffect } from "react";
+import Logo from "../assets/logo.png"
+const NavBar = () => {
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 20);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  return (
+    <nav
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        scrolled
+          ? " backdrop-blur-xl border-b border-white/10 shadow-lg"
+          : "bg-transparent"
+      }`}
+    >
+      <div className=" w-full h-15 flex justify-center items-center gap-x-37 md:gap-x-105 lg:gap-x-170 xl:gap-x-230 2xl:gap-x-300">
+        <div className="flex justify-center items-center gap-2 text-xl ">
+          <img src={Logo} alt="logo" className="w-13" />
+          <h1 className="text-[#000000] font-bold">
+            <div className="flex">
+              Flow <span className="text-green-500">Track</span>
+            </div>
+          </h1>
+        </div>
+
+        <div className="w-47.5 flex justify-center  gap-2 ">
+          <button className="text-[#000000] font-bold bg-green-400 w-19 h-9 rounded-xl hover:-translate-y-1 duration-300 hover:text-green-500 hover:bg-transparent ">
+            Sign in
+          </button>
+          <button className="text-[#000000] font-bold border border-2 border-green-500 text-green-500 w-19 h-9 rounded-xl hover:-translate-y-1 duration-300 hover:border-none hover:bg-transparent ">
+            Sign up
+          </button>
+        </div>
+      </div>
+    </nav>
+  );
+};
+
+export default NavBar;
