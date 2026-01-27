@@ -11,13 +11,13 @@ const NavBar = () => {
 
   return (
     <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+      className={`sticky top-0 z-50 transition-all duration-300 ${
         scrolled
           ? " backdrop-blur-xl border-b border-white/10 shadow-lg"
           : "bg-transparent"
       }`}
     >
-      <div className=" w-full h-15 flex justify-center items-center gap-x-37 md:gap-x-105 lg:gap-x-170 xl:gap-x-230 2xl:gap-x-300">
+      <div className=" w-full h-15 flex justify-center items-center gap-x-5 md:gap-x-105 lg:gap-x-170 xl:gap-x-230 2xl:gap-x-300">
         <div className="flex justify-center items-center gap-2 text-xl ">
           <img src={Logo} alt="logo" className="w-13" />
           <h1 className="text-[#000000] font-bold">
