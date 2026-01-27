@@ -1,11 +1,23 @@
-
-import Nav from "./Components/Nav"
+import {  Routes, Route } from "react-router-dom";
+import Landing from "./Landing";
+import AfterLoggedIn from "./AfterLoggedIn";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function App() {
+    let navigate = useNavigate();
+  const [Loggedin,setLoggedin]=useState(false)
+
+  useEffect(()=>{
+    Loggedin ? navigate("/") : navigate("/landing");
+  
+  },[Loggedin])
   return (
     <>
-      <Nav />
-    
+        <Routes>
+          <Route path="/landing" element={<Landing />} />
+          <Route path="/" element={<AfterLoggedIn />} />
+        </Routes>
     </>
   );
 }
