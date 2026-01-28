@@ -28,14 +28,14 @@ function HeroSection() {
   return (
     <>
       <div className=" mt-52  w-full h-screen ">
-        <div className="relative md:top-10 md:left-45 lg:top-0 lg:left-80 xl:-top-30 xl:-left-80 2xl:-top-10 2xl:-left-5 w-1 h-1">
+        <div className="relative  md:top-10 md:left-45 lg:top-0 lg:left-80 xl:-top-30 xl:-left-80 2xl:-top-10 2xl:-left-5 w-1 h-1">
           <div
             onClick={focus}
-            className={`absolute top-20 left-60 xl:top-35 xl:left-150 w-35 h-35 xl:w-100 xl:h-100 bg-amber-200 rounded-full   ${animation}  hover:w-120 hover:h-120 cursor-pointer`}
+            className={`absolute   top-20 left-60 xl:top-35 xl:left-150 w-35 h-35 xl:w-100 xl:h-100 bg-amber-200 rounded-full   ${animation}  hover:w-120 hover:h-120 cursor-pointer`}
           ></div>
           <div
             onClick={focus}
-            className={`absolute top-75 left-15 xl:top-105 xl:left-130 w-30 h-30 xl:w-80 xl:h-80 bg-red-600 rounded-3xl ${animation}   hover:w-100 hover:h-100 cursor-pointer`}
+            className={`absolute top-75 left-15 xl:top-105 xl:left-130 w-30 h-30 xl:w-80 xl:h-80 bg-red-600 rounded-3xl  ${animation}   hover:w-100 hover:h-100 cursor-pointer`}
           ></div>
           <div
             onClick={focus}

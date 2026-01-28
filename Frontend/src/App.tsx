@@ -3,6 +3,7 @@ import Landing from "./Landing";
 import AfterLoggedIn from "./AfterLoggedIn";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Background from "./LandingPageComponents/Background";
 
 function App() {
     let navigate = useNavigate();
@@ -14,10 +15,18 @@ function App() {
   },[Loggedin])
   return (
     <>
-        <Routes>
-          <Route path="/landing" element={<Landing />} />
-          <Route path="/" element={<AfterLoggedIn />} />
-        </Routes>
+      <Routes>
+        <Route
+          path="/landing"
+          element={
+            <>
+              <Background />
+              <Landing />
+            </>
+          }
+        />
+        <Route path="/" element={<AfterLoggedIn />} />
+      </Routes>
     </>
   );
 }

@@ -4,6 +4,10 @@
   padding: 0px;
 }
 
+body{
+  background: #00140a;
+}
+
 .focus{
   position:fixed;
   top: 0px;
@@ -15,3 +19,4 @@
   pointer-events: none;
   transform: rotate(0deg);
 }
+

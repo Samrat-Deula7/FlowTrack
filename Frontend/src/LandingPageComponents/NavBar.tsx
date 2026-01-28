@@ -20,7 +20,7 @@ const NavBar = () => {
       <div className=" w-full h-15 flex justify-center items-center gap-x-5 md:gap-x-105 lg:gap-x-170 xl:gap-x-230 2xl:gap-x-300">
         <div className="flex justify-center items-center gap-2 text-xl ">
           <img src={Logo} alt="logo" className="w-13" />
-          <h1 className="text-[#000000] font-bold">
+          <h1 className="text-white font-bold">
             <div className="flex">
               Flow <span className="text-green-500">Track</span>
             </div>
