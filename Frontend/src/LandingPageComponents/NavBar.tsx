@@ -17,9 +17,9 @@ const NavBar = () => {
           : "bg-transparent"
       }`}
     >
-      <div className=" w-full h-15 flex justify-center items-center gap-x-5 md:gap-x-105 lg:gap-x-170 xl:gap-x-230 2xl:gap-x-300">
+      <div className=" w-full h-15 flex justify-center items-center gap-x-5 md:gap-x-105 lg:gap-x-170 xl:gap-x-230 2xl:gap-x-350">
         <div className="flex justify-center items-center gap-2 text-xl ">
-          <img src={Logo} alt="logo" className="w-13" />
+          <img src={Logo} alt="logo" className="w-8" />
           <h1 className="text-white font-bold">
             <div className="flex">
               Flow <span className="text-green-500">Track</span>
@@ -27,11 +27,11 @@ const NavBar = () => {
           </h1>
         </div>
 
-        <div className="w-47.5 flex justify-center  gap-2 ">
-          <button className="text-[#000000] font-bold bg-green-400 w-19 h-9 rounded-xl hover:-translate-y-1 duration-300 hover:text-green-500 hover:bg-transparent cursor-pointer">
+        <div className="w-47.5 flex justify-center  gap-2  h-15 flex justify-center items-center ">
+          <button className="text-[#000000] font-bold text-[13px] bg-green-400 w-19 h-7 rounded-xl hover:-translate-y-1 duration-300 hover:text-green-500 hover:bg-transparent cursor-pointer">
             Sign in
           </button>
-          <button className="text-[#000000] font-bold border border-2 border-green-500 text-green-500 w-19 h-9 rounded-xl hover:-translate-y-1 duration-300 hover:border-none hover:bg-transparent cursor-pointer">
+          <button className="text-[#000000] font-bold text-[13px] border border-2 border-green-500 text-green-500 w-19 h-7 rounded-xl hover:-translate-y-1 duration-300 hover:border-none hover:bg-transparent cursor-pointer">
             Sign up
           </button>
         </div>

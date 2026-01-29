@@ -3,7 +3,8 @@ import Landing from "./Landing";
 import AfterLoggedIn from "./AfterLoggedIn";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Background from "./LandingPageComponents/Background";
+import Bg from "./LandingPageComponents/Bg";
+
 
 function App() {
     let navigate = useNavigate();
@@ -20,7 +21,7 @@ function App() {
           path="/landing"
           element={
             <>
-              <Background />
+              <Bg  />
               <Landing />
             </>
           }
