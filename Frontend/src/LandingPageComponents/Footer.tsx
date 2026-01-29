@@ -119,7 +119,7 @@ const Footer = () => {
             </ul>
           </div>
         </div>
-
+        <br />
         <div className="border-t border-gray-800 pt-6 text-center text-sm">
           <p>
             © 2026 Flow<span className="text-green-500">Track</span>. All rights
