@@ -6,7 +6,7 @@ import Insta from "../assets/instagram.png"
 
 const Footer = () => {
   return (
-    <footer className="bg-gradient-to-br from-black to-slate-950 text-gray-400 py-8 px-6 flex justify-center items-center">
+    <footer className=" bg-gradient-to-br from-black to-slate-950 text-gray-400 py-8 px-6 flex justify-center items-center">
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col md:flex-row justify-between items-center gap-6 mb-6">
           <div className="flex justify-center items-center gap-2 text-xl ">
@@ -58,6 +58,65 @@ const Footer = () => {
             >
               <img src={Insta} alt="" className="w-6" />
             </a>
+          </div>
+        </div>
+
+
+      
+
+        <div className="flex justify-center items-center gap-10">
+          {" "}
+          {/* Product Links */}
+          <div>
+            <h3 className="text-white font-semibold mb-4">Product</h3>
+            <ul className="space-y-2 text-sm">
+              <li>
+                <a href="#" className="hover:text-white transition">
+                  Features
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-white transition">
+                  Pricing
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-white transition">
+                  Integrations
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-white transition">
+                  Updates
+                </a>
+              </li>
+            </ul>
+          </div>
+          {/* Company Links */}
+          <div>
+            <h3 className="text-white font-semibold mb-4">Company</h3>
+            <ul className="space-y-2 text-sm">
+              <li>
+                <a href="#" className="hover:text-white transition">
+                  About
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-white transition">
+                  Blog
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-white transition">
+                  Careers
+                </a>
+              </li>
+              <li>
+                <a href="#" className="hover:text-white transition">
+                  Contact
+                </a>
+              </li>
+            </ul>
           </div>
         </div>
 
