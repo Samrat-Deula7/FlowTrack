@@ -27,34 +27,36 @@ function HeroSection() {
 
   return (
     <>
-      <div className="w-screen ">
-        <h1 className="text-white ">
-          Our <span className="text-white">Services</span>
+      <div className=" mt-52 hidden xl:flex flex-col  w-full h-screen ">
+        <h1 className="text-green-500 relative top-10 font-bold text-4xl md:text-6xl text-center ">
+          Our <span className="text-white font-normal">Services</span>
         </h1>
-      </div>
 
-      <div className=" mt-52  w-full h-screen ">
-        <div className="relative  md:top-10 md:left-45 lg:top-0 lg:left-80 xl:-top-30 xl:-left-80 2xl:-top-10 2xl:-left-5 w-1 h-1">
-          <div
-            onClick={focus}
-            className={`absolute    top-20 left-60 xl:top-35 xl:left-150 w-35 h-35 xl:w-100 xl:h-100 bg-amber-200 rounded-full   ${animation}  hover:w-120 hover:h-120 cursor-pointer`}
-          ></div>
-          <div
-            onClick={focus}
-            className={`absolute  top-75 left-15 xl:top-105 xl:left-130 w-30 h-30 xl:w-80 xl:h-80 bg-red-600 rounded-3xl  ${animation}   hover:w-100 hover:h-100 cursor-pointer`}
-          ></div>
-          <div
-            onClick={focus}
-            className={`absolute  top-90 left-50 xl:top-95  xl:left-290 w-27.5 h-27.5 xl:w-70 xl:h-70 bg-green-400 rounded-full ${animation}  hover:w-90 hover:h-90 cursor-pointer`}
-          ></div>
-          <div
-            onClick={focus}
-            className={`absolute  top-30 left-15 xl:top-35 xl:left-230 w-32.5 h-32.5 xl:w-90 xl:h-90 bg-blue-400 rounded-4xl ${animation}   hover:w-110 hover:h-110 cursor-pointer`}
-          ></div>
-          <div
-            onClick={focus}
-            className={`absolute  top-55 left-50  xl:top-105 xl:left-200 w-35 h-32.5 xl:w-120 xl:h-90 bg-purple-900 rounded-full  ${animation} hover:w-140 hover:h-110 cursor-pointer`}
-          ></div>
+        <div className="w-screen h-screen flex justify-center items-start bg-transparent">
+          <div className="absolute w-5xl h-[10px] bg-transparent">
+            <div
+              onClick={focus}
+              className={`relative   xl:top-25 xl:left-55 w-80 h-80 bg-amber-200 rounded-full   ${animation}  hover:w-90 hover:h-90 cursor-pointer`}
+            ></div>
+            <div
+              onClick={focus}
+              className={`relative xl:top-0 xl:left-50 w-65 h-65  bg-red-600 rounded-3xl  ${animation}   hover:w-75 hover:h-75 cursor-pointer`}
+            ></div>
+            <div
+              onClick={focus}
+              className={`relative xl:-top-60  xl:left-160 w-60 h-60  bg-green-400 rounded-full ${animation}  hover:w-70 hover:h-70 cursor-pointer`}
+            ></div>
+            <div
+              onClick={focus}
+              className={`relative xl:-top-190 xl:left-120 w-80 h-80  bg-blue-400 rounded-4xl ${animation}   hover:w-90 hover:h-90 cursor-pointer`}
+            ></div>
+            <div
+              onClick={focus}
+              className={`relative  xl:-top-195 xl:left-100 w-85 h-65  bg-purple-900 rounded-full  ${animation} hover:w-95 hover:h-75 cursor-pointer`}
+            ></div>
+
+         
+          </div>
         </div>
       </div>
     </>
