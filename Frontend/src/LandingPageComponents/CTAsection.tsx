@@ -1,28 +1,26 @@
-import Google from "../assets/google.png"
+import Google from "../assets/google.png";
 const CTASection = () => {
-const options = {
-  rootMargin: "0px",
-  scrollMargin: "0px",
-  threshold: 1,
-};
+  const options = {
+    rootMargin: "0px",
+    scrollMargin: "0px",
+    threshold: 1,
+  };
 
-const EmainInput = document.getElementById("EmailInput");
+  const EmainInput = document.getElementById("EmailInput");
 
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach((entry) => {
-    entry.target.classList.toggle("show", entry.isIntersecting);
-    // if(entry.isIntersecting) observer.unobserve(entry.target)
-  });
-  console.log(entries);
-}, options);
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      entry.target.classList.toggle("show", entry.isIntersecting);
+      // if(entry.isIntersecting) observer.unobserve(entry.target)
+    });
+    console.log(entries);
+  }, options);
 
-if(EmainInput){
-observer.observe(EmainInput)
-}
+  if (EmainInput) {
+    observer.observe(EmainInput);
+  }
   return (
-    <div
-      className="w-screen h-screen  flex justify-center items-center bg-gradient-to-br from-black to-slate-950 py-20 px-6 "
-    >
+    <div className="w-screen h-screen  flex justify-center items-center bg-gradient-to-br from-black to-slate-950 py-20 px-6 ">
       <div className="max-w-4xl  text-center h-auto w-190 duration-200">
         <h2 className="text-3xl md:text-5xl  font-bold text-white m-4">
           Stay <span className="text-green-500 font-bold">ahead</span> of your{" "}
