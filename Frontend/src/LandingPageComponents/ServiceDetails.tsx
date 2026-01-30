@@ -7,54 +7,54 @@ const ServiceDetails = () => {
         document.querySelector(`.${targetClass}`)?.classList.add("scalefull");
       };
   return (
-    <div className="w-screen h-screen  flex justify-center items-center bg-transparent py-20 px-6 ">
-      <div className="flex justify-center items-center gap-4 w-300 h-180 bg-white/2 backdrop-blur-md shadow-lg rounded-xl border border-white/10">
-        <div className="flex flex-col justify-center items-center w-80 h-160  bg-white/5 backdrop-blur-md shadow-lg rounded-xl gap-6">
+    <div className="h-200 xl:w-screen xl:h-screen  flex justify-center items-center bg-transparent py-20 px-6 mb-3">
+      <div className="flex flex-col xl:flex-row justify-center items-center gap-4 w-300 h-180 bg-white/2 backdrop-blur-md shadow-lg rounded-xl border border-white/10">
+        <div className="flex xl:flex-col justify-center items-center w-90 h-20 xl:w-80 xl:h-160  bg-white/5 backdrop-blur-md shadow-lg rounded-xl gap-1 xl:gap-6">
           <button
-            className=" bg-white/5 backdrop-blur-md shadow-lg rounded-full hover:border  hover:border-white/10 hover:bg-green-500 hover:text-white w-35 h-15 cursor-pointer"
+            className=" bg-white/5 xl:text-xl font-semibold backdrop-blur-md shadow-lg rounded-full hover:border  hover:border-white/10 hover:bg-green-500 hover:text-white w-30 h-6 xl:w-35 xl:h-15 cursor-pointer"
             onClick={() => handleTabClick("list")}
           >
-            list
+            List
           </button>
           <button
-            className=" bg-white/5 backdrop-blur-md shadow-lg rounded-full hover:border  hover:border-white/10 hover:bg-green-500 hover:text-white w-35 h-15 cursor-pointer"
-            onClick={() => handleTabClick("metting")}
+            className=" bg-white/5 xl:text-xl font-semibold backdrop-blur-md shadow-lg rounded-full hover:border  hover:border-white/10 hover:bg-green-500 hover:text-white w-30 h-6 xl:w-35 xl:h-15  cursor-pointer"
+            onClick={() => handleTabClick("meeting")}
           >
-            meeting
+            Meeting
           </button>
           <button
-            className=" bg-white/5 backdrop-blur-md shadow-lg rounded-full hover:border  hover:border-white/10 hover:bg-green-500 hover:text-white w-35 h-15 cursor-pointer"
+            className=" bg-white/5 xl:text-xl font-semibold backdrop-blur-md shadow-lg rounded-full hover:border  hover:border-white/10 hover:bg-green-500 hover:text-white  w-30 h-6 xl:w-35 xl:h-15  cursor-pointer"
             onClick={() => handleTabClick("graph")}
           >
-            graph
+            Graph
           </button>
           <button
-            className=" bg-white/5 backdrop-blur-md shadow-lg rounded-full hover:border  hover:border-white/10 hover:bg-green-500 hover:text-white w-35 h-15 cursor-pointer"
+            className=" bg-white/5 xl:text-xl font-semibold backdrop-blur-md shadow-lg rounded-full hover:border  hover:border-white/10 hover:bg-green-500 hover:text-white  w-30 h-6 xl:w-35 xl:h-15  cursor-pointer"
             onClick={() => handleTabClick("history")}
           >
-            history
+            History
           </button>
           <button
-            className=" bg-white/5 backdrop-blur-md shadow-lg rounded-full hover:border  hover:border-white/10 hover:bg-green-500 hover:text-white w-35 h-15 cursor-pointer"
+            className=" bg-white/5 xl:text-xl font-semibold backdrop-blur-md shadow-lg rounded-full hover:border  hover:border-white/10 hover:bg-green-500 hover:text-white  w-30 h-6 xl:w-35 xl:h-15  cursor-pointer"
             onClick={() => handleTabClick("progress")}
           >
-            progress
+            Progress
           </button>
         </div>
-        <div className="relative w-200 h-160  bg-white/5 backdrop-blur-md shadow-lg rounded-xl   ">
-          <div className="absolute inset-0 w-200 h-160  bg-white/5 backdrop-blur-md shadow-lg rounded-xl  duration-300 scalenone list  tab-content z-5">
+        <div className="relative w-90 h-60 xl:w-200 xl:h-160  bg-white/5 backdrop-blur-md shadow-lg rounded-xl   ">
+          <div className="absolute inset-0  bg-white/5 backdrop-blur-md shadow-lg rounded-xl  duration-300 scalenone list  tab-content z-5">
             list
           </div>
-          <div className="absolute inset-0 w-200 h-160  bg-white/5 backdrop-blur-md shadow-lg rounded-xl  duration-300 scalenone  metting tab-content z-4">
+          <div className="absolute inset-0  bg-white/5 backdrop-blur-md shadow-lg rounded-xl  duration-300 scalenone  meeting tab-content z-4">
             metting
           </div>
-          <div className="absolute inset-0 w-200 h-160  bg-white/5 backdrop-blur-md shadow-lg rounded-xl  duration-300 scalenone  graph tab-content z-3">
+          <div className="absolute inset-0 bg-white/5 backdrop-blur-md shadow-lg rounded-xl  duration-300 scalenone  graph tab-content z-3">
             graph
           </div>
-          <div className="absolute inset-0 w-200 h-160  bg-white/5 backdrop-blur-md shadow-lg rounded-xl  duration-300 scalenone  history tab-content z-2">
+          <div className="absolute inset-0  bg-white/5 backdrop-blur-md shadow-lg rounded-xl  duration-300 scalenone  history tab-content z-2">
             history
           </div>
-          <div className="absolute inset-0 w-200 h-160  bg-white/5 backdrop-blur-md shadow-lg rounded-xl  duration-300 scalenone  progress tab-content z-1">
+          <div className="absolute inset-0  bg-white/5 backdrop-blur-md shadow-lg rounded-xl  duration-300 scalenone  progress tab-content z-1">
             progress
           </div>
         </div>
