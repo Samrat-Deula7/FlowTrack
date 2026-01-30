@@ -12,7 +12,7 @@ const Footer = () => {
           <div className="flex justify-center items-center gap-2 text-xl ">
             <img src={Logo} alt="logo" className="w-8" />
             <h1 className="text-white font-bold">
-              <div className="flex">
+              <div className="flex ">
                 Flow <span className="text-green-500">Track</span>
               </div>
             </h1>
