@@ -1,10 +1,31 @@
 import Google from "../assets/google.png"
 const CTASection = () => {
+const options = {
+  rootMargin: "0px",
+  scrollMargin: "0px",
+  threshold: 0,
+};
+
+const Cards = document.querySelectorAll(".CTA-card");
+
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    entry.target.classList.toggle("show", entry.isIntersecting);
+    if(entry.isIntersecting) observer.unobserve(entry.target);
+  });
+  console.log(entries);
+}, options);
+
+
+  Cards.forEach(card=>{
+    if(card){
+ observer.observe(card);
+    }
+  })
 
   return (
     <div
       className="w-screen h-screen  flex justify-center items-center bg-gradient-to-br from-black to-slate-950 py-20 px-6 "
-      id="CTA-Section"
     >
       <div className="max-w-4xl  text-center h-auto w-190 duration-200">
         <h2 className="text-3xl md:text-5xl  font-bold text-white m-4">
@@ -24,10 +45,10 @@ const CTASection = () => {
             <input
               type="email"
               placeholder=" Enter your email"
-              className="w-full sm:w-96 px-8 py-6 rounded-lg text-gray-900 text-2xl bg-white focus:outline-none focus:ring-2 focus:ring-green-500 "
+              className="w-full sm:w-96 px-8 py-6 rounded-lg text-gray-900 text-2xl bg-white focus:outline-none focus:ring-2 focus:ring-green-500 hide CTA-card"
             />
           </div>
-          <button className=" flex items-center justify-around gap-3   w-70 h-auto font-semibold text-2xl text-black bg-white hover:bg-green-700 rounded-lg cursor-pointer">
+          <button className=" flex items-center justify-around gap-3   w-70 h-auto font-semibold text-2xl text-black bg-white hover:bg-green-700 rounded-lg cursor-pointer hide CTA-card">
             <img src={Google} alt="google icon " className="w-6 " /> Sign up
             with Google
           </button>
