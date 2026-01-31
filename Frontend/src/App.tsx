@@ -4,11 +4,12 @@ import AfterLoggedIn from "./AfterLoggedIn";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Bg from "./LandingPageComponents/Bg";
+import Background from "./AfterLoggedInComponents/background";
 
 
 function App() {
     let navigate = useNavigate();
-  const [Loggedin,setLoggedin]=useState(false)
+  const [Loggedin,setLoggedin]=useState(true)
 
   useEffect(()=>{
     Loggedin ? navigate("/") : navigate("/landing");
@@ -21,12 +22,20 @@ function App() {
           path="/landing"
           element={
             <>
-              <Bg  />
+              <Bg />
               <Landing />
             </>
           }
         />
-        <Route path="/" element={<AfterLoggedIn />} />
+        <Route
+          path="/"
+          element={
+            <>
+              <Background />
+              <AfterLoggedIn />
+            </>
+          }
+        />
       </Routes>
     </>
   );

@@ -67,7 +67,7 @@ export default function CosmicGradient() {
         <img
           src={Clock}
           alt="clock"
-          className=" w-25 md:w-35 xl:w-45 m-auto opacity-20"
+          className=" w-25 md:w-35 xl:w-45  opacity-20"
         />
         <img
           src={List}

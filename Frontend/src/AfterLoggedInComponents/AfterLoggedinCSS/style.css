@@ -1,0 +1,21 @@
+ @keyframes twinkle {
+          0%, 100% {
+            opacity: 0.5;
+            transform: scale(1);
+          }
+          50% {
+            opacity: 1;
+            transform: scale(1.2);
+          }
+        }
+
+        @keyframes shooting {
+          0% {
+            transform: translateX(0) translateY(0);
+            opacity: 1;
+          }
+          100% {
+            transform: translateX(300px) translateY(300px);
+            opacity: 0;
+          }
+        }

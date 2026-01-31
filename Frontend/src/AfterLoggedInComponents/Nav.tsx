@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
-import GearImg from "../assets/circle.png";
-
-const Nav = () => {
+import Logo from "../assets/logo.png";
+const NavBar = () => {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -18,19 +17,23 @@ const Nav = () => {
           : "bg-transparent"
       }`}
     >
-      <div className=" w-full h-15 flex justify-center items-center gap-x-32 md:gap-x-44 lg:gap-x-56">
-        <h3 className="text-[#08CB00] font-bold text-3xl md:text-4xl ">
-          Flow <span>Track</span>
-        </h3>
+      <div className=" w-full h-15 flex justify-center items-center gap-x-5 md:gap-x-105 lg:gap-x-170 xl:gap-x-230 2xl:gap-x-350">
+        <div className="flex justify-center items-center gap-2 text-xl ">
+          <img src={Logo} alt="logo" className="w-8" />
+          <h1 className="text-white font-bold">
+            <div className="flex">
+              Flow <span className="text-green-500">Track</span>
+            </div>
+          </h1>
+        </div>
 
-        <img src={GearImg} alt="gear" className="w-10 h-10 " />
-
-        <button className="text-[#000000] font-bold bg-green-600 w-19 h-9 rounded-xl hover:-translate-y-1 duration-300 hover:text-green-500 hover:bg-transparent ">
-          Login
-        </button>
+        
+          <button className="text-[#000000] font-bold text-[13px] border border-2 border-green-500 text-green-500 w-30 h-7 rounded-xl hover:-translate-y-1 duration-300 hover:border-none hover:bg-transparent cursor-pointer">
+            Logged Out
+          </button>
       </div>
     </nav>
   );
 };
 
-export default Nav;
+export default NavBar;
