@@ -6,9 +6,9 @@ import Insta from "../assets/instagram.png"
 
 const Footer = () => {
   return (
-    <footer className=" bg-gradient-to-br from-black to-slate-950 text-gray-400 py-8 px-6 flex justify-center items-center">
+    <footer className=" bg-gradient-to-br from-black to-slate-950 text-gray-400 py-1 flex justify-center items-center ">
       <div className="max-w-7xl mx-auto">
-        <div className="flex flex-col md:flex-row justify-between items-center gap-6 mb-6">
+        <div className="flex flex-col md:flex-row justify-between items-center gap-6 mb-6 ">
           <div className="flex justify-center items-center gap-2 text-xl ">
             <img src={Logo} alt="logo" className="w-8" />
             <h1 className="text-white font-bold">

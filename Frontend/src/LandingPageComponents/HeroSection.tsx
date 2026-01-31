@@ -27,7 +27,7 @@ function HeroSection() {
 
   return (
     <>
-      <div className=" mt-52 hidden xl:flex flex-col  w-full h-screen ">
+      <div className="  hidden xl:flex flex-col  w-full h-screen ">
         <h1 className="text-green-500 relative top-10 font-bold text-4xl md:text-6xl text-center ">
           Our <span className="text-white font-normal">Services</span>
         </h1>

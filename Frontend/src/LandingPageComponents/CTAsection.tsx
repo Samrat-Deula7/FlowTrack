@@ -20,15 +20,15 @@ const CTASection = () => {
     observer.observe(EmainInput);
   }
   return (
-    <div className="w-screen h-screen  flex justify-center items-center bg-gradient-to-br from-black to-slate-950 py-20 px-6 ">
+    <div className="w-screen h-screen  flex justify-center items-center bg-gradient-to-br from-black to-slate-950 py-10 px-6 ">
       <div className="max-w-4xl  text-center h-auto w-190 duration-200">
-        <h2 className="text-3xl md:text-5xl  font-bold text-white m-4">
+        <h2 className="text-3xl md:text-5xl  font-bold text-white ">
           Stay <span className="text-green-500 font-bold">ahead</span> of your{" "}
           <span className="text-green-500 font-bold">workflow</span>
         </h2>
         <br />
 
-        <p className="mt-10 text-gray-400 text-lg  max-w-2xl ">
+        <p className="mt-4 text-gray-400 text-lg  max-w-2xl ">
           Join thousands of professionals who trust FlowTrack to keep their
           projects organized and their teams aligned.
         </p>
@@ -39,7 +39,7 @@ const CTASection = () => {
             <input
               type="email"
               placeholder=" Enter your email"
-              className="w-full sm:w-96 px-8 py-6 rounded-lg text-gray-900 text-2xl bg-white focus:outline-none focus:ring-2 focus:ring-green-500 hide"
+              className="w-full sm:w-96 px-4 py-1 rounded-lg text-gray-900 text-2xl bg-white focus:outline-none focus:ring-2 focus:ring-green-500 hide"
               id="EmailInput"
             />
           </div>
