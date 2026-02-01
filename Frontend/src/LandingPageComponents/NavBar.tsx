@@ -17,7 +17,7 @@ const NavBar = () => {
           : "bg-transparent"
       }`}
     >
-      <div className=" w-full h-15 flex justify-center items-center gap-x-5 md:gap-x-105 lg:gap-x-170 xl:gap-x-230 2xl:gap-x-350">
+      <div className=" w-full h-15 flex justify-between items-center px-3">
         <div className="flex justify-center items-center gap-2 text-xl ">
           <img src={Logo} alt="logo" className="w-8" />
           <h1 className="text-white font-bold">
