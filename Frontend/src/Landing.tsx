@@ -1,6 +1,6 @@
 import NavBar from "./LandingPageComponents/NavBar";
 import HeroSection from './LandingPageComponents/HeroSection'
-import Footer from "./LandingPageComponents/Footer";
+import Footer from "./Footer";
 import CTASection from "./LandingPageComponents/CTAsection";
 import ServiceDetails from "./LandingPageComponents/ServiceDetails";
 function Landing() {

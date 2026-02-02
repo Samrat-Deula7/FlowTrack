@@ -24,8 +24,8 @@ const NavBar = () => {
             <img src={Logo} alt="logo" className="w-7" />
             <h1 className="text-white font-bold">
               <div className="flex">
-                <Link to="/home">
-                  Flow <span className="text-green-500">Track</span>
+                <Link to="/">
+                  Flow<span className="text-green-500">Track</span>
                 </Link>
               </div>
             </h1>

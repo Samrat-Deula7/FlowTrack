@@ -4,10 +4,9 @@ import AfterLoggedIn from "./AfterLoggedIn";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Bg from "./LandingPageComponents/Bg";
-import Background from "./AfterLoggedInComponents/background";
 
 // This is after logged in components
-import Home from "./AfterLoggedInComponents/Home";
+import Background from "./AfterLoggedInComponents/background";
 import Tasks from "./AfterLoggedInComponents/Tasks";
 import Collaboration from "./AfterLoggedInComponents/Collaboration";
 import Visualization from "./AfterLoggedInComponents/Visualization";
@@ -43,9 +42,9 @@ function App() {
             </>
           }
         />
+
+        
         {/* This are after logged in components */}
-    
-          <Route path="/home" element={<Home />} />
           <Route path="/tasks" element={<Tasks />} />
           <Route path="/collaboration" element={<Collaboration />} />
           <Route path="/visualization" element={<Visualization />} />

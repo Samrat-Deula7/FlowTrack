@@ -1,8 +1,8 @@
-import Logo from "../assets/logo.png";
-import Github from "../assets/github.png"
-import Linkdin from "../assets/linkedin.png"
-import FB from "../assets/facebook.png"
-import Insta from "../assets/instagram.png"
+import Logo from "./assets/logo.png";
+import Github from "./assets/github.png"
+import Linkdin from "./assets/linkedin.png"
+import FB from "./assets/facebook.png"
+import Insta from "./assets/instagram.png"
 
 const Footer = () => {
   return (
