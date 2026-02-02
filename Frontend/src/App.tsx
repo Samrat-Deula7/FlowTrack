@@ -6,6 +6,13 @@ import { useNavigate } from "react-router-dom";
 import Bg from "./LandingPageComponents/Bg";
 import Background from "./AfterLoggedInComponents/background";
 
+// This is after logged in components
+import Home from "./AfterLoggedInComponents/Home";
+import Tasks from "./AfterLoggedInComponents/Tasks";
+import Collaboration from "./AfterLoggedInComponents/Collaboration";
+import Visualization from "./AfterLoggedInComponents/Visualization";
+import Timeline from "./AfterLoggedInComponents/Timeline";
+import Iteration from "./AfterLoggedInComponents/Iteration";
 
 function App() {
     let navigate = useNavigate();
@@ -36,6 +43,15 @@ function App() {
             </>
           }
         />
+        {/* This are after logged in components */}
+    
+          <Route path="/home" element={<Home />} />
+          <Route path="/tasks" element={<Tasks />} />
+          <Route path="/collaboration" element={<Collaboration />} />
+          <Route path="/visualization" element={<Visualization />} />
+          <Route path="/timeline" element={<Timeline />} />
+          <Route path="/iteration" element={<Iteration />} />
+      
       </Routes>
     </>
   );

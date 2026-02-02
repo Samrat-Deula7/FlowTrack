@@ -24,7 +24,7 @@ const NavBar = () => {
             <img src={Logo} alt="logo" className="w-7" />
             <h1 className="text-white font-bold">
               <div className="flex">
-                <Link to="/">
+                <Link to="/home">
                   Flow <span className="text-green-500">Track</span>
                 </Link>
               </div>
@@ -46,31 +46,31 @@ const NavBar = () => {
           {" "}
           <div className=" flex items-center gap-x-5 px-3 ">
             <Link
-              to="/"
+              to="/tasks"
               className={` md:text-110  text-gray-400 cursor-pointer hover:text-green-500 hover:font-mono`}
             >
               Tasks
             </Link>
             <Link
-              to="/services"
+              to="/collaboration"
               className={` md:text-110  text-gray-400 cursor-pointer hover:text-green-500 hover:font-mono`}
             >
               Collaboration
             </Link>
             <Link
-              to="/services"
+              to="/visualization"
               className={` md:text-110  text-gray-400 cursor-pointer hover:text-green-500 hover:font-mono`}
             >
               Visualization
             </Link>
             <Link
-              to="/services"
+              to="/timeline"
               className={` md:text-110 text-gray-400 cursor-pointer hover:text-green-500 hover:font-mono`}
             >
               Timeline
             </Link>
             <Link
-              to="/services"
+              to="/iteration"
               className={` md:text-110  text-gray-400 cursor-pointer hover:text-green-500 hover:font-mono`}
             >
               Iteration
