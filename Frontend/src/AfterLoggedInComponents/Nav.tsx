@@ -42,7 +42,7 @@ const NavBar = () => {
             &#9776;
           </div>
         </div>
-        <div className="w-3xl h-xl flex justify-start items-center gap-x-2 py-1 px-2">
+        <div className="hidden md:flex w-3xl h-xl  justify-start items-center gap-x-2 py-1 px-2">
           {" "}
           <div className=" flex items-center gap-x-5 px-3 ">
             <Link
