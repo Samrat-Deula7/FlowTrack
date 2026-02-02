@@ -1,6 +1,9 @@
 import { useState } from "react";
 import Nav from "./Nav";
 import Footer from "../Footer";
+import Add from "../assets/add.png";
+import Tick from "../assets/check-mark.png";
+import Delete from "../assets/trash.png";
 
 interface Task {
   id: number;
@@ -46,98 +49,84 @@ export default function Tasks() {
   return (
     <>
       <Nav />
-      <div className="min-h-screen p-8">
-        <div className="max-w-2xl mx-auto">
-          <h1 className="text-3xl  text-white mb-8">Your Tasks</h1>
+      <div className="min-h-screen w-full px-3 sm:px-4 md:px-6 lg:px-8 xl:px-10 py-6 sm:py-8 md:py-10 lg:py-12">
+        <div className="flex flex-col lg:flex-row justify-center items-center lg:items-start gap-6 sm:gap-8 lg:gap-10 xl:gap-12 max-w-[95rem] mx-auto">
+          {/* Tasks Section */}
+          <div className="w-full lg:flex-1 lg:max-w-3xl xl:max-w-4xl">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-3xl xl:text-4xl text-white mb-6 sm:mb-8 font-semibold">
+              Your Tasks
+            </h1>
 
-          {/* Add Task Input */}
-          <div className="flex gap-3 mb-6">
-            <input
-              type="text"
-              value={newTask}
-              onChange={(e) => setNewTask(e.target.value)}
-              onKeyPress={handleKeyPress}
-              placeholder="Add new task"
-              className="flex-1 px-4 py-3 text-lg text-gray-500 placeholder-gray-400 border-b-2 border-gray-300 focus:border-gray-400 focus:outline-none bg-transparent"
-            />
-            <button
-              onClick={addTask}
-              className="w-14 h-14 bg-gray-700 hover:bg-gray-800 text-white rounded-2xl flex items-center justify-center transition-colors"
-            >
-              <svg
-                className="w-8 h-8"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
+            {/* Add Task Input */}
+            <div className="flex gap-2 sm:gap-3 mb-5 sm:mb-6">
+              <input
+                type="text"
+                value={newTask}
+                onChange={(e) => setNewTask(e.target.value)}
+                onKeyPress={handleKeyPress}
+                placeholder="Add new task"
+                className="flex-1 px-3 sm:px-4 md:px-5 py-2 sm:py-3 text-sm sm:text-base md:text-lg text-gray-500 placeholder-gray-400 border-b-2 border-gray-300 focus:border-gray-400 focus:outline-none bg-transparent transition-colors"
+              />
+              <button
+                onClick={addTask}
+                className="w-9 h-9 sm:w-10 sm:h-10 md:w-12 md:h-12 bg-gray-700 hover:bg-gray-800 active:bg-gray-900 text-white rounded-full flex items-center justify-center transition-all duration-200 flex-shrink-0 shadow-md hover:shadow-lg"
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M12 4v16m8-8H4"
+                <img
+                  src={Add}
+                  alt="add"
+                  className="bg-white rounded-full w-full h-full p-1.5 sm:p-2"
                 />
-              </svg>
-            </button>
+              </button>
+            </div>
+
+            {/* Task List */}
+            <div className="space-y-3 sm:space-y-4 max-h-[calc(100vh-20rem)] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-transparent">
+              {tasks.map((task) => (
+                <div
+                  key={task.id}
+                  className="flex items-center gap-3 sm:gap-4 p-3 sm:p-4 md:p-5 bg-white border-2 border-gray-200 rounded-xl hover:border-gray-300 hover:shadow-md transition-all duration-200"
+                >
+                  <button
+                    onClick={() => toggleTask(task.id)}
+                    className="flex-shrink-0 w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 border-2 border-gray-400 rounded flex items-center justify-center hover:bg-gray-50 hover:border-gray-500 transition-all duration-200"
+                  >
+                    {task.completed && (
+                      <img
+                        src={Tick}
+                        alt="tick"
+                        className="bg-white rounded-full w-full h-full p-0.5"
+                      />
+                    )}
+                  </button>
+
+                  <span
+                    className={`flex-1 text-sm sm:text-base md:text-lg break-words leading-relaxed ${
+                      task.completed
+                        ? "text-gray-400 line-through"
+                        : "text-gray-700"
+                    }`}
+                  >
+                    {task.text}
+                  </span>
+
+                  <button
+                    onClick={() => deleteTask(task.id)}
+                    className="flex-shrink-0 text-gray-400 hover:text-red-500 transition-colors duration-200"
+                  >
+                    <img
+                      src={Delete}
+                      alt="delete"
+                      className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7"
+                    />
+                  </button>
+                </div>
+              ))}
+            </div>
           </div>
 
-          {/* Task List */}
-          <div className="space-y-4">
-            {tasks.map((task) => (
-              <div
-                key={task.id}
-                className="flex items-center gap-4 p-4 bg-white border-2 border-gray-200 rounded-2xl hover:border-gray-300 transition-colors"
-              >
-                <button
-                  onClick={() => toggleTask(task.id)}
-                  className="flex-shrink-0 w-6 h-6 border-2 border-gray-400 rounded flex items-center justify-center hover:bg-gray-50 transition-colors"
-                >
-                  {task.completed && (
-                    <svg
-                      className="w-5 h-5 text-gray-600"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={3}
-                        d="M5 13l4 4L19 7"
-                      />
-                    </svg>
-                  )}
-                </button>
-
-                <span
-                  className={`flex-1 text-lg ${
-                    task.completed
-                      ? "text-gray-400 line-through"
-                      : "text-gray-700"
-                  }`}
-                >
-                  {task.text}
-                </span>
-
-                <button
-                  onClick={() => deleteTask(task.id)}
-                  className="flex-shrink-0 text-gray-400 hover:text-gray-600 transition-colors"
-                >
-                  <svg
-                    className="w-6 h-6"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M6 18L18 6M6 6l12 12"
-                    />
-                  </svg>
-                </button>
-              </div>
-            ))}
+          {/* Side Panel */}
+          <div className="w-full lg:w-96 xl:w-[28rem] 2xl:w-[32rem] min-h-[20rem] sm:min-h-[24rem] md:min-h-[28rem] lg:min-h-[32rem] xl:min-h-[36rem] bg-white/20 backdrop-blur-md shadow-lg rounded-xl border border-white/10 p-4 sm:p-6">
+            {/* Add your content here */}
           </div>
         </div>
       </div>
