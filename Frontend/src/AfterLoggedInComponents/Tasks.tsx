@@ -1,6 +1,5 @@
 import { useState } from "react";
 import Nav from "./Nav";
-import Footer from "../Footer";
 import Add from "../assets/add.png";
 import Tick from "../assets/check-mark.png";
 import Delete from "../assets/trash.png";
@@ -130,7 +129,6 @@ export default function Tasks() {
           </div>
         </div>
       </div>
-      <Footer />
     </>
   );
 }
