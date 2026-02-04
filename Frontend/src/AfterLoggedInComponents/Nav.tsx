@@ -64,10 +64,10 @@ const NavBar = () => {
               Visualization
             </Link>
             <Link
-              to="/timeline"
+              to="/history"
               className={` md:text-110 text-gray-400 cursor-pointer hover:text-green-500 hover:font-mono`}
             >
-              Timeline
+              History
             </Link>
             <Link
               to="/iteration"

@@ -10,7 +10,7 @@ import Background from "./AfterLoggedInComponents/background";
 import Tasks from "./AfterLoggedInComponents/Tasks";
 import Collaboration from "./AfterLoggedInComponents/Collaboration";
 import Visualization from "./AfterLoggedInComponents/Visualization";
-import Timeline from "./AfterLoggedInComponents/Timeline";
+import History from "./AfterLoggedInComponents/History";
 import Iteration from "./AfterLoggedInComponents/Iteration";
 
 function App() {
@@ -43,14 +43,12 @@ function App() {
           }
         />
 
-        
         {/* This are after logged in components */}
-          <Route path="/tasks" element={<Tasks />} />
-          <Route path="/collaboration" element={<Collaboration />} />
-          <Route path="/visualization" element={<Visualization />} />
-          <Route path="/timeline" element={<Timeline />} />
-          <Route path="/iteration" element={<Iteration />} />
-      
+        <Route path="/tasks" element={<Tasks />} />
+        <Route path="/collaboration" element={<Collaboration />} />
+        <Route path="/visualization" element={<Visualization />} />
+        <Route path="/history" element={<History />} />
+        <Route path="/iteration" element={<Iteration />} />
       </Routes>
     </>
   );
