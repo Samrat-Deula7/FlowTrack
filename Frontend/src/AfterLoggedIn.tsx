@@ -1,10 +1,12 @@
 import Nav from "./AfterLoggedInComponents/Nav";
+import Hero from "./AfterLoggedInComponents/Hero";
 import Footer from "./Footer";
 
 function AfterLoggedIn() {
   return (
     <>
       <Nav />
+      <Hero />
       <div className="w-full min-h-screen px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12 py-6 sm:py-8 md:py-10 lg:py-12">
         <div className="flex flex-col lg:flex-row justify-center items-center lg:items-start gap-4 sm:gap-5 md:gap-6 lg:gap-8 max-w-[90rem] mx-auto">
           <div className="flex flex-col gap-4 sm:gap-5 md:gap-6 w-full lg:flex-1 lg:max-w-4xl">
