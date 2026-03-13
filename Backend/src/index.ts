@@ -7,6 +7,8 @@ app.get("/", (req: Request, res: Response) => {
   res.send("Welcome to Express & TypeScript Server!");
 });
 
+// app.use("api/tasks",require("./routes/Task.ts"))
+
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });
