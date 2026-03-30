@@ -1,13 +1,14 @@
 import express, { Request, Response } from "express";
+import dotenv from "dotenv";
 import sql from "mssql";
 
 const router = express.Router();
-
+dotenv.config();
 const config = {
-  user: "Flow_Track",
-  password: "1111",
+  user: process.env.Database_User,
+  password: process.env.Database_User_Pass,
   server: "DESKTOP-DVSO359",
-  database: "Project_Flow_Track",
+  database: process.env.Database,
   options: {
     trustServerCertificate: true,
     trustedConnection: false,
@@ -17,11 +18,11 @@ const config = {
   port: 1433,
 };
 
-router.get("/createtasks", async (req: Request, res: Response) => {
+router.get("/GetAllTasks", async (req: Request, res: Response) => {
   try {
     const pool = await sql.connect(config);
     const data = await pool.request().query("SELECT * FROM tasks");
-    return res.json(data.recordset); // ✅ return the rows array
+    return res.json(data.recordset);
   } catch (err) {
     console.error(err);
     res.status(500).send("Some error occurred");
