@@ -27,14 +27,21 @@ const config = {
 router.post(
   "/loginUser",
   [
-    body("name", "Name should have at least 3 characters").isLength({ min: 3 }),
-    body("password", "Password must be atleast 5 characters").isLength({
+    body(
+      "name",
+      "Name should have at least 3 characters and maximun of 20 character",
+    ).isLength({ min: 3,max:20 }),
+    body(
+      "password",
+      "Password must be atleast 5 characters and maximun of 20 character",
+    ).isLength({
       min: 5,
+      max:20
     }),
     body("email", "Enter a valid email").isEmail(),
     body("phoneno", "Phoneno must be at least have 10 numbers").isLength({
       min: 10,
-    })
+    }),
   ],
   async (req: Request, res: Response) => {
     // The above array will set the restrictions rules and the following code will give error if those rules are broken.
@@ -43,7 +50,7 @@ router.post(
     if (!errors.isEmpty()) {
       return res.status(400).json({ errors: errors.array() });
     }
-  }
+  },
 );
 
 router.get("/GetAllTasks", async (req: Request, res: Response) => {
