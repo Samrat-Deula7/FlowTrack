@@ -4,9 +4,9 @@ import bcrypt from "bcryptjs";
 import dotenv from "dotenv";
 import sql from "mssql";
 
-// const JWT_SECRET = process.env.JWT_SECRET;
+const JWT_SECRET = process.env.JWT_SECRET!;
 
-// import jwt from "jsonwebtoken"
+import jwt from "jsonwebtoken";
 
 const router = express.Router();
 dotenv.config();
@@ -24,8 +24,9 @@ const config = {
   port: 1433,
 };
 
+// Sign Up API
 router.post(
-  "/loginUser",
+  "/SignUpUser",
   [
     body(
       "Name",
@@ -55,9 +56,9 @@ router.post(
 
       const { Name, Password, Email, Phoneno } = req.body;
 
-      const salt= await bcrypt.genSalt(10);
-      let EncriptedPassword = await bcrypt.hash(Password,salt);
-      let EncriptedPhoneno = await bcrypt.hash(Phoneno,salt);
+      const salt = await bcrypt.genSalt(10);
+      let EncriptedPassword = await bcrypt.hash(Password, salt);
+      let EncriptedPhoneno = await bcrypt.hash(Phoneno, salt);
 
       const emails: any = await pool
         .request()
@@ -85,6 +86,74 @@ router.post(
   },
 );
 
+// Login API
+router.get(
+  "/LoginUser",
+  [body("email", "Enter a valid email").isEmail()],
+  async (req: Request, res: Response) => {
+    try {
+      const errors = validationResult(req);
+      // If error is empty is false then there is error so the if statement cathes the error.
+      if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+      }
+      const { Email, Password } = req.body;
+
+      const pool = await sql.connect(config);
+
+      let id = await pool
+        .request()
+        .input("email", sql.VarChar(30), Email)
+        .query("select User_Id from User_Table WHERE Email = @email");
+
+      if (id.recordset.length > 0) {
+        const userId = id.recordset[0].User_Id;
+        console.log("User_Id:", userId);
+
+        let DBpassword: any = await pool
+          .request()
+          .input("userId", sql.Int, userId)
+          .query("select Password from User_Table WHERE User_Id = @userId");
+
+        const passwordCompare = await bcrypt.compare(Password, DBpassword);
+        if (passwordCompare) {
+          // The following code generates an authentication token which is provided to the user
+          const data = {
+            contractor: {
+              id: userId,
+            },
+          };
+          // This gives the user the authtoken using which the token can be transformed back into the user.id .And because of the secret helps to detect if the token has been Tampered(changed)
+          const authtoken = jwt.sign(data, JWT_SECRET);
+          res.status(200).send({ authtoken: authtoken });
+        } else {
+          return res.status(400).json({
+            error: "Please try to login with correct credentials",
+          });
+        }
+      } else {
+        console.log("No user found with that email");
+      }
+    } catch (err) {
+      console.error(err);
+      res.status(500).send("Some error occurred in the database");
+    }
+  },
+);
+
+// CreateTask API
+router.post("/CreateTask", async (req: Request, res: Response) => {
+  try {
+    const pool = await sql.connect(config);
+    const data = await pool.request().query("SELECT * FROM User_Task");
+    return res.json(data.recordset);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Some error occurred");
+  }
+});
+
+// GetAllTasks API
 router.get("/GetAllTasks", async (req: Request, res: Response) => {
   try {
     const pool = await sql.connect(config);
@@ -96,27 +165,6 @@ router.get("/GetAllTasks", async (req: Request, res: Response) => {
   }
 });
 
-  // The following code are to be used after the user is logged in
-
-  // let id = await pool
-  //   .request()
-  //   .input("email", sql.VarChar(30), Email)
-  //   .query("select User_Id from User_Table WHERE Email = @email");
-  // if (id.recordset.length > 0) {
-  //   const userId = id.recordset[0].User_Id;
-  //   console.log("User_Id:", userId);
-  //   // The following code generates an authentication token which is provided to the user
-  //   const data = {
-  //     contractor: {
-  //       id: userId,
-  //     },
-  //   };
-  //   // This gives the user the authtoken using which the token can be transformed back into the user.id .And because of the secret helps to detect if the token has been Tampered(changed)
-  //   const authtoken = jwt.sign(data, process.env.JWT_SECRET!);
-  //   res.status(200).send({ authtoken: authtoken });
-  // } else {
-  //   console.log("No user found with that email");
-  // }
 
 
 export default router;
