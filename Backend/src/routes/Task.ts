@@ -4,8 +4,6 @@ import bcrypt from "bcryptjs";
 import dotenv from "dotenv";
 import sql from "mssql";
 
-const JWT_SECRET = process.env.JWT_SECRET!;
-
 import jwt from "jsonwebtoken";
 
 const router = express.Router();
@@ -89,7 +87,7 @@ router.post(
 // Login API
 router.get(
   "/LoginUser",
-  [body("email", "Enter a valid email").isEmail()],
+  [body("Email", "Enter a valid email").isEmail()],
   async (req: Request, res: Response) => {
     try {
       const errors = validationResult(req);
@@ -108,14 +106,17 @@ router.get(
 
       if (id.recordset.length > 0) {
         const userId = id.recordset[0].User_Id;
-        console.log("User_Id:", userId);
 
         let DBpassword: any = await pool
           .request()
           .input("userId", sql.Int, userId)
           .query("select Password from User_Table WHERE User_Id = @userId");
 
-        const passwordCompare = await bcrypt.compare(Password, DBpassword);
+        const passwordCompare = await bcrypt.compare(
+          Password,
+          DBpassword.recordset[0].Password,
+        );
+
         if (passwordCompare) {
           // The following code generates an authentication token which is provided to the user
           const data = {
@@ -124,7 +125,8 @@ router.get(
             },
           };
           // This gives the user the authtoken using which the token can be transformed back into the user.id .And because of the secret helps to detect if the token has been Tampered(changed)
-          const authtoken = jwt.sign(data, JWT_SECRET);
+
+          const authtoken = jwt.sign(data, process.env.JWT_SECRET!);
           res.status(200).send({ authtoken: authtoken });
         } else {
           return res.status(400).json({
@@ -164,7 +166,5 @@ router.get("/GetAllTasks", async (req: Request, res: Response) => {
     res.status(500).send("Some error occurred");
   }
 });
-
-
 
 export default router;
