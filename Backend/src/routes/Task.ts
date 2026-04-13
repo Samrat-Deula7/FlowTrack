@@ -120,7 +120,7 @@ router.get(
         if (passwordCompare) {
           // The following code generates an authentication token which is provided to the user
           const data = {
-            contractor: {
+            user: {
               id: userId,
             },
           };
