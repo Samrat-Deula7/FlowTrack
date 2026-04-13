@@ -3,7 +3,11 @@ import HeroSection from './LandingPageComponents/HeroSection'
 import Footer from "./Footer";
 import CTASection from "./LandingPageComponents/CTAsection";
 import ServiceDetails from "./LandingPageComponents/ServiceDetails";
-function Landing() {
+
+type LandingProps = {
+  setLoginbtn:React.Dispatch<React.SetStateAction<boolean>>;
+};
+const Landing:React.FC<LandingProps>=({setLoginbtn})=> {
   return (
     <>
     <NavBar/>

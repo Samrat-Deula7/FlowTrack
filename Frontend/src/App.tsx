@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Bg from "./LandingPageComponents/Bg";
 
+
 // This is after logged in components
 import Background from "./AfterLoggedInComponents/background";
 import Tasks from "./AfterLoggedInComponents/Tasks";
@@ -12,6 +13,8 @@ import Collaboration from "./AfterLoggedInComponents/Collaboration";
 import Visualization from "./AfterLoggedInComponents/Visualization";
 import History from "./AfterLoggedInComponents/History";
 import Iteration from "./AfterLoggedInComponents/Iteration";
+
+
 
 function App() {
   let navigate = useNavigate();
@@ -50,7 +53,7 @@ function App() {
           element={
             <>
               <Bg />
-              <Landing />
+              <Landing setLoginbtn={setLoginbtn}/>
             </>
           }
         />
