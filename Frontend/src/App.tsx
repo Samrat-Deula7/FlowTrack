@@ -1,4 +1,4 @@
-import {  Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Landing from "./Landing";
 import AfterLoggedIn from "./AfterLoggedIn";
 import { useEffect, useState } from "react";
@@ -14,13 +14,34 @@ import History from "./AfterLoggedInComponents/History";
 import Iteration from "./AfterLoggedInComponents/Iteration";
 
 function App() {
-    let navigate = useNavigate();
-  const [Loggedin,setLoggedin]=useState(true)
+  let navigate = useNavigate();
+  const [Loggedin, setLoggedin] = useState(false);
+  const [Loginbtn, setLoginbtn] = useState(false);
+  const [Signupbtn, setSignupbtn] = useState(false);
 
-  useEffect(()=>{
+  useEffect(() => {
     Loggedin ? navigate("/") : navigate("/landing");
-  
-  },[Loggedin])
+  }, [Loggedin]);
+
+  useEffect(() => {
+    if (Loginbtn || Signupbtn) {
+      const scrollY = window.scrollY;
+      document.body.style.position = "fixed";
+      document.body.style.top = `-${scrollY}px`;
+      document.body.style.left = "0";
+      document.body.style.right = "0";
+      document.body.style.overflow = "hidden";
+      document.body.style.pointerEvents = "none";
+    } else {
+      const scrollY = document.body.style.top;
+      document.body.style.position = "";
+      document.body.style.top = "";
+      document.body.style.left = "";
+      document.body.style.right = "";
+      document.body.style.overflow = "";
+      window.scrollTo(0, parseInt(scrollY || "0") * -1);
+    }
+  }, [Loginbtn || Signupbtn]);
   return (
     <>
       <Routes>
