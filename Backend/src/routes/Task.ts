@@ -2,12 +2,15 @@ import express, { Request, Response } from "express";
 import { body, validationResult } from "express-validator";
 import bcrypt from "bcryptjs";
 import dotenv from "dotenv";
+dotenv.config();
+
 import sql from "mssql";
 
 import jwt from "jsonwebtoken";
+import authenticateuser from "../middleware/authenticateuser";
 
 const router = express.Router();
-dotenv.config();
+
 const config = {
   user: process.env.Database_User,
   password: process.env.Database_User_Pass,
@@ -144,16 +147,29 @@ router.get(
 );
 
 // CreateTask API
-router.post("/CreateTask", async (req: Request, res: Response) => {
-  try {
-    const pool = await sql.connect(config);
-    const data = await pool.request().query("SELECT * FROM User_Task");
-    return res.json(data.recordset);
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("Some error occurred");
-  }
-});
+router.post(
+  "/CreateTask",
+  authenticateuser,
+  async (req: Request, res: Response) => {
+    try {
+      const pool = await sql.connect(config);
+      const { Task } = req.body;
+      const payload = req.user as { user: { id: string } };
+      const id = parseInt(payload.user.id);
+      // Insert query with bound parameters
+      await pool
+        .request()
+        .input("Userid", sql.Int, id)
+        .input("task", sql.VarChar(80), Task).query(`
+        INSERT INTO User_Tasks VALUES (@Userid, @task)
+      `);
+      res.status(200).send("Task has been saved !")
+    } catch (err) {
+      console.error(err);
+      res.status(500).send("Some error occurred");
+    }
+  },
+);
 
 // GetAllTasks API
 router.get("/GetAllTasks", async (req: Request, res: Response) => {
