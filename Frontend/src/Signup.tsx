@@ -109,18 +109,18 @@ const Signup: React.FC<SignupPorps> = ({
 
   return (
     <div
-      className={`fixed top-0 left-0 min-w-screen  bg-[#020617CC] z-40 flex flex-col items-center justify-center transition-all duration-300 ease-in-out ${
+      className={`fixed top-0 left-0 min-w-screen  bg-transparent z-40 flex flex-col items-center justify-center transition-all duration-300 ease-in-out ${
         Signupbtn
           ? "h-screen opacity-100 pointer-events-auto "
           : "h-0 opacity-0 pointer-events-none scale-0"
       }`}
     >
       <div
-        className={`relative w-[300px] lg:w-[600px] xl:w-[800px] 2xl:w-[800px] text-center bg-[#10172a] rounded-2xl py-3 px-2 ${
+        className={`relative w-[300px]  xl:w-[350px] xl:h-[470px] text-center bg-[#10172a] rounded-2xl py-3 px-2 ${
           Signupbtn ? "animate-popup" : ""
         }`}
       >
-        <h2 className="text-2xl  xl:text-6xl font-bold mb-8 text-[#2563eb] text-center">
+        <h2 className="text-2xl  xl:text-3xl font-bold mb-8 text-green-500 text-center">
           Sign Up
         </h2>
         <h6 className="text-red-500">{validationError.userExistsError}</h6>
@@ -136,7 +136,7 @@ const Signup: React.FC<SignupPorps> = ({
         </button>
 
         <form onSubmit={preventDefault}>
-          <div className="grid grid-cols-1 xl:grid-cols-2  place-items-center">
+          <div className="flex flex-col justify-around items-center text-center h-[280px]">
             <div className="relative">
               <h6 className="text-red-500">{validationError.Name}</h6>
               <input
@@ -144,7 +144,7 @@ const Signup: React.FC<SignupPorps> = ({
                 id="name"
                 name="name"
                 value={credentials.Name}
-                className="w-[280px] mb-1 xl:mb-2 xl:w-94  bg-black border border-white/10 rounded px-2 py-1 xl:px-4 xl:py-3 text-white transition focus:outline-none focus:border-blue-500 focus:bg-[#020617CC]"
+                className="ww-[280px] xl:w-[300px] bg-black border border-white/10 rounded-full  rounded px-2 py-1 xl:px-4 xl:py-3 text-white transition focus:outline-none focus:border-green-500 focus:bg-[#020617CC]"
                 placeholder="Name...."
                 onChange={onChange}
               />
@@ -156,7 +156,7 @@ const Signup: React.FC<SignupPorps> = ({
                 type="password"
                 id="password"
                 name="password"
-                className="w-[280px] mb-1 xl:mb-2 xl:w-94 bg-black border border-white/10 rounded px-2 py-1 xl:px-4 xl:py-3 text-white transition focus:outline-none focus:border-blue-500 focus:bg-[#020617CC]"
+                className="w-[280px] xl:w-[300px] bg-black border border-white/10 rounded-full  rounded px-2 py-1 xl:px-4 xl:py-3 text-white transition focus:outline-none focus:border-green-500 focus:bg-[#020617CC]"
                 placeholder="Enter your password"
                 onChange={onChange}
                 value={credentials.Password}
@@ -168,7 +168,7 @@ const Signup: React.FC<SignupPorps> = ({
                 type="password"
                 id="cpassword"
                 name="cpassword"
-                className="w-[280px] mb-1 xl:mb-2 xl:w-94 bg-black border border-white/10 rounded px-2 py-1 xl:px-4 xl:py-3 text-white transition focus:outline-none focus:border-blue-500 focus:bg-[#020617CC]"
+                className="w-[280px] xl:w-[300px] bg-black border border-white/10 rounded-full  rounded px-2 py-1 xl:px-4 xl:py-3 text-white transition focus:outline-none focus:border-green-500 focus:bg-[#020617CC]"
                 placeholder="Confirm password"
                 onChange={onChange}
                 value={credentials.CPassword}
@@ -180,7 +180,7 @@ const Signup: React.FC<SignupPorps> = ({
                 type="email"
                 id="email"
                 name="email"
-                className="w-[280px] mb-1 xl:mb-2 xl:w-94 bg-black border border-white/10 rounded px-2 py-1 xl:px-4 xl:py-3 text-white transition focus:outline-none focus:border-blue-500 focus:bg-[#020617CC]"
+                className="w-[280px] xl:w-[300px] bg-black border border-white/10 rounded-full  rounded px-2 py-1 xl:px-4 xl:py-3 text-white transition focus:outline-none focus:border-green-500 focus:bg-[#020617CC]"
                 placeholder="example@gmail.com"
                 onChange={onChange}
                 value={credentials.Email}
@@ -192,7 +192,7 @@ const Signup: React.FC<SignupPorps> = ({
                 type="text"
                 id="phoneno"
                 name="phoneno"
-                className="w-[280px] mb-1 xl:mb-2 xl:w-94 bg-black border border-white/10 rounded px-2 py-1 xl:px-4 xl:py-3 text-white transition focus:outline-none focus:border-blue-500 focus:bg-[#020617CC]"
+                className="w-[280px] xl:w-[300px] bg-black border border-white/10 rounded-full  rounded px-2 py-1 xl:px-4 xl:py-3 text-white transition focus:outline-none focus:border-green-500 focus:bg-[#020617CC]"
                 placeholder="Enter your phone no"
                 onChange={onChange}
                 value={credentials.Phoneno}
@@ -203,7 +203,7 @@ const Signup: React.FC<SignupPorps> = ({
           <button
             onClick={createUser}
             type="submit"
-            className="w-[280px] xl:w-full mb-2 mt-1 bg-blue-500 text-white py-1 px-3 xl:py-3 xl:px-6 rounded font-medium transition relative overflow-hidden hover:-translate-y-0.5 hover:shadow-[0_0_15px_rgba(59,130,246,0.4)]"
+            className="w-[280px] xl:w-[300px] mt-1 bg-green-500 text-white py-1 px-3 xl:py-3 xl:px-6 rounded font-medium transition relative overflow-hidden hover:-translate-y-0.5 hover:shadow-[0_0_15px_rgba(59,130,246,0.4)]"
           >
             Sign Up
           </button>
