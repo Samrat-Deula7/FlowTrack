@@ -55,7 +55,7 @@ const Signup: React.FC<SignupPorps> = ({
         });
         const result = await response.json();
         console.log(result);
-        if (result.FlowTrackAuthtoken) {
+        if (result.success) {
           // Save the auth token and redirect
           setCredentials({
             Name: "",
@@ -73,8 +73,8 @@ const Signup: React.FC<SignupPorps> = ({
           });
           setSignupbtn(false);
           setLoginbtn(true);
-          localStorage.setItem("FlowTrackToken", result.FlowTrackAuthtoken);
-          alert("Account Created");
+          const successmsg=result.success
+          alert(successmsg)
         } else {
           if (result.error) {
             const alreadyExistsError = result.error;
@@ -116,7 +116,7 @@ const Signup: React.FC<SignupPorps> = ({
       }`}
     >
       <div
-        className={`relative w-[300px]  xl:w-[350px] xl:h-[470px] text-center bg-[#10172a] rounded-2xl py-3 px-2 ${
+        className={`relative w-[300px]  xl:w-[350px] xl:h-[510px] text-center bg-[#10172a] rounded-2xl py-3 px-2 ${
           Signupbtn ? "animate-popup" : ""
         }`}
       >
@@ -136,13 +136,13 @@ const Signup: React.FC<SignupPorps> = ({
         </button>
 
         <form onSubmit={preventDefault}>
-          <div className="flex flex-col justify-around items-center text-center h-[280px]">
+          <div className="flex flex-col justify-around items-center text-center h-[330px]">
             <div className="relative">
               <h6 className="text-red-500">{validationError.Name}</h6>
               <input
                 type="text"
                 id="name"
-                name="name"
+                name="Name"
                 value={credentials.Name}
                 className="w-[280px] xl:w-[300px] bg-black border border-white/10 rounded-full  rounded px-2 py-1 xl:px-4 xl:py-3 text-white transition focus:outline-none focus:border-green-500 focus:bg-[#020617CC]"
                 placeholder="Name...."
@@ -155,7 +155,7 @@ const Signup: React.FC<SignupPorps> = ({
               <input
                 type="password"
                 id="password"
-                name="password"
+                name="Password"
                 className="w-[280px] xl:w-[300px] bg-black border border-white/10 rounded-full  rounded px-2 py-1 xl:px-4 xl:py-3 text-white transition focus:outline-none focus:border-green-500 focus:bg-[#020617CC]"
                 placeholder="Enter your password"
                 onChange={onChange}
@@ -167,7 +167,7 @@ const Signup: React.FC<SignupPorps> = ({
               <input
                 type="password"
                 id="cpassword"
-                name="cpassword"
+                name="CPassword"
                 className="w-[280px] xl:w-[300px] bg-black border border-white/10 rounded-full  rounded px-2 py-1 xl:px-4 xl:py-3 text-white transition focus:outline-none focus:border-green-500 focus:bg-[#020617CC]"
                 placeholder="Confirm password"
                 onChange={onChange}
@@ -179,7 +179,7 @@ const Signup: React.FC<SignupPorps> = ({
               <input
                 type="email"
                 id="email"
-                name="email"
+                name="Email"
                 className="w-[280px] xl:w-[300px] bg-black border border-white/10 rounded-full  rounded px-2 py-1 xl:px-4 xl:py-3 text-white transition focus:outline-none focus:border-green-500 focus:bg-[#020617CC]"
                 placeholder="example@gmail.com"
                 onChange={onChange}
@@ -191,7 +191,7 @@ const Signup: React.FC<SignupPorps> = ({
               <input
                 type="text"
                 id="phoneno"
-                name="phoneno"
+                name="Phoneno"
                 className="w-[280px] xl:w-[300px] bg-black border border-white/10 rounded-full  rounded px-2 py-1 xl:px-4 xl:py-3 text-white transition focus:outline-none focus:border-green-500 focus:bg-[#020617CC]"
                 placeholder="Enter your phone no"
                 onChange={onChange}

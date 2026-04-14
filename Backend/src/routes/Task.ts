@@ -66,7 +66,9 @@ router.post(
         .input("email", sql.VarChar(30), Email)
         .query("SELECT 1 FROM User_Table WHERE Email = @email");
       if (emails.recordset.length > 0) {
-        res.status(400).send("User already exists!");
+        res.status(400).json({
+          error: "User already exists!",
+        });
       } else {
         // Insert query with bound parameters
         await pool
@@ -77,12 +79,13 @@ router.post(
           .input("phoneno", sql.VarChar(80), EncriptedPhoneno).query(`
         INSERT INTO User_Table VALUES (@name, @password, @email, @phoneno)
       `);
-
-        res.status(200).send("User registered successfully!");
+        res.status(200).send({ success:"User Created successfully" });
       }
     } catch (err) {
       console.error(err);
-      res.status(500).send("Some error occurred in the database");
+        res.status(400).json({
+          error: "Some error occurred in the database",
+        });
     }
   },
 );

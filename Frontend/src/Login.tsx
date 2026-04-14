@@ -117,7 +117,7 @@ const Login: React.FC<LoginProps> = ({
 
         <form
           onSubmit={handleSubmit}
-          className="flex flex-col justify-around items-center text-center h-[150px]"
+          className="flex flex-col justify-around items-center text-center h-[170px]"
         >
           <div className="relative">
             <input
