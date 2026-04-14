@@ -53,7 +53,12 @@ function App() {
           element={
             <>
               <Bg />
-              <Landing setLoginbtn={setLoginbtn}/>
+              <Landing
+                setLoginbtn={setLoginbtn}
+                Loginbtn={Loginbtn}
+                setLoggedin={setLoggedin}
+                setSignupbtn={setSignupbtn}
+              />
             </>
           }
         />

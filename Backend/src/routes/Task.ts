@@ -88,7 +88,7 @@ router.post(
 );
 
 // Login API
-router.get(
+router.post(
   "/LoginUser",
   [body("Email", "Enter a valid email").isEmail()],
   async (req: Request, res: Response) => {
@@ -130,7 +130,7 @@ router.get(
           // This gives the user the authtoken using which the token can be transformed back into the user.id .And because of the secret helps to detect if the token has been Tampered(changed)
 
           const authtoken = jwt.sign(data, process.env.JWT_SECRET!);
-          res.status(200).send({ authtoken: authtoken });
+          res.status(200).send({ FlowTrackAuthtoken: authtoken });
         } else {
           return res.status(400).json({
             error: "Please try to login with correct credentials",
@@ -163,7 +163,7 @@ router.post(
         .input("task", sql.VarChar(80), Task).query(`
         INSERT INTO User_Tasks VALUES (@Userid, @task)
       `);
-      res.status(200).send("Task has been saved !")
+      res.status(200).send("Task has been saved !");
     } catch (err) {
       console.error(err);
       res.status(500).send("Some error occurred");
