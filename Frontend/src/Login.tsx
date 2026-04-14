@@ -92,7 +92,7 @@ const Login: React.FC<LoginProps> = ({
       className={`fixed top-0 left-0 max-w-screen w-full bg-[#020617CC] z-40 flex flex-col items-center justify-center transition-all duration-300 ease-in-out ${
         Loginbtn
           ? "h-screen opacity-100 pointer-events-auto"
-          : "h-0 opacity-0 pointer-events-none"
+          : "h-0 opacity-0 pointer-events-none scale-0"
       }`}
     >
       <div

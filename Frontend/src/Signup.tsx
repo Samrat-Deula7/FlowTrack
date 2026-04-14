@@ -1,3 +1,226 @@
-const Login = () => {};
+import React, { useState, useEffect } from "react";
 
-export default Login;
+type SignupPorps = {
+  setSignupbtn: React.Dispatch<React.SetStateAction<boolean>>;
+  setLoginbtn: React.Dispatch<React.SetStateAction<boolean>>;
+  Signupbtn: boolean;
+};
+
+const Signup: React.FC<SignupPorps> = ({
+  Signupbtn,
+  setSignupbtn,
+  setLoginbtn,
+}) => {
+  const [validationError, setValidationError] = useState({
+    Name: "",
+    Password: "",
+    Email: "",
+    Phoneno: "",
+    userExistsError: "",
+  });
+  const [credentials, setCredentials] = useState({
+    Name: "",
+    Password: "",
+    CPassword: "",
+    Email: "",
+    Phoneno: "",
+  });
+
+  const onChange = (e: any) => {
+    setCredentials({ ...credentials, [e.target.name]: e.target.value });
+  };
+  const preventDefault = async (e: any) => {
+    e.preventDefault();
+  };
+
+  const createUser = async () => {
+    try {
+      if (credentials.Password == credentials.CPassword) {
+        // API Call
+        const url = "http://localhost:3000/api/tasks/SignUpUser";
+        const { Name, Password, CPassword, Email, Phoneno } = credentials;
+
+        const response = await fetch(url, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            Name,
+            Password,
+            CPassword,
+            Email,
+            Phoneno,
+          }),
+        });
+        const result = await response.json();
+        console.log(result);
+        if (result.FlowTrackAuthtoken) {
+          // Save the auth token and redirect
+          setCredentials({
+            Name: "",
+            Password: "",
+            CPassword: "",
+            Email: "",
+            Phoneno: "",
+          });
+          setValidationError({
+            Name: "",
+            Password: "",
+            Email: "",
+            Phoneno: "",
+            userExistsError: "",
+          });
+          setSignupbtn(false);
+          setLoginbtn(true);
+          localStorage.setItem("FlowTrackToken", result.FlowTrackAuthtoken);
+          alert("Account Created");
+        } else {
+          if (result.error) {
+            const alreadyExistsError = result.error;
+            setValidationError({
+              Name: "",
+              Password: "",
+              Email: "",
+              Phoneno: "",
+              userExistsError: alreadyExistsError,
+            });
+          } else {
+            const getErrorMessage = (field: string) => {
+              const error = result.errors.find((e: any) => e.path === field);
+              return error?.msg || null;
+            };
+            setValidationError({
+              Name: getErrorMessage("Name"),
+              Password: getErrorMessage("Password"),
+              Email: getErrorMessage("Email"),
+              Phoneno: getErrorMessage("Phoneno"),
+              userExistsError: "",
+            });
+          }
+        }
+      } else {
+        alert("Both password must be same");
+      }
+    } catch (error:any) {
+      alert(error.message);
+    }
+  };
+
+  return (
+    <div
+      className={`fixed top-0 left-0 min-w-screen  bg-[#020617CC] z-40 flex flex-col items-center justify-center transition-all duration-300 ease-in-out ${
+        Signupbtn
+          ? "h-screen opacity-100 pointer-events-auto "
+          : "h-0 opacity-0 pointer-events-none scale-0"
+      }`}
+    >
+      <div
+        className={`relative w-[300px] lg:w-[600px] xl:w-[800px] 2xl:w-[800px] text-center bg-[#10172a] rounded-2xl py-3 px-2 ${
+          Signupbtn ? "animate-popup" : ""
+        }`}
+      >
+        <h2 className="text-2xl  xl:text-6xl font-bold mb-8 text-[#2563eb] text-center">
+          Sign Up
+        </h2>
+        <h6 className="text-red-500">{validationError.userExistsError}</h6>
+
+        <button
+          onClick={() => {
+            setSignupbtn(false);
+          }}
+          className="absolute top-4 right-6 text-xl lg:text-3xl  focus:outline-none cursor-pointer text-white"
+          aria-label="Close button"
+        >
+          &times;
+        </button>
+
+        <form onSubmit={preventDefault}>
+          <div className="grid grid-cols-1 xl:grid-cols-2  place-items-center">
+            <div className="relative">
+              <h6 className="text-red-500">{validationError.Name}</h6>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                value={credentials.Name}
+                className="w-[280px] mb-1 xl:mb-2 xl:w-94  bg-black border border-white/10 rounded px-2 py-1 xl:px-4 xl:py-3 text-white transition focus:outline-none focus:border-blue-500 focus:bg-[#020617CC]"
+                placeholder="Name...."
+                onChange={onChange}
+              />
+            </div>
+
+            <div className="relative">
+              <h6 className="text-red-500">{validationError.Password}</h6>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                className="w-[280px] mb-1 xl:mb-2 xl:w-94 bg-black border border-white/10 rounded px-2 py-1 xl:px-4 xl:py-3 text-white transition focus:outline-none focus:border-blue-500 focus:bg-[#020617CC]"
+                placeholder="Enter your password"
+                onChange={onChange}
+                value={credentials.Password}
+              />
+            </div>
+            <div className="relative">
+              <h6 className="text-red-500">{validationError.Password}</h6>
+              <input
+                type="password"
+                id="cpassword"
+                name="cpassword"
+                className="w-[280px] mb-1 xl:mb-2 xl:w-94 bg-black border border-white/10 rounded px-2 py-1 xl:px-4 xl:py-3 text-white transition focus:outline-none focus:border-blue-500 focus:bg-[#020617CC]"
+                placeholder="Confirm password"
+                onChange={onChange}
+                value={credentials.CPassword}
+              />
+            </div>
+            <div className="relative">
+              <h6 className="text-red-500">{validationError.Email}</h6>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                className="w-[280px] mb-1 xl:mb-2 xl:w-94 bg-black border border-white/10 rounded px-2 py-1 xl:px-4 xl:py-3 text-white transition focus:outline-none focus:border-blue-500 focus:bg-[#020617CC]"
+                placeholder="example@gmail.com"
+                onChange={onChange}
+                value={credentials.Email}
+              />
+            </div>
+            <div className="relative">
+              <h6 className="text-red-500">{validationError.Phoneno}</h6>
+              <input
+                type="text"
+                id="phoneno"
+                name="phoneno"
+                className="w-[280px] mb-1 xl:mb-2 xl:w-94 bg-black border border-white/10 rounded px-2 py-1 xl:px-4 xl:py-3 text-white transition focus:outline-none focus:border-blue-500 focus:bg-[#020617CC]"
+                placeholder="Enter your phone no"
+                onChange={onChange}
+                value={credentials.Phoneno}
+              />
+            </div>
+          </div>
+
+          <button
+            onClick={createUser}
+            type="submit"
+            className="w-[280px] xl:w-full mb-2 mt-1 bg-blue-500 text-white py-1 px-3 xl:py-3 xl:px-6 rounded font-medium transition relative overflow-hidden hover:-translate-y-0.5 hover:shadow-[0_0_15px_rgba(59,130,246,0.4)]"
+          >
+            Sign Up
+          </button>
+        </form>
+
+        <button
+          onClick={() => {
+            setSignupbtn(false);
+            setLoginbtn(true);
+          }}
+          className="text-blue-600 underline cursor-pointer"
+        >
+          Already got an account ?
+        </button>
+      </div>
+    </div>
+  );
+};
+
+export default Signup;

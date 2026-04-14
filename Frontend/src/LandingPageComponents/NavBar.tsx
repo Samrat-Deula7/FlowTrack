@@ -3,8 +3,9 @@ import Logo from "../assets/logo.png"
 
 type NavBarProps={
   setLoginbtn:React.Dispatch<React.SetStateAction<boolean>>
+  setSignupbtn:React.Dispatch<React.SetStateAction<boolean>>
 }
-const NavBar : React.FC<NavBarProps> = ({setLoginbtn}) => {
+const NavBar: React.FC<NavBarProps> = ({ setLoginbtn, setSignupbtn }) => {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -38,7 +39,10 @@ const NavBar : React.FC<NavBarProps> = ({setLoginbtn}) => {
           >
             Sign in
           </button>
-          <button className="text-[#000000] font-bold text-[13px] border border-2 border-green-500 text-green-500 w-19 h-7 rounded-xl hover:-translate-y-1 duration-300 hover:border-none hover:bg-transparent cursor-pointer">
+          <button
+            className="text-[#000000] font-bold text-[13px] border border-2 border-green-500 text-green-500 w-19 h-7 rounded-xl hover:-translate-y-1 duration-300 hover:border-none hover:bg-transparent cursor-pointer"
+            onClick={() => setSignupbtn((prev) => !prev)}
+          >
             Sign up
           </button>
         </div>

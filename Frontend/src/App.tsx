@@ -34,7 +34,6 @@ function App() {
       document.body.style.left = "0";
       document.body.style.right = "0";
       document.body.style.overflow = "hidden";
-      document.body.style.pointerEvents = "none";
     } else {
       const scrollY = document.body.style.top;
       document.body.style.position = "";
@@ -44,7 +43,7 @@ function App() {
       document.body.style.overflow = "";
       window.scrollTo(0, parseInt(scrollY || "0") * -1);
     }
-  }, [Loginbtn || Signupbtn]);
+  }, [Loginbtn , Signupbtn]);
   return (
     <>
       <Routes>
@@ -56,6 +55,7 @@ function App() {
               <Landing
                 setLoginbtn={setLoginbtn}
                 Loginbtn={Loginbtn}
+                Signupbtn={Signupbtn}
                 setLoggedin={setLoggedin}
                 setSignupbtn={setSignupbtn}
               />
