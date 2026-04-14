@@ -62,12 +62,12 @@ const Login: React.FC<LoginProps> = ({
         setLoginbtn(false);
       } else {
         if (result.errors) {
-          const getErrorMessage = (field: any) => {
+          const getErrorMessage = (field: string) => {
             const errors = result.errors.find((e: any) => e.path === field);
             return errors?.msg || null;
           };
           setLoginErrorValidation({
-            loginError1: getErrorMessage("email"),
+            loginError1: getErrorMessage("Email"),
             loginError2: "",
           });
         } else {

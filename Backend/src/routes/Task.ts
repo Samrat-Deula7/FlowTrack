@@ -137,11 +137,15 @@ router.post(
           });
         }
       } else {
-        console.log("No user found with that email");
+        return res.status(400).json({
+          error: "No user found with that email",
+        });
       }
     } catch (err) {
       console.error(err);
-      res.status(500).send("Some error occurred in the database");
+      return res.status(500).json({
+        error: "Some error occurred in the database",
+      });
     }
   },
 );
