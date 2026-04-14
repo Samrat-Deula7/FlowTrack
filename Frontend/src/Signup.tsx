@@ -144,7 +144,7 @@ const Signup: React.FC<SignupPorps> = ({
                 id="name"
                 name="name"
                 value={credentials.Name}
-                className="ww-[280px] xl:w-[300px] bg-black border border-white/10 rounded-full  rounded px-2 py-1 xl:px-4 xl:py-3 text-white transition focus:outline-none focus:border-green-500 focus:bg-[#020617CC]"
+                className="w-[280px] xl:w-[300px] bg-black border border-white/10 rounded-full  rounded px-2 py-1 xl:px-4 xl:py-3 text-white transition focus:outline-none focus:border-green-500 focus:bg-[#020617CC]"
                 placeholder="Name...."
                 onChange={onChange}
               />
