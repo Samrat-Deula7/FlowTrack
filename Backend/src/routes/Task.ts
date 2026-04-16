@@ -172,7 +172,7 @@ router.post(
         .input("completed", sql.Bit, Completed).query(`
         INSERT INTO User_Tasks VALUES (@Userid, @task,@completed)
       `);
-      res.status(200).send("Task has been saved !");
+      res.status(200).send({success:"Task has been saved !"});
     } catch (err) {
       console.error(err);
       res.status(500).send("Some error occurred");

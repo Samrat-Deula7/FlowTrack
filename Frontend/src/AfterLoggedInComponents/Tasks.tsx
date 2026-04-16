@@ -4,43 +4,32 @@ import Add from "../assets/add.png";
 import Tick from "../assets/check-mark.png";
 import Delete from "../assets/trash.png";
 
-interface Task {
-  text: string;
-  completed: boolean;
-}
-
 export default function Tasks() {
-  const [tasks, setTasks] = useState<Task[]>([
-    { text: "This is an example of task #1", completed: true },
-    { text: "This is an example of task #2", completed: false },
-    { text: "This is an example of task #3", completed: true },
-    { text: "This is an example of task #4", completed: false },
-    { text: "This is an example of task #5", completed: false },
-  ]);
-  const [newTask, setNewTask] = useState<string>("");
+  const [Task, setTask] = useState({ task: "", completed: "" });
 
-  const addTask = (): void => {
-    if (newTask.trim()) {
-      setTasks([...tasks, { id: Date.now(), text: newTask, completed: false }]);
-      setNewTask("");
-    }
+  const onChange = (e: any) => {
+    setTask({ ...Task, [e.target.name]: e.target.value });
   };
 
-  const toggleTask = (id: number): void => {
-    setTasks(
-      tasks.map((task) =>
-        task.id === id ? { ...task, completed: !task.completed } : task,
-      ),
-    );
-  };
-
-  const deleteTask = (id: number): void => {
-    setTasks(tasks.filter((task) => task.id !== id));
-  };
-
-  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>): void => {
-    if (e.key === "Enter") {
-      addTask();
+  const addTask = async () => {
+    const FlowTrackAuthtoken: any = localStorage.getItem("FlowTrackToken");
+    const url = "http://localhost:3000/api/tasks/CreateTask";
+    try {
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          FlowTrackAuthtoken: FlowTrackAuthtoken,
+        },
+        body: JSON.stringify({ Task: Task.task, Completed: Task.completed }),
+      });
+      const result = await response.json();
+      if (result.success) {
+        setTask({ task: "", completed: "" });
+        alert(result.success)
+      }
+    } catch (error: any) {
+      alert(error.message);
     }
   };
 
@@ -59,15 +48,17 @@ export default function Tasks() {
             <div className="flex gap-2 sm:gap-3 mb-5 sm:mb-6">
               <input
                 type="text"
-                value={newTask}
-                onChange={(e) => setNewTask(e.target.value)}
-                onKeyPress={handleKeyPress}
+                value={Task.task}
+                name="task"
+                onChange={onChange}
+                // onKeyPress={handleKeyPress}
                 placeholder="Add new task"
                 className="flex-1 px-3 sm:px-4 md:px-5 py-2 sm:py-3 text-sm sm:text-base md:text-lg text-gray-500 placeholder-gray-400 border-b-2 border-gray-300 focus:border-gray-400 focus:outline-none bg-transparent transition-colors"
               />
               <button
+                // onClick={addTask}
                 onClick={addTask}
-                className="w-9 h-9 sm:w-10 sm:h-10 md:w-12 md:h-12 bg-gray-700 hover:bg-gray-800 active:bg-gray-900 text-white rounded-full flex items-center justify-center transition-all duration-200 flex-shrink-0 shadow-md hover:shadow-lg"
+                className="w-9 h-9 sm:w-10 sm:h-10 md:w-12 md:h-12 cursor-pointer bg-gray-700 hover:bg-gray-800 active:bg-gray-900 text-white rounded-full flex items-center justify-center transition-all duration-200 flex-shrink-0 shadow-md hover:shadow-lg"
               >
                 <img
                   src={Add}
@@ -77,7 +68,7 @@ export default function Tasks() {
               </button>
             </div>
 
-            {/* Task List */}
+            {/* Task List
             <div className="space-y-3 sm:space-y-4 max-h-[calc(100vh-20rem)] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-transparent">
               {tasks.map((task) => (
                 <div
@@ -85,7 +76,7 @@ export default function Tasks() {
                   className="flex items-center gap-3 sm:gap-4 p-3 sm:p-4 md:p-5 bg-white border-2 border-gray-200 rounded-xl hover:border-gray-300 hover:shadow-md transition-all duration-200"
                 >
                   <button
-                    onClick={() => toggleTask(task.id)}
+                    // onClick={() => toggleTask(task.id)}
                     className="flex-shrink-0 w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 border-2 border-gray-400 rounded flex items-center justify-center hover:bg-gray-50 hover:border-gray-500 transition-all duration-200"
                   >
                     {task.completed && (
@@ -99,7 +90,7 @@ export default function Tasks() {
 
                   <span
                     className={`flex-1 text-sm sm:text-base md:text-lg break-words leading-relaxed ${
-                      task.completed
+                      task.completed == 1
                         ? "text-gray-400 line-through"
                         : "text-gray-700"
                     }`}
@@ -108,7 +99,7 @@ export default function Tasks() {
                   </span>
 
                   <button
-                    onClick={() => deleteTask(task.id)}
+                    // onClick={() => deleteTask(task.id)}
                     className="flex-shrink-0 text-gray-400 hover:text-red-500 transition-colors duration-200"
                   >
                     <img
@@ -119,7 +110,7 @@ export default function Tasks() {
                   </button>
                 </div>
               ))}
-            </div>
+            </div> */}
           </div>
 
           {/* Side Panel */}
