@@ -67,7 +67,7 @@ function App() {
           element={
             <>
               <Background />
-              <AfterLoggedIn />
+              <AfterLoggedIn setLoggedin ={setLoggedin}/>
             </>
           }
         />
