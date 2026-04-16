@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import Logo from "../assets/logo.png";
 
 type NavProps = {
-  setLoggedin: React.Dispatch<React.SetStateAction<boolean>>;
+  setLoggedin?: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const NavBar: React.FC<NavProps> = ({ setLoggedin }) => {
@@ -39,7 +39,7 @@ const NavBar: React.FC<NavProps> = ({ setLoggedin }) => {
           <button
             className="text-[#000000] font-bold text-[13px] border border-2 border-green-500 text-green-500 w-30 h-7 rounded-xl hover:-translate-y-1 duration-300 hover:border-none hover:bg-transparent cursor-pointer"
             onClick={() => {
-              setLoggedin(false);
+              setLoggedin?.(false);
               localStorage.removeItem("FlowTrackToken");
             }}
           >

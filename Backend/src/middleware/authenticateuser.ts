@@ -13,7 +13,7 @@ declare global {
 }
 
 const authenticateuser = (req: Request, res: Response, next: NextFunction) => {
-  const token: any = req.header("auth-token");
+  const token: any = req.header("FlowTrackAuthtoken");
   if (!token) {
     res.status(401).send({ error: "Please provide the authentication token" });
   }

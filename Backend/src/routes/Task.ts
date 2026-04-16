@@ -4,7 +4,7 @@ import bcrypt from "bcryptjs";
 import dotenv from "dotenv";
 dotenv.config();
 
-import sql from "mssql";
+import sql, { Bit } from "mssql";
 
 import jwt from "jsonwebtoken";
 import authenticateuser from "../middleware/authenticateuser";
@@ -160,15 +160,17 @@ router.post(
   async (req: Request, res: Response) => {
     try {
       const pool = await sql.connect(config);
-      const { Task } = req.body;
+      let { Task,Completed } = req.body;
+      if(Completed == undefined){ Completed=0}
       const payload = req.user as { user: { id: string } };
       const id = parseInt(payload.user.id);
       // Insert query with bound parameters
       await pool
         .request()
         .input("Userid", sql.Int, id)
-        .input("task", sql.VarChar(80), Task).query(`
-        INSERT INTO User_Tasks VALUES (@Userid, @task)
+        .input("task", sql.VarChar(80), Task)
+        .input("completed", sql.Bit, Completed).query(`
+        INSERT INTO User_Tasks VALUES (@Userid, @task,@completed)
       `);
       res.status(200).send("Task has been saved !");
     } catch (err) {

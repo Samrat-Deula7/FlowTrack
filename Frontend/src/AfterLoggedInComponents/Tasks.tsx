@@ -5,18 +5,17 @@ import Tick from "../assets/check-mark.png";
 import Delete from "../assets/trash.png";
 
 interface Task {
-  id: number;
   text: string;
   completed: boolean;
 }
 
 export default function Tasks() {
   const [tasks, setTasks] = useState<Task[]>([
-    { id: 1, text: "This is an example of task #1", completed: true },
-    { id: 2, text: "This is an example of task #2", completed: false },
-    { id: 3, text: "This is an example of task #3", completed: true },
-    { id: 4, text: "This is an example of task #4", completed: false },
-    { id: 5, text: "This is an example of task #5", completed: false },
+    { text: "This is an example of task #1", completed: true },
+    { text: "This is an example of task #2", completed: false },
+    { text: "This is an example of task #3", completed: true },
+    { text: "This is an example of task #4", completed: false },
+    { text: "This is an example of task #5", completed: false },
   ]);
   const [newTask, setNewTask] = useState<string>("");
 
