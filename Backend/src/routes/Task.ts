@@ -184,8 +184,8 @@ router.post(
 router.get("/GetAllTasks", async (req: Request, res: Response) => {
   try {
     const pool = await sql.connect(config);
-    const data = await pool.request().query("SELECT * FROM User_Task");
-    return res.json(data.recordset);
+    const data = await pool.request().query("SELECT * FROM User_Tasks");
+    return res.json({dataSet:data.recordset});
   } catch (err) {
     console.error(err);
     res.status(500).send("Some error occurred");

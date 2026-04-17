@@ -1,9 +1,18 @@
+import { createContext } from "react";
 
-// import { createContext } from "react";
+type data = {
+  Task_Id: number;
+  User_Id: number;
+  Task: string;
+  Completed: string;
+};
 
-// type FlowtrackContextType={
+type FlowtrackContextType = {
+  getAllTask: () => Promise<data[]>;
+};
+const FlowtrackContext = createContext<FlowtrackContextType>({
+  // Needed to put async here because the function getAllTask return and Promise
+  getAllTask: async() => [],
+});
 
-// }
-// const FlowtrackContext = createContext();
-
-// export default FlowtrackContext;
+export default FlowtrackContext;
