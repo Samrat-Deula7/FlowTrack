@@ -4,7 +4,7 @@ import AfterLoggedIn from "./AfterLoggedIn";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Bg from "./LandingPageComponents/Bg";
-
+import FlowtrackState from "../context/FlowtrackState"
 
 // This is after logged in components
 import Background from "./AfterLoggedInComponents/background";
@@ -46,39 +46,41 @@ function App() {
   }, [Loginbtn , Signupbtn]);
   return (
     <>
-      <Routes>
-        <Route
-          path="/landing"
-          element={
-            <>
-              <Bg />
-              <Landing
-                setLoginbtn={setLoginbtn}
-                Loginbtn={Loginbtn}
-                Signupbtn={Signupbtn}
-                setLoggedin={setLoggedin}
-                setSignupbtn={setSignupbtn}
-              />
-            </>
-          }
-        />
-        <Route
-          path="/"
-          element={
-            <>
-              <Background />
-              <AfterLoggedIn setLoggedin ={setLoggedin}/>
-            </>
-          }
-        />
+      <FlowtrackState>
+        <Routes>
+          <Route
+            path="/landing"
+            element={
+              <>
+                <Bg />
+                <Landing
+                  setLoginbtn={setLoginbtn}
+                  Loginbtn={Loginbtn}
+                  Signupbtn={Signupbtn}
+                  setLoggedin={setLoggedin}
+                  setSignupbtn={setSignupbtn}
+                />
+              </>
+            }
+          />
+          <Route
+            path="/"
+            element={
+              <>
+                <Background />
+                <AfterLoggedIn setLoggedin={setLoggedin} />
+              </>
+            }
+          />
 
-        {/* This are after logged in components */}
-        <Route path="/tasks" element={<Tasks />} />
-        <Route path="/collaboration" element={<Collaboration />} />
-        <Route path="/visualization" element={<Visualization />} />
-        <Route path="/history" element={<History />} />
-        <Route path="/iteration" element={<Iteration />} />
-      </Routes>
+          {/* This are after logged in components */}
+          <Route path="/tasks" element={<Tasks />} />
+          <Route path="/collaboration" element={<Collaboration />} />
+          <Route path="/visualization" element={<Visualization />} />
+          <Route path="/history" element={<History />} />
+          <Route path="/iteration" element={<Iteration />} />
+        </Routes>
+      </FlowtrackState>
     </>
   );
 }

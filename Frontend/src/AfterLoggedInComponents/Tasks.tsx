@@ -1,50 +1,49 @@
-import { useState , useContext , useEffect } from "react";
+import { useState, useContext, useEffect } from "react";
 import Nav from "./Nav";
 import Add from "../assets/add.png";
 import Tick from "../assets/check-mark.png";
 import Delete from "../assets/trash.png";
-import FlowTrackContext from "../../context/FlowtrackContext"
-type data = {
+import FlowTrackContext from "../../context/FlowtrackContext";
+type Data = {
   Task_Id: number;
   User_Id: number;
   Task: string;
-  Completed: string;
+  Completed: boolean;
 };
 export default function Tasks() {
-  const [Task, setTask] = useState({ task: "", completed: "" });
-  const [AllTasks, setAllTasks] = useState<data[]>([]);
-  const context =useContext(FlowTrackContext);
+  const [Task, setTask] = useState({ task: "", completed: false});
+  const [AllTasks, setAllTasks] = useState<Data[]>([]);
+  const {getAllTask} = useContext(FlowTrackContext);
 
-const getTasks=async()=>{
-      if (!context) return [];
-      const {getAllTask}=context;
-  const dataSet = await getAllTask();
-  setAllTasks(dataSet)
-
-}
-useEffect(()=>{
-  getTasks()
-},[])
-  const onChange = (e: any) => {
+  const getTasks = async () => {
+    
+    const dataSet:Data[] = await getAllTask();
+    setAllTasks(dataSet);
+  };
+  useEffect(() => {
+    getTasks();
+  }, []);
+  const onChange = (e:React.ChangeEvent<HTMLInputElement>) => {
     setTask({ ...Task, [e.target.name]: e.target.value });
   };
 
   const addTask = async () => {
-    const FlowTrackAuthtoken: any = localStorage.getItem("FlowTrackToken");
+    const FlowTrackAuthtoken = localStorage.getItem("FlowTrackToken");
     const url = "http://localhost:3000/api/tasks/CreateTask";
     try {
       const response = await fetch(url, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          FlowTrackAuthtoken: FlowTrackAuthtoken,
+          FlowTrackAuthtoken: FlowTrackAuthtoken || "",
         },
         body: JSON.stringify({ Task: Task.task, Completed: Task.completed }),
       });
       const result = await response.json();
       if (result.success) {
-        setTask({ task: "", completed: "" });
-        alert(result.success)
+        setTask({ task: "", completed: false });
+        getTasks()
+        alert(result.success);
       }
     } catch (error: any) {
       alert(error.message);
@@ -85,10 +84,11 @@ useEffect(()=>{
                 />
               </button>
             </div>
+            
 
             {/* Task List */}
             <div className="space-y-3 sm:space-y-4 max-h-[calc(100vh-20rem)] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-transparent">
-              {AllTasks.map((Task:data) => (
+              {AllTasks.map((Task: Data) => (
                 <div
                   key={Task.Task_Id}
                   className="flex items-center gap-3 sm:gap-4 p-3 sm:p-4 md:p-5 bg-white border-2 border-gray-200 rounded-xl hover:border-gray-300 hover:shadow-md transition-all duration-200"
@@ -105,10 +105,9 @@ useEffect(()=>{
                       />
                     )}
                   </button>
-
                   <span
                     className={`flex-1 text-sm sm:text-base md:text-lg break-words leading-relaxed ${
-                      Task.Completed 
+                      Task.Completed
                         ? "text-gray-400 line-through"
                         : "text-gray-700"
                     }`}
