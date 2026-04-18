@@ -11,19 +11,24 @@ type Data = {
   Completed: boolean;
 };
 export default function Tasks() {
-  const [Task, setTask] = useState({ task: "", completed: false});
+  let TaskInInput = false;
+  const [Task, setTask] = useState({ task: "", completed: false });
   const [AllTasks, setAllTasks] = useState<Data[]>([]);
-  const {getAllTask} = useContext(FlowTrackContext);
+  const { getAllTask } = useContext(FlowTrackContext);
 
   const getTasks = async () => {
-    
-    const dataSet:Data[] = await getAllTask();
+    const dataSet: Data[] = await getAllTask();
     setAllTasks(dataSet);
   };
   useEffect(() => {
+    if (Task.task == "") {
+      TaskInInput = false;
+    } else {
+      TaskInInput = true;
+    }
     getTasks();
-  }, []);
-  const onChange = (e:React.ChangeEvent<HTMLInputElement>) => {
+  }, [Task]);
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTask({ ...Task, [e.target.name]: e.target.value });
   };
 
@@ -42,7 +47,7 @@ export default function Tasks() {
       const result = await response.json();
       if (result.success) {
         setTask({ task: "", completed: false });
-        getTasks()
+        getTasks();
         alert(result.success);
       }
     } catch (error: any) {
@@ -73,18 +78,16 @@ export default function Tasks() {
                 className="flex-1 px-3 sm:px-4 md:px-5 py-2 sm:py-3 text-sm sm:text-base md:text-lg text-gray-500 placeholder-gray-400 border-b-2 border-gray-300 focus:border-gray-400 focus:outline-none bg-transparent transition-colors"
               />
               <button
-                // onClick={addTask}
                 onClick={addTask}
-                className="w-9 h-9 sm:w-10 sm:h-10 md:w-12 md:h-12 cursor-pointer bg-gray-700 hover:bg-gray-800 active:bg-gray-900 text-white rounded-full flex items-center justify-center transition-all duration-200 flex-shrink-0 shadow-md hover:shadow-lg"
+                className={`w-9 h-9 sm:w-10 sm:h-10 md:w-12 md:h-12 cursor-pointer bg-gray-700 hover:bg-gray-800 active:bg-gray-900 text-white rounded-full flex items-center justify-center transition-all duration-200 flex-shrink-0 shadow-md hover:shadow-lg${TaskInInput ? "" : "cursor-not-allowed"}`}
               >
                 <img
                   src={Add}
                   alt="add"
-                  className="bg-white rounded-full w-full h-full p-1.5 sm:p-2"
+                  className="bg-white rounded-full w-full h-full p-1.5 sm:p-2 "
                 />
               </button>
             </div>
-            
 
             {/* Task List */}
             <div className="space-y-3 sm:space-y-4 max-h-[calc(100vh-20rem)] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-transparent">

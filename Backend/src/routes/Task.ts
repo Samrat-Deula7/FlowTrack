@@ -192,4 +192,14 @@ router.get("/GetAllTasks", async (req: Request, res: Response) => {
   }
 });
 
+// Update complete state API
+router.post("/UpdateCompleteState",async(req:Request,res:Response)=>{
+  try {
+    const pool = await sql.connect(config);
+    const data = await pool.request().query("")
+  } catch (error) {
+    
+  }
+})
+
 export default router;
