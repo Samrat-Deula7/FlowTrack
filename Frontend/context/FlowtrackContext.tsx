@@ -9,10 +9,12 @@ type Data = {
 
 type FlowtrackContextType = {
   getAllTask: () => Promise<Data[]>;
+  UpdateCompletedState: (Task_id: number, Completed: boolean) => Promise<object>;
 };
-const FlowtrackContext = createContext<FlowtrackContextType >({
+const FlowtrackContext = createContext<FlowtrackContextType>({
   // Needed to put async here because the function getAllTask return and Promise
-  getAllTask: async() => [],
+  getAllTask: async () => [],
+  UpdateCompletedState: async () => {},
 });
 
 export default FlowtrackContext;

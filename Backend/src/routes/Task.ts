@@ -199,7 +199,7 @@ router.get("/GetAllTasks",authenticateuser, async (req: Request, res: Response) 
 // Update complete state API
 router.post(
   "/UpdateCompleteState",
-  authenticateuser,
+  authenticateuser, 
   async (req: Request, res: Response) => {
     try {
       const pool = await sql.connect(config);

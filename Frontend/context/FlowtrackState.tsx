@@ -31,8 +31,28 @@ const FlowtrackState: React.FC<{ children: React.ReactNode }> = ({
       return [];
     }
   };
+
+   const UpdateCompletedState= async (Task_id:number,Completed:boolean):Promise<object>=>{
+     const FlowTrackAuthtoken = localStorage.getItem("FlowTrackToken");
+    const url = "http://localhost:3000/api/tasks/UpdateCompleteState";
+    try {
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          FlowTrackAuthtoken: FlowTrackAuthtoken || "",
+        },
+        body: JSON.stringify({ Task_Id: Task_id, Completed: Completed }),
+      });
+      const result:object= await response.json();
+      return result;
+    } catch (error: any) {
+      alert(error.message);
+    }
+    }
+  
   return (
-    <FlowtrackContext.Provider value={{ getAllTask }}>
+    <FlowtrackContext.Provider value={{ getAllTask,UpdateCompletedState }}>
       {children}
     </FlowtrackContext.Provider>
   );
