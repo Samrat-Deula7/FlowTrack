@@ -15,13 +15,22 @@ import Visualization from "./AfterLoggedInComponents/Visualization";
 import History from "./AfterLoggedInComponents/History";
 import Iteration from "./AfterLoggedInComponents/Iteration";
 
-
+type AlertType={
+  alert:boolean,
+  type:"success"|"failure",
+  msg:string
+}
 
 function App() {
   let navigate = useNavigate();
   const [Loggedin, setLoggedin] = useState(false);
   const [Loginbtn, setLoginbtn] = useState(false);
   const [Signupbtn, setSignupbtn] = useState(false);
+  const [Alert, SetAlert] = useState<AlertType>({
+    alert: false,
+    type: "failure",
+    msg:"",
+  });
 
   useEffect(() => {
     Loggedin ? navigate("/") : navigate("/landing");
