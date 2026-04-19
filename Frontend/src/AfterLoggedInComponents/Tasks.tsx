@@ -55,6 +55,13 @@ export default function Tasks() {
     }
   };
 
+  const UpdateState = (id: any, completed: any) => {
+    completed = !completed;
+    UpdateCompletedState(id, completed);
+    console.log("updated state");
+    getTasks();
+  };
+
   return (
     <>
       <Nav />
@@ -97,14 +104,14 @@ export default function Tasks() {
                   className="flex items-center gap-3 sm:gap-4 p-3 sm:p-4 md:p-5 bg-white border-2 border-gray-200 rounded-xl hover:border-gray-300 hover:shadow-md transition-all duration-200"
                 >
                   <button
-                    // onClick={() => toggleTask(task.id)}
+                    onClick={() => UpdateState(Task.Task_Id, Task.Completed)}
                     className="flex-shrink-0 w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 border-2 border-gray-400 rounded flex items-center justify-center hover:bg-gray-50 hover:border-gray-500 transition-all duration-200"
                   >
                     {Task.Completed && (
                       <img
                         src={Tick}
                         alt="tick"
-                        className="bg-white rounded-full w-full h-full p-0.5"
+                        className="bg-white rounded-full w-full h-full p-0.5 cursor-pointer"
                       />
                     )}
                   </button>
