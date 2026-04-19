@@ -10,16 +10,17 @@ const FlowtrackState: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
   const getAllTask = async (): Promise<Data[]> => {
+    const FlowTrackAuthtoken = localStorage.getItem("FlowTrackToken");
     const url = "http://localhost:3000/api/tasks/GetAllTasks";
     try {
       const response = await fetch(url, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
+          FlowTrackAuthtoken: FlowTrackAuthtoken || "",
         },
       });
       const result = await response.json();
-      console.log(result)
       if (result.dataSet && Array.isArray(result.dataSet)) {
         return result.dataSet as Data[];
       }

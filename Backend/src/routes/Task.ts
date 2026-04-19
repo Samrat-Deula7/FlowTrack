@@ -183,10 +183,12 @@ router.post(
 );
 
 // GetAllTasks API
-router.get("/GetAllTasks", async (req: Request, res: Response) => {
+router.get("/GetAllTasks",authenticateuser, async (req: Request, res: Response) => {
   try {
     const pool = await sql.connect(config);
-    const data = await pool.request().query("SELECT * FROM User_Tasks");
+     const payload = req.user as { user: { id: string } };
+     const id = parseInt(payload.user.id);
+    const data = await pool.request().input("Userid",sql.Int,id).query("SELECT * FROM User_Tasks Where User_Id=@Userid");
     return res.json({ dataSet: data.recordset });
   } catch (err) {
     console.error(err);
