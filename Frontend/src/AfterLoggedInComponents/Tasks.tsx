@@ -14,7 +14,7 @@ export default function Tasks() {
   let TaskInInput = false;
   const [Task, setTask] = useState({ task: "", completed: false });
   const [AllTasks, setAllTasks] = useState<Data[]>([]);
-  const { getAllTask } = useContext(FlowTrackContext);
+  const { getAllTask, UpdateCompletedState } = useContext(FlowTrackContext);
 
   const getTasks = async () => {
     const dataSet: Data[] = await getAllTask();

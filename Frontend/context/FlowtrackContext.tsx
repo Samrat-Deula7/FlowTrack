@@ -14,7 +14,7 @@ type FlowtrackContextType = {
 const FlowtrackContext = createContext<FlowtrackContextType>({
   // Needed to put async here because the function getAllTask return and Promise
   getAllTask: async () => [],
-  UpdateCompletedState: async () => {},
+  UpdateCompletedState: async () => ({})
 });
 
 export default FlowtrackContext;
