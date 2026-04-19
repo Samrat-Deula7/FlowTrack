@@ -8,6 +8,7 @@ import FlowtrackState from "../context/FlowtrackState"
 
 // This is after logged in components
 import Background from "./AfterLoggedInComponents/background";
+import Nav from "./AfterLoggedInComponents/Nav"
 import Tasks from "./AfterLoggedInComponents/Tasks";
 import Collaboration from "./AfterLoggedInComponents/Collaboration";
 import Visualization from "./AfterLoggedInComponents/Visualization";
@@ -68,17 +69,53 @@ function App() {
             element={
               <>
                 <Background />
-                <AfterLoggedIn setLoggedin={setLoggedin} />
+                <Nav setLoggedin={setLoggedin} />
+                <AfterLoggedIn />
               </>
             }
           />
 
           {/* This are after logged in components */}
-          <Route path="/tasks" element={<Tasks />} />
-          <Route path="/collaboration" element={<Collaboration />} />
-          <Route path="/visualization" element={<Visualization />} />
-          <Route path="/history" element={<History />} />
-          <Route path="/iteration" element={<Iteration />} />
+          <Route
+            path="/tasks"
+            element={
+              <>
+                <Nav setLoggedin={setLoggedin} /> <Tasks />
+              </>
+            }
+          />
+          <Route
+            path="/collaboration"
+            element={
+              <>
+                <Nav setLoggedin={setLoggedin} /> <Collaboration />
+              </>
+            }
+          />
+          <Route
+            path="/visualization"
+            element={
+              <>
+                <Nav setLoggedin={setLoggedin} /> <Visualization />
+              </>
+            }
+          />
+          <Route
+            path="/history"
+            element={
+              <>
+                <Nav setLoggedin={setLoggedin} /> <History />
+              </>
+            }
+          />
+          <Route
+            path="/iteration"
+            element={
+              <>
+                <Nav setLoggedin={setLoggedin} /> <Iteration />
+              </>
+            }
+          />
         </Routes>
       </FlowtrackState>
     </>

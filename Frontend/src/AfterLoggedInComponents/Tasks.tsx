@@ -1,5 +1,4 @@
 import { useState, useContext, useEffect } from "react";
-import Nav from "./Nav";
 import Add from "../assets/add.png";
 import Tick from "../assets/check-mark.png";
 import Delete from "../assets/trash.png";
@@ -75,7 +74,6 @@ export default function Tasks() {
 
   return (
     <>
-      <Nav />
       <div className="min-h-auto  w-full px-3 sm:px-4 md:px-6 lg:px-8 xl:px-10  pt-4  ">
         <div className="flex flex-col lg:flex-row justify-center items-center lg:items-start gap-6 sm:gap-8 lg:gap-10 xl:gap-12 max-w-[95rem] mx-auto">
           {/* Tasks Section */}

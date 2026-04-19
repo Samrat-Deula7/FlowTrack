@@ -1,4 +1,3 @@
-import Nav from "./Nav";
 import { useState } from "react";
 import Search from "../assets/search.png";
 
@@ -19,7 +18,6 @@ export default function Collaboration() {
   };
   return (
     <>
-      <Nav />
       <div className="flex flex-col md:flex-row justify-center items-start gap-4 px-4 sm:px-6 lg:px-8 xl:px-12 py-6">
         {/* Left Panel - Search Section */}
         <div className="flex flex-col justify-start items-center w-full md:w-[35%] lg:w-[30%] h-auto md:h-[500px] lg:h-[600px] bg-white/20 backdrop-blur-md shadow-lg rounded-xl border border-white/10 p-4 sm:p-6">

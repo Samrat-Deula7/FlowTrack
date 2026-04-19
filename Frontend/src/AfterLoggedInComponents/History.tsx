@@ -1,4 +1,3 @@
-import Nav from "./Nav";
 import { useState } from "react";
 
 interface HistoryItem {
@@ -111,7 +110,6 @@ export default function Timeline() {
 
   return (
     <>
-      <Nav />
       <div className="min-h-screen  p-4 sm:p-6 lg:p-8">
         <div className="max-w-6xl mx-auto">
           {/* Header */}

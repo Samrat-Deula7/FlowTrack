@@ -1,4 +1,3 @@
-import Nav from "./Nav";
 import { useState } from "react";
 
 interface Iteration {
@@ -167,7 +166,6 @@ export default function Iterations() {
 
   return (
     <>
-      <Nav />
       <div className="min-h-screen  p-4 sm:p-6 lg:p-8">
         <div className="max-w-7xl mx-auto">
           {/* Header */}
