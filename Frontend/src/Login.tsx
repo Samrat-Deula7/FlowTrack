@@ -96,7 +96,7 @@ const Login: React.FC<LoginProps> = ({
       }`}
     >
       <div
-        className={`relative  w-[300px]  xl:w-[350px] xl:h-[270px]  text-center bg-[#10172a]  rounded-2xl py-3 px-2 ${
+        className={`relative  w-[300px]  xl:w-[350px] xl:h-[290px]  text-center bg-[#10172a]  rounded-2xl py-3 px-2 ${
           Loginbtn ? "animate-popup" : ""
         }`}
       >

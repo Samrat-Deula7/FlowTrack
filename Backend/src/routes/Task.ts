@@ -79,13 +79,13 @@ router.post(
           .input("phoneno", sql.VarChar(80), EncriptedPhoneno).query(`
         INSERT INTO User_Table VALUES (@name, @password, @email, @phoneno)
       `);
-        res.status(200).send({ success:"User Created successfully" });
+        res.status(200).send({ success: "User Created successfully" });
       }
     } catch (err) {
       console.error(err);
-        res.status(400).json({
-          error: "Some error occurred in the database",
-        });
+      res.status(400).json({
+        error: "Some error occurred in the database",
+      });
     }
   },
 );
@@ -160,8 +160,10 @@ router.post(
   async (req: Request, res: Response) => {
     try {
       const pool = await sql.connect(config);
-      let { Task,Completed } = req.body;
-      if(Completed == undefined){ Completed=0}
+      let { Task, Completed } = req.body;
+      if (Completed == undefined) {
+        Completed = 0;
+      }
       const payload = req.user as { user: { id: string } };
       const id = parseInt(payload.user.id);
       // Insert query with bound parameters
@@ -172,7 +174,7 @@ router.post(
         .input("completed", sql.Bit, Completed).query(`
         INSERT INTO User_Tasks VALUES (@Userid, @task,@completed)
       `);
-      res.status(200).send({success:"Task has been saved !"});
+      res.status(200).send({ success: "Task has been saved !" });
     } catch (err) {
       console.error(err);
       res.status(500).send("Some error occurred");
@@ -185,7 +187,7 @@ router.get("/GetAllTasks", async (req: Request, res: Response) => {
   try {
     const pool = await sql.connect(config);
     const data = await pool.request().query("SELECT * FROM User_Tasks");
-    return res.json({dataSet:data.recordset});
+    return res.json({ dataSet: data.recordset });
   } catch (err) {
     console.error(err);
     res.status(500).send("Some error occurred");
@@ -193,13 +195,39 @@ router.get("/GetAllTasks", async (req: Request, res: Response) => {
 });
 
 // Update complete state API
-router.post("/UpdateCompleteState",async(req:Request,res:Response)=>{
-  try {
-    const pool = await sql.connect(config);
-    const data = await pool.request().query("")
-  } catch (error) {
+router.post(
+  "/UpdateCompleteState",
+  authenticateuser,
+  async (req: Request, res: Response) => {
+    try {
+      const pool = await sql.connect(config);
+      let {Task_Id, Completed } = req.body;
+      if (Completed == 0) {
+        Completed = 0;
+      } else {
+        Completed = 1;
+      }
+      const payload = req.user as { user: { id: string } };
+      const id = parseInt(payload.user.id);
+      // Insert query with bound parameters
+      
+      await pool
+        .request()
+        .input("Userid", sql.Int, id)
+        .input("taskId", sql.Int, Task_Id)
+        .input("Completed", sql.Int, Completed).query(`
+        Update User_Tasks set Completed = @Completed where User_Id = @Userid and Task_Id = @taskId
+      `);
+        
+      res.status(200).send({ success: "Task has been Completed !" });
+    } catch (err) {
+      console.error(err);
+      res.status(500).send("Some error occurred");
+    }
     
-  }
-})
+  },
+);
+
+
 
 export default router;
