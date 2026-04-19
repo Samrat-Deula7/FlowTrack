@@ -51,9 +51,28 @@ const FlowtrackState: React.FC<{ children: React.ReactNode }> = ({
       return {}
     }
     }
+
+    const DeleteTask=async (Task_id:number) => {
+      const FlowTrackAuthtoken = localStorage.getItem("FlowTrackToken");
+      const url = "http://localhost:3000/api/tasks/DeleteTask";
+      try {
+        const response = fetch(url, {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            FlowTrackAuthtoken: FlowTrackAuthtoken || "",
+          },
+          body: JSON.stringify({ Task_Id: Task_id }),
+        });
+      } catch (error: any) {
+        alert(error.message);
+      }
+    };
   
   return (
-    <FlowtrackContext.Provider value={{ getAllTask,UpdateCompletedState }}>
+    <FlowtrackContext.Provider
+      value={{ getAllTask, UpdateCompletedState, DeleteTask }}
+    >
       {children}
     </FlowtrackContext.Provider>
   );

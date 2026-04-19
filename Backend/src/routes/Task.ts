@@ -231,5 +231,36 @@ router.post(
 );
 
 
+// Delete Task API
+router.delete(
+  "/DeleteTask",
+  authenticateuser, 
+  async (req: Request, res: Response) => {
+    try {
+      const pool = await sql.connect(config);
+      let {Task_Id } = req.body;
+     
+      const payload = req.user as { user: { id: string } };
+      const id = parseInt(payload.user.id);
+      // Insert query with bound parameters
+      
+      await pool
+        .request()
+        .input("Userid", sql.Int, id)
+        .input("taskId", sql.Int, Task_Id)
+        .query(`
+       Delete from User_Tasks where User_Id = @Userid and Task_Id = @taskId
+      `);
+        
+      res.status(200).send({ success: "Task has been Deleted successfully !" });
+    } catch (err) {
+      console.error(err);
+      res.status(500).send("Some error occurred");
+    }
+    
+  },
+);
+
+
 
 export default router;

@@ -14,12 +14,24 @@ export default function Tasks() {
   let TaskInInput = false;
   const [Task, setTask] = useState({ task: "", completed: false });
   const [AllTasks, setAllTasks] = useState<Data[]>([]);
-  const { getAllTask, UpdateCompletedState } = useContext(FlowTrackContext);
+  const { getAllTask, UpdateCompletedState, DeleteTask } =
+    useContext(FlowTrackContext);
 
   const getTasks = async () => {
     const dataSet: Data[] = await getAllTask();
     setAllTasks(dataSet);
   };
+
+   const UpdateState = (id: any, completed: any) => {
+     completed = !completed;
+     UpdateCompletedState(id, completed);
+     getTasks();
+   };
+
+   const HandleDelete=(id:any)=>{
+    DeleteTask(id);
+    getTasks();
+   }
   useEffect(() => {
     getTasks();
   }, [Task]);
@@ -59,16 +71,12 @@ export default function Tasks() {
       }
   };
 
-  const UpdateState = (id: any, completed: any) => {
-    completed = !completed;
-    UpdateCompletedState(id, completed);
-    getTasks();
-  };
+ 
 
   return (
     <>
       <Nav />
-      <div className="min-h-screen w-full px-3 sm:px-4 md:px-6 lg:px-8 xl:px-10 py-6 sm:py-8 md:py-10 lg:py-12">
+      <div className="min-h-auto  w-full px-3 sm:px-4 md:px-6 lg:px-8 xl:px-10  pt-4  ">
         <div className="flex flex-col lg:flex-row justify-center items-center lg:items-start gap-6 sm:gap-8 lg:gap-10 xl:gap-12 max-w-[95rem] mx-auto">
           {/* Tasks Section */}
           <div className="w-full lg:flex-1 lg:max-w-3xl xl:max-w-4xl">
@@ -79,7 +87,7 @@ export default function Tasks() {
             {/* Add Task Input */}
             <div className="flex gap-2 sm:gap-3 mb-5 sm:mb-6">
               <input
-              id="TaskInput"
+                id="TaskInput"
                 type="text"
                 value={Task.task}
                 name="task"
@@ -101,7 +109,7 @@ export default function Tasks() {
             </div>
 
             {/* Task List */}
-            <div className="space-y-3 sm:space-y-4 max-h-[calc(100vh-20rem)] overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-transparent">
+            <div className="space-y-3 sm:space-y-4 max-h-[calc(100vh-20rem)] pr-2 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-transparent overflow-y-scroll">
               {AllTasks.map((Task: Data) => (
                 <div
                   key={Task.Task_Id}
@@ -109,7 +117,7 @@ export default function Tasks() {
                 >
                   <button
                     onClick={() => UpdateState(Task.Task_Id, Task.Completed)}
-                    className="flex-shrink-0 w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 border-2 border-gray-400 rounded flex items-center justify-center hover:bg-gray-50 hover:border-gray-500 transition-all duration-200"
+                    className="flex-shrink-0 w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 border-2  cursor-pointer border-gray-400 rounded flex items-center justify-center hover:bg-gray-50 hover:border-gray-500 transition-all duration-200"
                   >
                     {Task.Completed && (
                       <img
@@ -130,13 +138,13 @@ export default function Tasks() {
                   </span>
 
                   <button
-                    // onClick={() => deleteTask(task.id)}
-                    className="flex-shrink-0 text-gray-400 hover:text-red-500 transition-colors duration-200"
+                    onClick={() => HandleDelete(Task.Task_Id)}
+                    className="flex-shrink-0 text-gray-400 hover:text-red-500 transition-colors duration-200  cursor-pointer"
                   >
                     <img
                       src={Delete}
                       alt="delete"
-                      className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7"
+                      className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7  cursor-pointer"
                     />
                   </button>
                 </div>
