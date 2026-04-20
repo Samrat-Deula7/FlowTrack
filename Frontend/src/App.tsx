@@ -15,21 +15,18 @@ import Visualization from "./AfterLoggedInComponents/Visualization";
 import History from "./AfterLoggedInComponents/History";
 import Iteration from "./AfterLoggedInComponents/Iteration";
 
-type AlertType={
-  alert:boolean,
-  type:"success"|"failure",
-  msg:string
-}
+import Alert, {type AlertType} from "./Alert";
+
 
 function App() {
   let navigate = useNavigate();
   const [Loggedin, setLoggedin] = useState(false);
   const [Loginbtn, setLoginbtn] = useState(false);
   const [Signupbtn, setSignupbtn] = useState(false);
-  const [Alert, SetAlert] = useState<AlertType>({
-    alert: false,
+  const [AlertPopUp, setAlertPopUp] = useState<AlertType>({
+    alert: true,
     type: "failure",
-    msg:"",
+    msg: "",
   });
 
   useEffect(() => {
@@ -37,13 +34,14 @@ function App() {
   }, [Loggedin]);
 
   useEffect(() => {
-    if (Loginbtn || Signupbtn) {
+    if (Loginbtn || Signupbtn || AlertPopUp.alert) {
       const scrollY = window.scrollY;
       document.body.style.position = "fixed";
       document.body.style.top = `-${scrollY}px`;
       document.body.style.left = "0";
       document.body.style.right = "0";
       document.body.style.overflow = "hidden";
+      document.body.style.pointerEvents = "none";
     } else {
       const scrollY = document.body.style.top;
       document.body.style.position = "";
@@ -51,9 +49,10 @@ function App() {
       document.body.style.left = "";
       document.body.style.right = "";
       document.body.style.overflow = "";
+      document.body.style.pointerEvents = "auto";
       window.scrollTo(0, parseInt(scrollY || "0") * -1);
     }
-  }, [Loginbtn , Signupbtn]);
+  }, [Loginbtn, Signupbtn, AlertPopUp.alert]);
   return (
     <>
       <FlowtrackState>
@@ -63,6 +62,7 @@ function App() {
             element={
               <>
                 <Bg />
+                <Alert AlertPopUp={AlertPopUp} setAlertPopUp={setAlertPopUp} />
                 <Landing
                   setLoginbtn={setLoginbtn}
                   Loginbtn={Loginbtn}
