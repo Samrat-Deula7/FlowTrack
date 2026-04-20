@@ -73,7 +73,7 @@ const Login: React.FC<LoginProps> = ({
           setLoggedin(true);
           localStorage.setItem("FlowTrackToken", result.FlowTrackAuthtoken);
           setAlertPopUp({ ...AlertPopUp, alert: false });
-        }, 3000);
+        }, 2000);
       } else {
         if (result.errors) {
           const getErrorMessage = (field: string) => {
@@ -103,7 +103,7 @@ const Login: React.FC<LoginProps> = ({
       });
       setTimeout(() => {
         setAlertPopUp({ ...AlertPopUp, alert: false });
-      }, 3000);
+      }, 2000);
     }
   };
   const handleSubmit = (e: any) => {

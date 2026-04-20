@@ -1,15 +1,21 @@
-import { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import Add from "../assets/add.png";
 import Tick from "../assets/check-mark.png";
 import Delete from "../assets/trash.png";
 import FlowTrackContext from "../../context/FlowtrackContext";
+import Alert, { type AlertType } from "../Alert";
+
 type Data = {
   Task_Id: number;
   User_Id: number;
   Task: string;
   Completed: boolean;
 };
-export default function Tasks() {
+type TasksProps = {
+  setAlertPopUp: React.Dispatch<React.SetStateAction<AlertType>>;
+  AlertPopUp: AlertType;
+};
+const Tasks: React.FC<TasksProps> = ({ setAlertPopUp, AlertPopUp }) => {
   let TaskInInput = false;
   const [Task, setTask] = useState({ task: "", completed: false });
   const [AllTasks, setAllTasks] = useState<Data[]>([]);
@@ -21,20 +27,30 @@ export default function Tasks() {
     setAllTasks(dataSet);
   };
 
-   const UpdateState = (id: any, completed: any) => {
-     completed = !completed;
-     UpdateCompletedState(id, completed);
-     getTasks();
-   };
-
-   const HandleDelete=(id:any)=>{
-    DeleteTask(id);
+  const UpdateState = (id: any, completed: any) => {
+    completed = !completed;
+    UpdateCompletedState(id, completed);
     getTasks();
-   }
+  };
+
+  const HandleDelete = (id: any) => {
+    DeleteTask(id);
+    setAlertPopUp({
+      ...AlertPopUp,
+      alert: true,
+      type: "success",
+      msg: "Task deleted successfully",
+    });
+
+    setTimeout(() => {
+      getTasks();
+      setAlertPopUp({ ...AlertPopUp, alert: false });
+    }, 2000);
+  };
   useEffect(() => {
     getTasks();
   }, [Task]);
-  
+
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTask({ ...Task, [e.target.name]: e.target.value });
   };
@@ -42,35 +58,61 @@ export default function Tasks() {
   const addTask = async () => {
     const FlowTrackAuthtoken = localStorage.getItem("FlowTrackToken");
     const url = "http://localhost:3000/api/tasks/CreateTask";
-    if (Task.task != "") TaskInInput = true
-      if (TaskInInput) {
-        try {
-          const response = await fetch(url, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              FlowTrackAuthtoken: FlowTrackAuthtoken || "",
-            },
-            body: JSON.stringify({
-              Task: Task.task,
-              Completed: Task.completed,
-            }),
-          });
-          const result = await response.json();
-          if (result.success) {
-            setTask({ task: "", completed: false });
-            getTasks();
-            alert(result.success);
-          }
-        } catch (error: any) {
-          alert(error.message);
-        }
-      } else {
-        alert("Enter a task before adding it");
-      }
-  };
+    if (Task.task != "") TaskInInput = true;
+    if (TaskInInput) {
+      try {
+        const response = await fetch(url, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            FlowTrackAuthtoken: FlowTrackAuthtoken || "",
+          },
+          body: JSON.stringify({
+            Task: Task.task,
+            Completed: Task.completed,
+          }),
+        });
+        const result = await response.json();
+        if (result.success) {
+          setTask({ task: "", completed: false });
 
- 
+          setAlertPopUp({
+            ...AlertPopUp,
+            alert: true,
+            type: "success",
+            msg: result.success,
+          });
+
+          setTimeout(() => {
+            getTasks();
+            setAlertPopUp({ ...AlertPopUp, alert: false });
+          }, 2000);
+        }
+      } catch (error: any) {
+        setAlertPopUp({
+          ...AlertPopUp,
+          alert: true,
+          type: "failure",
+          msg: error.message,
+        });
+
+        setTimeout(() => {
+          setAlertPopUp({ ...AlertPopUp, alert: false });
+        }, 2000);
+      }
+    } else {
+      setAlertPopUp({
+        ...AlertPopUp,
+        alert: true,
+        type: "failure",
+        msg: "Enter a task before adding it",
+      });
+
+      setTimeout(() => {
+        setAlertPopUp({ ...AlertPopUp, alert: false });
+      }, 2000);
+    }
+  };
 
   return (
     <>
@@ -158,4 +200,6 @@ export default function Tasks() {
       </div>
     </>
   );
-}
+};
+
+export default Tasks;

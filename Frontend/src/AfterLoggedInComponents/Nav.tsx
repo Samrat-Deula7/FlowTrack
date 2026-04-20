@@ -58,7 +58,7 @@ const NavBar: React.FC<NavProps> = ({
                 setLoggedin?.(false);
                 localStorage.removeItem("FlowTrackToken");
                 setAlertPopUp({ ...AlertPopUp, alert: false });
-              }, 3000);
+              }, 2000);
             }}
           >
             Logged Out

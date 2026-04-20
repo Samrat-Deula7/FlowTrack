@@ -126,7 +126,7 @@ const Signup: React.FC<SignupPorps> = ({
          });
          setTimeout(() => {
            setAlertPopUp({ ...AlertPopUp, alert: false });
-         }, 3000);
+         }, 2000);
       }
     } catch (error: any) {
       setAlertPopUp({
@@ -137,7 +137,7 @@ const Signup: React.FC<SignupPorps> = ({
       });
       setTimeout(() => {
         setAlertPopUp({ ...AlertPopUp, alert: false });
-      }, 3000);
+      }, 2000);
     }
   };
 

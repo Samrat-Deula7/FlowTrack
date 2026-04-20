@@ -95,7 +95,12 @@ function App() {
             path="/tasks"
             element={
               <>
-                <Nav setLoggedin={setLoggedin} /> <Tasks />
+                <Nav
+                  setLoggedin={setLoggedin}
+                  setAlertPopUp={setAlertPopUp}
+                  AlertPopUp={AlertPopUp}
+                />
+                <Tasks setAlertPopUp={setAlertPopUp} AlertPopUp={AlertPopUp} />
               </>
             }
           />
@@ -103,7 +108,12 @@ function App() {
             path="/collaboration"
             element={
               <>
-                <Nav setLoggedin={setLoggedin} /> <Collaboration />
+                <Nav
+                  setLoggedin={setLoggedin}
+                  setAlertPopUp={setAlertPopUp}
+                  AlertPopUp={AlertPopUp}
+                />{" "}
+                <Collaboration />
               </>
             }
           />
@@ -111,7 +121,12 @@ function App() {
             path="/visualization"
             element={
               <>
-                <Nav setLoggedin={setLoggedin} /> <Visualization />
+                <Nav
+                  setLoggedin={setLoggedin}
+                  setAlertPopUp={setAlertPopUp}
+                  AlertPopUp={AlertPopUp}
+                />
+                <Visualization />
               </>
             }
           />
@@ -119,7 +134,12 @@ function App() {
             path="/history"
             element={
               <>
-                <Nav setLoggedin={setLoggedin} /> <History />
+                <Nav
+                  setLoggedin={setLoggedin}
+                  setAlertPopUp={setAlertPopUp}
+                  AlertPopUp={AlertPopUp}
+                />
+                <History />
               </>
             }
           />
@@ -127,7 +147,12 @@ function App() {
             path="/iteration"
             element={
               <>
-                <Nav setLoggedin={setLoggedin} /> <Iteration />
+                <Nav
+                  setLoggedin={setLoggedin}
+                  setAlertPopUp={setAlertPopUp}
+                  AlertPopUp={AlertPopUp}
+                />
+                <Iteration />
               </>
             }
           />
