@@ -1,15 +1,20 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+import { type AlertType } from "./Alert";
 
 type SignupPorps = {
   setSignupbtn: React.Dispatch<React.SetStateAction<boolean>>;
   setLoginbtn: React.Dispatch<React.SetStateAction<boolean>>;
+  setAlertPopUp: React.Dispatch<React.SetStateAction<AlertType>>;
   Signupbtn: boolean;
+  AlertPopUp: AlertType;
 };
 
 const Signup: React.FC<SignupPorps> = ({
   Signupbtn,
   setSignupbtn,
   setLoginbtn,
+  setAlertPopUp,
+  AlertPopUp,
 }) => {
   const [validationError, setValidationError] = useState({
     Name: "",
@@ -71,10 +76,23 @@ const Signup: React.FC<SignupPorps> = ({
             Phoneno: "",
             userExistsError: "",
           });
+          setAlertPopUp({
+            ...AlertPopUp,
+            alert: true,
+            type: "success",
+            msg: result.success,
+          });
           setSignupbtn(false);
-          setLoginbtn(true);
-          const successmsg=result.success
-          alert(successmsg)
+          setTimeout(() => {
+            setLoginbtn(true);
+            // I am still setting the type and msg because if i dont then for a sec the alert show failure.
+            setAlertPopUp({
+              ...AlertPopUp,
+              alert: false,
+              type: "success",
+              msg: result.success,
+            });
+          }, 3000);
         } else {
           if (result.error) {
             const alreadyExistsError = result.error;
@@ -100,10 +118,26 @@ const Signup: React.FC<SignupPorps> = ({
           }
         }
       } else {
-        alert("Both password must be same");
+         setAlertPopUp({
+           ...AlertPopUp,
+           alert: true,
+           type: "failure",
+           msg: "Both password must be same",
+         });
+         setTimeout(() => {
+           setAlertPopUp({ ...AlertPopUp, alert: false });
+         }, 3000);
       }
-    } catch (error:any) {
-      alert(error.message);
+    } catch (error: any) {
+      setAlertPopUp({
+        ...AlertPopUp,
+        alert: true,
+        type: "failure",
+        msg: error.message,
+      });
+      setTimeout(() => {
+        setAlertPopUp({ ...AlertPopUp, alert: false });
+      }, 3000);
     }
   };
 
@@ -120,7 +154,7 @@ const Signup: React.FC<SignupPorps> = ({
           Signupbtn ? "animate-popup" : ""
         }`}
       >
-        <h2 className="text-2xl  xl:text-3xl font-bold mb-8 text-green-500 text-center">
+        <h2 className="text-2xl  xl:text-3xl font-bold mb-8 text-green-500 text-center cursor-pointer">
           Sign Up
         </h2>
         <h6 className="text-red-500">{validationError.userExistsError}</h6>

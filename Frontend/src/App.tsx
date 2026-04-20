@@ -24,11 +24,11 @@ function App() {
   const [Loginbtn, setLoginbtn] = useState(false);
   const [Signupbtn, setSignupbtn] = useState(false);
   const [AlertPopUp, setAlertPopUp] = useState<AlertType>({
-    alert: true,
+    alert: false,
     type: "failure",
     msg: "This is an default alert",
   });
-
+  
   useEffect(() => {
     Loggedin ? navigate("/") : navigate("/landing");
   }, [Loggedin]);
@@ -69,6 +69,8 @@ function App() {
                   Signupbtn={Signupbtn}
                   setLoggedin={setLoggedin}
                   setSignupbtn={setSignupbtn}
+                  setAlertPopUp={setAlertPopUp}
+                  AlertPopUp={AlertPopUp}
                 />
               </>
             }

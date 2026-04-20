@@ -5,11 +5,14 @@ import CTASection from "./LandingPageComponents/CTAsection";
 import ServiceDetails from "./LandingPageComponents/ServiceDetails";
 import Login from "./Login";
 import Signup from "./Signup";
+import  { type AlertType } from "./Alert";
 
 type LandingProps = {
   setLoginbtn: React.Dispatch<React.SetStateAction<boolean>>;
   setLoggedin: React.Dispatch<React.SetStateAction<boolean>>;
   setSignupbtn: React.Dispatch<React.SetStateAction<boolean>>;
+  setAlertPopUp: React.Dispatch<React.SetStateAction<AlertType>>;
+  AlertPopUp: AlertType;
   Loginbtn: boolean;
   Signupbtn: boolean;
 };
@@ -19,6 +22,8 @@ const Landing: React.FC<LandingProps> = ({
   Signupbtn,
   setLoggedin,
   setSignupbtn,
+  setAlertPopUp,
+  AlertPopUp,
 }) => {
   return (
     <>
@@ -28,11 +33,15 @@ const Landing: React.FC<LandingProps> = ({
         setLoggedin={setLoggedin}
         setLoginbtn={setLoginbtn}
         setSignupbtn={setSignupbtn}
+        setAlertPopUp={setAlertPopUp}
+        AlertPopUp={AlertPopUp}
       />
       <Signup
         Signupbtn={Signupbtn}
         setSignupbtn={setSignupbtn}
         setLoginbtn={setLoginbtn}
+        setAlertPopUp={setAlertPopUp}
+        AlertPopUp={AlertPopUp}
       />
       <HeroSection />
       <CTASection />

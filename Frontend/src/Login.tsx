@@ -1,11 +1,14 @@
 import { useState } from "react";
 import { useEffect } from "react";
+import { type AlertType } from "./Alert";
 
 type LoginProps = {
   setLoggedin: React.Dispatch<React.SetStateAction<boolean>>;
   setLoginbtn: React.Dispatch<React.SetStateAction<boolean>>;
   setSignupbtn: React.Dispatch<React.SetStateAction<boolean>>;
+  setAlertPopUp: React.Dispatch<React.SetStateAction<AlertType>>;
   Loginbtn: boolean;
+  AlertPopUp: AlertType;
 };
 
 const Login: React.FC<LoginProps> = ({
@@ -13,6 +16,8 @@ const Login: React.FC<LoginProps> = ({
   setLoggedin,
   setLoginbtn,
   setSignupbtn,
+  setAlertPopUp,
+  AlertPopUp,
 }) => {
   useEffect(() => {
     const token = localStorage.getItem("FlowTrackToken");
@@ -56,10 +61,19 @@ const Login: React.FC<LoginProps> = ({
           email: "",
           password: "",
         });
-        alert("logged in");
-        setLoggedin(true);
-        localStorage.setItem("FlowTrackToken", result.FlowTrackAuthtoken);
+        setAlertPopUp({
+          ...AlertPopUp,
+          alert: true,
+          type: "success",
+          msg: "Logged in Successfully",
+        });
         setLoginbtn(false);
+
+        setTimeout(() => {
+          setLoggedin(true);
+          localStorage.setItem("FlowTrackToken", result.FlowTrackAuthtoken);
+          setAlertPopUp({ ...AlertPopUp, alert: false });
+        }, 3000);
       } else {
         if (result.errors) {
           const getErrorMessage = (field: string) => {
@@ -81,7 +95,15 @@ const Login: React.FC<LoginProps> = ({
         setLoggedin(false);
       }
     } catch (error: any) {
-      alert(error.message);
+      setAlertPopUp({
+        ...AlertPopUp,
+        alert: true,
+        type: "failure",
+        msg: error.message,
+      });
+      setTimeout(() => {
+        setAlertPopUp({ ...AlertPopUp, alert: false });
+      }, 3000);
     }
   };
   const handleSubmit = (e: any) => {
@@ -100,7 +122,7 @@ const Login: React.FC<LoginProps> = ({
           Loginbtn ? "animate-popup" : ""
         }`}
       >
-        <h2 className="text-2xl  xl:text-3xl font-bold mb-4 text-green-500 text-center">
+        <h2 className="text-2xl  xl:text-3xl font-bold mb-4 text-green-500 text-center cursor-pointer">
           Log in
         </h2>
         <h6 className="text-red-500">{loginErrorValidation.loginError1}</h6>

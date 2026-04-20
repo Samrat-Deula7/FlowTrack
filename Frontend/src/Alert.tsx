@@ -1,8 +1,5 @@
-import { useState } from "react";
-import { useEffect } from "react";
-
-import error from "./assets/404-error.gif"
-import success from "./assets/party.gif"
+import error from "./assets/404-error.gif";
+import success from "./assets/party.gif";
 
 export type AlertType = {
   alert: boolean;
@@ -15,18 +12,10 @@ type LoginProps = {
   AlertPopUp: AlertType;
 };
 
-const Alert: React.FC<LoginProps> = ({
-  AlertPopUp, setAlertPopUp
-}) => {
-  
-
- 
-
-
-
+const Alert: React.FC<LoginProps> = ({ AlertPopUp, setAlertPopUp }) => {
   return (
     <div
-      className={`fixed top-0 left-0 max-w-screen w-full bg-[#020617CC] z-40 flex flex-col items-center justify-center transition-all duration-300 ease-in-out ${
+      className={`fixed top-0 left-0 max-w-screen w-full bg-[#020617CC] z-80 flex flex-col items-center justify-center transition-all duration-300 ease-in-out ${
         AlertPopUp.alert
           ? "h-screen opacity-100 pointer-events-auto"
           : "h-0 opacity-0 pointer-events-none scale-0"
@@ -51,7 +40,7 @@ const Alert: React.FC<LoginProps> = ({
 
           <button
             onClick={() => {
-              setAlertPopUp({ ...AlertPopUp, alert: false });
+              setAlertPopUp({ ...AlertPopUp, alert: false ,proceed:true});
             }}
             className="absolute top-1 right-2  text-white text-xl lg:text-3xl  focus:outline-none cursor-pointer "
             aria-label="Close button"
@@ -60,14 +49,14 @@ const Alert: React.FC<LoginProps> = ({
           </button>
 
           <img
-            src={AlertPopUp.type == "success"?success:error}
+            src={AlertPopUp.type == "success" ? success : error}
             alt="error img"
             className="absolute top-10 right-4 w-11 xl:w-25 ring-2 ring-gray-400 ring-opacity-50 rounded-lg"
           />
 
           <button
             onClick={() => {
-              setAlertPopUp({ ...AlertPopUp, alert: false });
+              setAlertPopUp({ ...AlertPopUp, alert: false,proceed:true });
             }}
             className="w-[240px] xl:w-[260px] mt-1 mb-2 cursor-pointer   bg-white text-black  px-2 py-1 xl:px-2 xl:py-2 rounded font-medium transition relative overflow-hidden hover:-translate-y-0.5 hover:shadow-[0_0_15px_rgba(59,130,246,0.4)] hover:bg-green-500"
             aria-label="Close button"
