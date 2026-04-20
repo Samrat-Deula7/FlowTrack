@@ -85,7 +85,8 @@ const Tasks: React.FC<TasksProps> = ({ setAlertPopUp, AlertPopUp }) => {
 
           setTimeout(() => {
             getTasks();
-            setAlertPopUp({ ...AlertPopUp, alert: false });
+            setAlertPopUp({ ...AlertPopUp, alert: false,type: "success",
+            msg: result.success, });
           }, 2000);
         }
       } catch (error: any) {
