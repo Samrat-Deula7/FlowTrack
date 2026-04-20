@@ -26,7 +26,7 @@ function App() {
   const [AlertPopUp, setAlertPopUp] = useState<AlertType>({
     alert: true,
     type: "failure",
-    msg: "",
+    msg: "This is an default alert",
   });
 
   useEffect(() => {
