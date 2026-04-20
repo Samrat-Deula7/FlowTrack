@@ -4,14 +4,14 @@ import bcrypt from "bcryptjs";
 import dotenv from "dotenv";
 dotenv.config();
 
-import sql, { Bit } from "mssql";
+import sql from "mssql";
 
 import jwt from "jsonwebtoken";
 import authenticateuser from "../middleware/authenticateuser";
 
 const router = express.Router();
 
-const config = {
+export const config = {
   user: process.env.Database_User,
   password: process.env.Database_User_Pass,
   server: "DESKTOP-DVSO359",

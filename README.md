@@ -33,10 +33,11 @@ CREATE TABLE Team_Table(
     Team_Name VARCHAR(70) NOT NULL,
     Team_Tasks VARCHAR(150) NOT NULL,
     Completed BIT NOT NULL DEFAULT 0,
-    Team_code INT NOT NULL,
+    Team_code NVARCHAR(MAX),
 
     FOREIGN KEY (User_Id) REFERENCES User_Table(User_Id)
 );
+
 
 select * from User_Tasks
 select * from User_Table
