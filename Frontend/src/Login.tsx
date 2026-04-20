@@ -122,7 +122,7 @@ const Login: React.FC<LoginProps> = ({
           Loginbtn ? "animate-popup" : ""
         }`}
       >
-        <h2 className="text-2xl  xl:text-3xl font-bold mb-4 text-green-500 text-center cursor-pointer">
+        <h2 className="text-2xl  xl:text-3xl font-bold mb-4 text-green-500 text-center ">
           Log in
         </h2>
         <h6 className="text-red-500">{loginErrorValidation.loginError1}</h6>
@@ -169,7 +169,7 @@ const Login: React.FC<LoginProps> = ({
             onClick={createUser}
             id="login"
             type="submit"
-            className="w-[280px] xl:w-[300px] mt-1 bg-green-500 text-white  px-2 py-1 xl:px-2 xl:py-2 rounded font-medium transition relative overflow-hidden hover:-translate-y-0.5 hover:shadow-[0_0_15px_rgba(59,130,246,0.4)]"
+            className="w-[280px] xl:w-[300px] mt-1 cursor-pointer bg-green-500 text-white  px-2 py-1 xl:px-2 xl:py-2 rounded font-medium transition relative overflow-hidden hover:-translate-y-0.5 hover:shadow-[0_0_15px_rgba(59,130,246,0.4)]"
           >
             Log in
           </button>

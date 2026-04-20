@@ -154,7 +154,7 @@ const Signup: React.FC<SignupPorps> = ({
           Signupbtn ? "animate-popup" : ""
         }`}
       >
-        <h2 className="text-2xl  xl:text-3xl font-bold mb-8 text-green-500 text-center cursor-pointer">
+        <h2 className="text-2xl  xl:text-3xl font-bold mb-8 text-green-500 text-center ">
           Sign Up
         </h2>
         <h6 className="text-red-500">{validationError.userExistsError}</h6>
@@ -237,7 +237,7 @@ const Signup: React.FC<SignupPorps> = ({
           <button
             onClick={createUser}
             type="submit"
-            className="w-[280px] xl:w-[300px] mt-1 bg-green-500 text-white py-1 px-3 xl:py-3 xl:px-6 rounded font-medium transition relative overflow-hidden hover:-translate-y-0.5 hover:shadow-[0_0_15px_rgba(59,130,246,0.4)]"
+            className="w-[280px] xl:w-[300px] mt-1 cursor-pointer bg-green-500 text-white py-1 px-3 xl:py-3 xl:px-6 rounded font-medium transition relative overflow-hidden hover:-translate-y-0.5 hover:shadow-[0_0_15px_rgba(59,130,246,0.4)]"
           >
             Sign Up
           </button>

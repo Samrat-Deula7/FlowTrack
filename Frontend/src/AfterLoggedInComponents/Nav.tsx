@@ -1,12 +1,19 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Logo from "../assets/logo.png";
+import Alert ,{ type AlertType } from "../Alert";
 
 type NavProps = {
   setLoggedin?: React.Dispatch<React.SetStateAction<boolean>>;
+  setAlertPopUp: React.Dispatch<React.SetStateAction<AlertType>>;
+  AlertPopUp: AlertType;
 };
 
-const NavBar: React.FC<NavProps> = ({ setLoggedin }) => {
+const NavBar: React.FC<NavProps> = ({
+  setLoggedin,
+  setAlertPopUp,
+  AlertPopUp,
+}) => {
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -17,6 +24,7 @@ const NavBar: React.FC<NavProps> = ({ setLoggedin }) => {
 
   return (
     <>
+      <Alert AlertPopUp={AlertPopUp} setAlertPopUp={setAlertPopUp} />
       <nav
         className={`sticky top-0 z-50 transition-all duration-300 ${
           scrolled
@@ -39,8 +47,18 @@ const NavBar: React.FC<NavProps> = ({ setLoggedin }) => {
           <button
             className="text-[#000000] font-bold text-[13px] border border-2 border-green-500 text-green-500 w-30 h-7 rounded-xl hover:-translate-y-1 duration-300 hover:border-none hover:bg-transparent cursor-pointer"
             onClick={() => {
-              setLoggedin?.(false);
-              localStorage.removeItem("FlowTrackToken");
+              setAlertPopUp({
+                ...AlertPopUp,
+                alert: true,
+                type: "success",
+                msg: "Logged out Successfully",
+              });
+
+              setTimeout(() => {
+                setLoggedin?.(false);
+                localStorage.removeItem("FlowTrackToken");
+                setAlertPopUp({ ...AlertPopUp, alert: false });
+              }, 3000);
             }}
           >
             Logged Out

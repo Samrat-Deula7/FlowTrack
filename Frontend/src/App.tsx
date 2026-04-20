@@ -80,7 +80,11 @@ function App() {
             element={
               <>
                 <Background />
-                <Nav setLoggedin={setLoggedin} />
+                <Nav
+                  setLoggedin={setLoggedin}
+                  setAlertPopUp={setAlertPopUp}
+                  AlertPopUp={AlertPopUp}
+                />
                 <AfterLoggedIn />
               </>
             }
