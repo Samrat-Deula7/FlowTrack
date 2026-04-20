@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Search from "../assets/search.png";
+import Add from "../assets/add.gif"
 
 export default function Collaboration() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -42,6 +43,7 @@ export default function Collaboration() {
             >
               Search
             </button>
+            <img src={Add} alt="add team" className="w-16 cursor-pointer"/>
           </div>
         </div>
 
