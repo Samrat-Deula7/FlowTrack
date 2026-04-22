@@ -32,7 +32,10 @@ router.post(
     }
     try {
       const pool = await sql.connect(config);
-      const { Team_Name, Team_Tasks, Completed } = req.body;
+      let { Team_Name, Team_Tasks, Completed } = req.body;
+      if (Completed == undefined) {
+        Completed = 0;
+      }
       const payload = req.user as { user: { id: string } };
       const id = parseInt(payload.user.id);
 
@@ -66,7 +69,6 @@ router.post(
         });
       } else {
         // Insert query with bound parameters
-        console.log(id, Team_Name, Team_Tasks, Completed, Team_code);
         await pool
           .request()
           .input("User_Id", sql.Int, id)
@@ -76,7 +78,7 @@ router.post(
           .input("Team_code", sql.NVarChar(sql.MAX), Team_code).query(`
               INSERT INTO Team_Table VALUES (@User_Id, @Team_Name, @Team_Tasks, @Completed,@Team_code)
             `);
-        res.status(200).send({ success: "Team Has been created !" });
+        res.status(200).send([{ success: "Team Has been created !"},{  Code : Team_code} ]);
       }
     } catch (error) {
       console.error(error);
