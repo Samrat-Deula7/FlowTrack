@@ -14,6 +14,7 @@ import Collaboration from "./AfterLoggedInComponents/Collaboration";
 import Visualization from "./AfterLoggedInComponents/Visualization";
 import History from "./AfterLoggedInComponents/History";
 import Iteration from "./AfterLoggedInComponents/Iteration";
+import AddTeam from "./AfterLoggedInComponents/AddTeam"
 
 import Alert, {type AlertType} from "./Alert";
 
@@ -23,6 +24,7 @@ function App() {
   const [Loggedin, setLoggedin] = useState(false);
   const [Loginbtn, setLoginbtn] = useState(false);
   const [Signupbtn, setSignupbtn] = useState(false);
+  const [AddTeambtn,setAddTeambtn]=useState(false);
   const [AlertPopUp, setAlertPopUp] = useState<AlertType>({
     alert: false,
     type: "failure",
@@ -34,7 +36,7 @@ function App() {
   }, [Loggedin]);
 
   useEffect(() => {
-    if (Loginbtn || Signupbtn || AlertPopUp.alert) {
+    if (Loginbtn || Signupbtn || AlertPopUp.alert || AddTeambtn) {
       const scrollY = window.scrollY;
       document.body.style.position = "fixed";
       document.body.style.top = `-${scrollY}px`;
@@ -52,7 +54,7 @@ function App() {
       document.body.style.pointerEvents = "auto";
       window.scrollTo(0, parseInt(scrollY || "0") * -1);
     }
-  }, [Loginbtn, Signupbtn, AlertPopUp.alert]);
+  }, [Loginbtn, Signupbtn, AlertPopUp.alert, AddTeambtn]);
   return (
     <>
       <FlowtrackState>
@@ -112,8 +114,14 @@ function App() {
                   setLoggedin={setLoggedin}
                   setAlertPopUp={setAlertPopUp}
                   AlertPopUp={AlertPopUp}
-                />{" "}
-                <Collaboration />
+                />
+                <AddTeam
+                  AddTeambtn={AddTeambtn}
+                  setAddTeambtn={setAddTeambtn}
+                  setAlertPopUp={setAlertPopUp}
+                  AlertPopUp={AlertPopUp}
+                />
+                <Collaboration setAddTeambtn={setAddTeambtn} />
               </>
             }
           />
