@@ -1,16 +1,13 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect, use } from "react";
 import Add from "../assets/add.png";
 import Tick from "../assets/check-mark.png";
 import Delete from "../assets/trash.png";
 import FlowTrackContext from "../../context/FlowtrackContext";
 import { type AlertType } from "../Alert";
+import { type Data, type TeamData } from "../../context/FlowtrackState"
+ 
 
-type Data = {
-  Task_Id: number;
-  User_Id: number;
-  Task: string;
-  Completed: boolean;
-};
+
 type TasksProps = {
   setAlertPopUp: React.Dispatch<React.SetStateAction<AlertType>>;
   AlertPopUp: AlertType;
@@ -19,12 +16,17 @@ const Tasks: React.FC<TasksProps> = ({ setAlertPopUp, AlertPopUp }) => {
   let TaskInInput = false;
   const [Task, setTask] = useState({ task: "", completed: false });
   const [AllTasks, setAllTasks] = useState<Data[]>([]);
-  const { getAllTask, UpdateCompletedState, DeleteTask } =
+  const [AllTeamData,setAllTeamData]=useState<TeamData[]>([]);
+  const { getAllTask, UpdateCompletedState, DeleteTask, GetTeamData } =
     useContext(FlowTrackContext);
 
   const getTasks = async () => {
     const dataSet: Data[] = await getAllTask();
     setAllTasks(dataSet);
+  };
+  const getTeamData = async () => {
+    const teamDataSet: TeamData[] = await GetTeamData();
+    setAllTeamData(teamDataSet);
   };
 
   const UpdateState = (id: any, completed: any) => {
@@ -49,6 +51,7 @@ const Tasks: React.FC<TasksProps> = ({ setAlertPopUp, AlertPopUp }) => {
   };
   useEffect(() => {
     getTasks();
+    getTeamData();
   }, [Task]);
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -194,9 +197,45 @@ const Tasks: React.FC<TasksProps> = ({ setAlertPopUp, AlertPopUp }) => {
           </div>
 
           {/* Side Panel */}
-          <div className="w-full lg:w-96 xl:w-[28rem] 2xl:w-[32rem] min-h-[20rem] sm:min-h-[24rem] md:min-h-[28rem] lg:min-h-[32rem] xl:min-h-[36rem] bg-white/20 backdrop-blur-md shadow-lg rounded-xl border border-white/10 p-4 sm:p-6">
-          
+          <div className="w-full lg:w-96 xl:w-[28rem] 2xl:w-[32rem] cursor-pointer min-h-[20rem] sm:min-h-[24rem] md:min-h-[28rem] lg:min-h-[32rem] xl:min-h-[36rem] bg-white/20 backdrop-blur-md shadow-lg rounded-xl border border-white/10 p-4 sm:p-6 ">
+            <h1 className="text-center font-bold text-white  text-2xl ">
+              Your Teams
+            </h1>
+            <br />
             {/* Add your content here */}
+            {/* Task List */}
+            <div className="space-y-3 sm:space-y-4 max-h-[calc(100vh-20rem)] pr-2 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-transparent overflow-y-scroll ">
+              {AllTeamData.map((Task: TeamData) => (
+                <div
+                  key={Task.Team_Id}
+                  className="flex items-center gap-3 sm:gap-4 p-3 sm:p-4 md:p-5 bg-white border-2 border-gray-200 rounded-xl hover:border-gray-300 hover:shadow-md transition-all duration-200 hover:-translate-y-1 duration-300 hover:border-none hover:bg-transparent cursor-pointer"
+                >
+                  <h2 className="text-black font-medium">
+                    Team:{" "}
+                    <span className="font-bold text-green-500">
+                      {Task.Team_Name}
+                    </span>
+                  </h2>
+                  <h3 className="text-black font-medium">
+                    Code:{" "}
+                    <span className="font-bold text-green-500">
+                      {Task.Team_code}
+                    </span>
+                  </h3>
+
+                  <button
+                    // onClick={() => HandleDelete(Task.Task_Id)}
+                    className="flex-shrink-0 text-gray-400 hover:text-red-500 transition-colors duration-200  cursor-pointer"
+                  >
+                    <img
+                      src={Delete}
+                      alt="delete"
+                      className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7  cursor-pointer"
+                    />
+                  </button>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>

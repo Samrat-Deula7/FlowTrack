@@ -1,14 +1,14 @@
 import FlowtrackContext from "./FlowtrackContext";
 
 
-type Data = {
+export type Data = {
   Task_Id: number;
   User_Id: number;
   Task: string;
   Completed: boolean;
 };
 
-type TeamData = {
+export type TeamData = {
   Team_Id: number;
   User_Id: number;
   Team_Name: string;
@@ -111,7 +111,7 @@ const FlowtrackState: React.FC<{ children: React.ReactNode }> = ({
 
   return (
     <FlowtrackContext.Provider
-      value={{ getAllTask, UpdateCompletedState, DeleteTask }}
+      value={{ getAllTask, UpdateCompletedState, DeleteTask, GetTeamData }}
     >
       {children}
     </FlowtrackContext.Provider>
