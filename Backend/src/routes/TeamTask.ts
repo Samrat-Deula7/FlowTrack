@@ -98,7 +98,7 @@ router.get(
         .request()
         .input("userId", sql.Int, id)
         .query("Select * from Team_Table where User_Id=@userId");
-      res.status(200).send(TeamData.recordset)
+      return res.json({ dataSet: TeamData.recordset });
     } catch (error) {
       console.error(error);
     }
