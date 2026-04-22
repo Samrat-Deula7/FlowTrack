@@ -3,7 +3,7 @@ import Add from "../assets/add.png";
 import Tick from "../assets/check-mark.png";
 import Delete from "../assets/trash.png";
 import FlowTrackContext from "../../context/FlowtrackContext";
-import Alert, { type AlertType } from "../Alert";
+import { type AlertType } from "../Alert";
 
 type Data = {
   Task_Id: number;
@@ -195,6 +195,7 @@ const Tasks: React.FC<TasksProps> = ({ setAlertPopUp, AlertPopUp }) => {
 
           {/* Side Panel */}
           <div className="w-full lg:w-96 xl:w-[28rem] 2xl:w-[32rem] min-h-[20rem] sm:min-h-[24rem] md:min-h-[28rem] lg:min-h-[32rem] xl:min-h-[36rem] bg-white/20 backdrop-blur-md shadow-lg rounded-xl border border-white/10 p-4 sm:p-6">
+          
             {/* Add your content here */}
           </div>
         </div>

@@ -1,5 +1,6 @@
 import FlowtrackContext from "./FlowtrackContext";
 
+
 type Data = {
   Task_Id: number;
   User_Id: number;
@@ -9,6 +10,8 @@ type Data = {
 const FlowtrackState: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
+  // Following are the API of Tasks route
+
   const getAllTask = async (): Promise<Data[]> => {
     const FlowTrackAuthtoken = localStorage.getItem("FlowTrackToken");
     const url = "http://localhost:3000/api/tasks/GetAllTasks";
@@ -32,7 +35,10 @@ const FlowtrackState: React.FC<{ children: React.ReactNode }> = ({
     }
   };
 
-   const UpdateCompletedState= async (Task_id:number,Completed:boolean):Promise<object>=>{
+  const UpdateCompletedState = async (
+    Task_id: number,
+    Completed: boolean,
+  ): Promise<object> => {
     const FlowTrackAuthtoken = localStorage.getItem("FlowTrackToken");
     const url = "http://localhost:3000/api/tasks/UpdateCompleteState";
     try {
@@ -44,31 +50,35 @@ const FlowtrackState: React.FC<{ children: React.ReactNode }> = ({
         },
         body: JSON.stringify({ Task_Id: Task_id, Completed: Completed }),
       });
-      const result:object = await response.json();
+      const result: object = await response.json();
       return result;
     } catch (error: any) {
       alert(error.message);
-      return {}
+      return {};
     }
-    }
+  };
 
-    const DeleteTask=async (Task_id:number) => {
-      const FlowTrackAuthtoken = localStorage.getItem("FlowTrackToken");
-      const url = "http://localhost:3000/api/tasks/DeleteTask";
-      try {
-        const response = fetch(url, {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-            FlowTrackAuthtoken: FlowTrackAuthtoken || "",
-          },
-          body: JSON.stringify({ Task_Id: Task_id }),
-        });
-      } catch (error: any) {
-        alert(error.message);
-      }
-    };
+  const DeleteTask = async (Task_id: number) => {
+    const FlowTrackAuthtoken = localStorage.getItem("FlowTrackToken");
+    const url = "http://localhost:3000/api/tasks/DeleteTask";
+    try {
+      const response = fetch(url, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          FlowTrackAuthtoken: FlowTrackAuthtoken || "",
+        },
+        body: JSON.stringify({ Task_Id: Task_id }),
+      });
+    } catch (error: any) {
+      alert(error.message);
+    }
+  };
+
+  // Following are the API of TeamTasks route
+
   
+
   return (
     <FlowtrackContext.Provider
       value={{ getAllTask, UpdateCompletedState, DeleteTask }}

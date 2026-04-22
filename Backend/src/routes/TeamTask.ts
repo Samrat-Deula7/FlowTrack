@@ -1,8 +1,5 @@
 import express, { Request, Response } from "express";
 import { body, validationResult } from "express-validator";
-import bcrypt from "bcryptjs";
-import dotenv from "dotenv";
-dotenv.config();
 
 import sql from "mssql";
 import { config } from "./Task";
@@ -78,12 +75,36 @@ router.post(
           .input("Team_code", sql.NVarChar(sql.MAX), Team_code).query(`
               INSERT INTO Team_Table VALUES (@User_Id, @Team_Name, @Team_Tasks, @Completed,@Team_code)
             `);
-        res.status(200).send([{ success: "Team Has been created !"},{  Code : Team_code} ]);
+        res
+          .status(200)
+          .send([{ success: "Team Has been created !" }, { Code: Team_code }]);
       }
     } catch (error) {
       console.error(error);
     }
   },
 );
+
+router.get(
+  "/GetTeamData",
+  authenticateuser,
+  async (req: Request, res: Response) => {
+    try {
+      
+      const payload = req.user as { user: { id: string } };
+      const id = parseInt(payload.user.id);
+      const pool = await sql.connect(config);
+      const TeamData = await pool
+        .request()
+        .input("userId", sql.Int, id)
+        .query("Select * from Team_Table where User_Id=@userId");
+      res.status(200).send(TeamData.recordset)
+    } catch (error) {
+      console.error(error);
+    }
+  },
+);
+
+
 
 export default router;
