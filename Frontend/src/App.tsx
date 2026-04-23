@@ -102,7 +102,17 @@ function App() {
                   setAlertPopUp={setAlertPopUp}
                   AlertPopUp={AlertPopUp}
                 />
-                <Tasks setAlertPopUp={setAlertPopUp} AlertPopUp={AlertPopUp} />
+                <AddTeam
+                  AddTeambtn={AddTeambtn}
+                  setAddTeambtn={setAddTeambtn}
+                  setAlertPopUp={setAlertPopUp}
+                  AlertPopUp={AlertPopUp}
+                />
+                <Tasks
+                  setAlertPopUp={setAlertPopUp}
+                  AlertPopUp={AlertPopUp}
+                  setAddTeambtn={setAddTeambtn}
+                />
               </>
             }
           />

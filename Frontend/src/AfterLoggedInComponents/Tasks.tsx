@@ -1,22 +1,27 @@
-import React, { useState, useContext, useEffect, use } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import Add from "../assets/add.png";
 import Tick from "../assets/check-mark.png";
 import Delete from "../assets/trash.png";
 import FlowTrackContext from "../../context/FlowtrackContext";
 import { type AlertType } from "../Alert";
 import { type Data, type TeamData } from "../../context/FlowtrackState"
- 
+import Addbtn from "../assets/add.gif";
 
 
 type TasksProps = {
+  setAddTeambtn: React.Dispatch<React.SetStateAction<boolean>>;
   setAlertPopUp: React.Dispatch<React.SetStateAction<AlertType>>;
   AlertPopUp: AlertType;
 };
-const Tasks: React.FC<TasksProps> = ({ setAlertPopUp, AlertPopUp }) => {
+const Tasks: React.FC<TasksProps> = ({
+  setAlertPopUp,
+  AlertPopUp,
+  setAddTeambtn,
+}) => {
   let TaskInInput = false;
   const [Task, setTask] = useState({ task: "", completed: false });
   const [AllTasks, setAllTasks] = useState<Data[]>([]);
-  const [AllTeamData,setAllTeamData]=useState<TeamData[]>([]);
+  const [AllTeamData, setAllTeamData] = useState<TeamData[]>([]);
   const { getAllTask, UpdateCompletedState, DeleteTask, GetTeamData } =
     useContext(FlowTrackContext);
 
@@ -88,8 +93,12 @@ const Tasks: React.FC<TasksProps> = ({ setAlertPopUp, AlertPopUp }) => {
 
           setTimeout(() => {
             getTasks();
-            setAlertPopUp({ ...AlertPopUp, alert: false,type: "success",
-            msg: result.success, });
+            setAlertPopUp({
+              ...AlertPopUp,
+              alert: false,
+              type: "success",
+              msg: result.success,
+            });
           }, 2000);
         }
       } catch (error: any) {
@@ -202,6 +211,24 @@ const Tasks: React.FC<TasksProps> = ({ setAlertPopUp, AlertPopUp }) => {
               Your Teams
             </h1>
             <br />
+            <div className="flex justify-around items-center bg-white rounded-full shadow-lg px-3 sm:px-4 py-2 w-full mt-2 mb-10">
+              <h2 className="mr-3 font-medium">Code: </h2>
+              <input
+                type="text"
+                placeholder="Join Team with code ...."
+                // value={searchQuery}
+                // onChange={(e) => setSearchQuery(e.target.value)}
+                // onKeyPress={handleKeyPress}
+                className="flex-1 outline-none text-gray-700 placeholder-gray-400 text-sm sm:text-base min-w-0"
+              />
+
+              <img
+                src={Addbtn}
+                alt="add team"
+                className="w-16 cursor-pointer"
+                onClick={() => setAddTeambtn(true)}
+              />
+            </div>
             {/* Add your content here */}
             {/* Task List */}
             <div className="space-y-3 sm:space-y-4 max-h-[calc(100vh-20rem)] pr-2 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-transparent overflow-y-scroll ">
@@ -211,7 +238,6 @@ const Tasks: React.FC<TasksProps> = ({ setAlertPopUp, AlertPopUp }) => {
                   className="flex flex-col w-[100%] h-auto items-center gap-3 sm:gap-4 p-3 sm:p-4 md:p-5 bg-white border-2 border-gray-200 rounded-xl hover:border-gray-300 hover:shadow-md cursor-pointer"
                 >
                   <div className="flex w-[100%] h-auto justify-around  items-center">
-                    
                     <h2 className="text-black font-medium">
                       Team:
                       <span className="font-bold text-green-500">
@@ -227,8 +253,6 @@ const Tasks: React.FC<TasksProps> = ({ setAlertPopUp, AlertPopUp }) => {
                   </div>
 
                   {/* This is the team tasks */}
-                  
-
                 </div>
               ))}
             </div>
