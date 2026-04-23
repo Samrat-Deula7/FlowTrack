@@ -129,36 +129,7 @@ const Tasks: React.FC<TasksProps> = ({
     }
   };
 
-  // function focus(e: React.MouseEvent<HTMLDivElement>): void {
-  //   const clickedDiv = document.getElementById("teamTasks");
 
-  //   if (!clickedDiv) return;
-  //   clickedDiv.classList.add("focus");
-  //   clickedDiv.classList.add("z-100");
-  //   clickedDiv.classList.add("scale-[100%]");
-  //   const scrollY = window.scrollY;
-  //   document.body.style.position = "";
-  //   document.body.style.top = `-${scrollY}px`;
-  //   document.body.style.left = "0";
-  //   document.body.style.right = "0";
-  //   document.body.style.overflow = "hidden";
-
-  //   document.body.style.pointerEvents = "auto";
-  // }
-  // function unFocus(e: React.MouseEvent<HTMLButtonElement>): void {
-  //   const clickedDiv = document.getElementById("teamTasks");
-
-  //   if (!clickedDiv) return;
-
-  //   clickedDiv.classList.remove("focus");
-  //   clickedDiv.classList.remove("z-100");
-  //   clickedDiv.classList.remove("scale-[100%]");
-  //   document.body.style.position = "";
-  //   document.body.style.top = "";
-  //   document.body.style.left = "";
-  //   document.body.style.right = "";
-  //   document.body.style.overflow = "";
-  // }
   return (
     <>
       <div className="min-h-auto  w-full px-3 sm:px-4 md:px-6 lg:px-8 xl:px-10  pt-4  ">
@@ -290,7 +261,7 @@ const Tasks: React.FC<TasksProps> = ({
             {/* This is the team tasks */}
             <div
               id="teamTasks"
-              className={`bg-green-800 rounded-xl scale-0 transition pointer-events-auto
+              className={` bg-[#101820] backdrop-blur-md shadow-lg rounded-xl border border-white/10 p-4 sm:p-6 rounded-xl scale-0 transition pointer-events-auto
           ${focused ? "absolute inset-0 z-1000 scale-100 pointer-events-auto" : ""}`}
             >
               <button
@@ -302,6 +273,7 @@ const Tasks: React.FC<TasksProps> = ({
               >
                 &times;
               </button>
+             
             </div>
           </div>
         </div>

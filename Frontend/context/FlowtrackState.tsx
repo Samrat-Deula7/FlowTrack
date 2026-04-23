@@ -98,7 +98,7 @@ const FlowtrackState: React.FC<{ children: React.ReactNode }> = ({
         },
       });
       const result = await response.json();
-      if (result.dataSet && Array.isArray(result.dataSet)) {
+      if (result[0].dataSet && Array.isArray(result[0].dataSet)) {
         return result.dataSet as TeamData[];
       }
 
