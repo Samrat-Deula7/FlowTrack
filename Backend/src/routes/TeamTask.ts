@@ -4,6 +4,7 @@ import { body, validationResult } from "express-validator";
 import sql from "mssql";
 import { config } from "./Task";
 import authenticateuser from "../middleware/authenticateuser";
+import { log } from "node:console";
 
 const router = express.Router();
 
@@ -112,12 +113,12 @@ router.post(
 
       let Team_Name: any = await pool
         .request()
-        .input("Team_code", sql.Int, Team_code)
+        .input("Team_code", sql.NVarChar(sql.MAX), Team_code)
         .query("select Team_Name from Team_Table WHERE Team_code = @Team_code");
 
       const TeamName: any = await pool
         .request()
-        .input("Team_Name", sql.NVarChar(sql.MAX), Team_Name)
+        .input("Team_Name", sql.NVarChar(sql.MAX), parseInt(Team_Name))
         .query("SELECT 1 FROM Team_Table WHERE Team_Name = @Team_Name");
 
       
@@ -133,12 +134,16 @@ router.post(
           .input("Team_Name", sql.VarChar(70), Team_Name.recordset[0].Team_Name)
           .input("Team_Tasks", sql.VarChar(150), Team_Tasks)
           .input("Completed", sql.Bit, Completed)
-          .input("Team_code", sql.NVarChar(sql.MAX), (Team_code as Array<number>)).query(`
+          .input("Team_code", sql.NVarChar(sql.MAX), Team_code)
+          .query(`
               INSERT INTO Team_Table VALUES (@User_Id, @Team_Name, @Team_Tasks, @Completed,@Team_code)
             `);
         res
           .status(200)
-          .send([{ success: "Team Has been created !" }, { Code: Team_code }]);
+          .send([
+            { success: "Team Has been created !" },
+            { Team_Name: Team_Name.recordset[0].Team_Name }
+          ]);
       }
     } catch (error) {
       console.error(error);
