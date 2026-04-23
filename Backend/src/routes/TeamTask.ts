@@ -4,7 +4,6 @@ import { body, validationResult } from "express-validator";
 import sql from "mssql";
 import { config } from "./Task";
 import authenticateuser from "../middleware/authenticateuser";
-import { log } from "node:console";
 
 const router = express.Router();
 

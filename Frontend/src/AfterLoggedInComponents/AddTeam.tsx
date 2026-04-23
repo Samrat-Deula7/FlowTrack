@@ -14,6 +14,7 @@ const Signup: React.FC<SignupPorps> = ({
   AlertPopUp,
   AddTeambtn,
 }) => {
+   
   const [validationError, setValidationError] = useState({
     Team_Name: "",
     Team_Tasks: "",

@@ -4,9 +4,8 @@ import Tick from "../assets/check-mark.png";
 import Delete from "../assets/trash.png";
 import FlowTrackContext from "../../context/FlowtrackContext";
 import { type AlertType } from "../Alert";
-import { type Data, type TeamData } from "../../context/FlowtrackState"
+import { type Data, type TeamData } from "../../context/FlowtrackState";
 import Addbtn from "../assets/add.gif";
-
 
 type TasksProps = {
   setAddTeambtn: React.Dispatch<React.SetStateAction<boolean>>;
@@ -24,6 +23,9 @@ const Tasks: React.FC<TasksProps> = ({
   const [AllTeamData, setAllTeamData] = useState<TeamData[]>([]);
   const { getAllTask, UpdateCompletedState, DeleteTask, GetTeamData } =
     useContext(FlowTrackContext);
+    const [focused, setFocused] = useState(false);
+
+    // useEffect(()=>{setTimeout(()=>{setFocused(false)},3000)},[focused])
 
   const getTasks = async () => {
     const dataSet: Data[] = await getAllTask();
@@ -127,6 +129,36 @@ const Tasks: React.FC<TasksProps> = ({
     }
   };
 
+  // function focus(e: React.MouseEvent<HTMLDivElement>): void {
+  //   const clickedDiv = document.getElementById("teamTasks");
+
+  //   if (!clickedDiv) return;
+  //   clickedDiv.classList.add("focus");
+  //   clickedDiv.classList.add("z-100");
+  //   clickedDiv.classList.add("scale-[100%]");
+  //   const scrollY = window.scrollY;
+  //   document.body.style.position = "";
+  //   document.body.style.top = `-${scrollY}px`;
+  //   document.body.style.left = "0";
+  //   document.body.style.right = "0";
+  //   document.body.style.overflow = "hidden";
+
+  //   document.body.style.pointerEvents = "auto";
+  // }
+  // function unFocus(e: React.MouseEvent<HTMLButtonElement>): void {
+  //   const clickedDiv = document.getElementById("teamTasks");
+
+  //   if (!clickedDiv) return;
+
+  //   clickedDiv.classList.remove("focus");
+  //   clickedDiv.classList.remove("z-100");
+  //   clickedDiv.classList.remove("scale-[100%]");
+  //   document.body.style.position = "";
+  //   document.body.style.top = "";
+  //   document.body.style.left = "";
+  //   document.body.style.right = "";
+  //   document.body.style.overflow = "";
+  // }
   return (
     <>
       <div className="min-h-auto  w-full px-3 sm:px-4 md:px-6 lg:px-8 xl:px-10  pt-4  ">
@@ -235,7 +267,8 @@ const Tasks: React.FC<TasksProps> = ({
               {AllTeamData.map((Task: TeamData) => (
                 <div
                   key={Task.Team_Id}
-                  className="flex flex-col w-[100%] h-auto items-center gap-3 sm:gap-4 p-3 sm:p-4 md:p-5 bg-white border-2 border-gray-200 rounded-xl hover:border-gray-300 hover:shadow-md cursor-pointer"
+                  className="flex flex-col w-[100%] h-auto items-center gap-3 sm:gap-4 p-3 sm:p-4 md:p-5 bg-white border-2 border-gray-200 rounded-xl hover:border-gray-300 hover:shadow-md cursor-pointer hover:-translate-y-1 duration-300 hover:border-none hover:bg-transparent cursor-pointer"
+                  onClick={() => setFocused(true)}
                 >
                   <div className="flex w-[100%] h-auto justify-around  items-center">
                     <h2 className="text-black font-medium">
@@ -251,10 +284,24 @@ const Tasks: React.FC<TasksProps> = ({
                       </span>
                     </h3>
                   </div>
-
-                  {/* This is the team tasks */}
                 </div>
               ))}
+            </div>
+            {/* This is the team tasks */}
+            <div
+              id="teamTasks"
+              className={`bg-green-800 rounded-xl scale-0 transition pointer-events-auto
+          ${focused ? "absolute inset-0 z-1000 scale-100 pointer-events-auto" : ""}`}
+            >
+              <button
+                onClick={(e) => {
+                  setFocused(false);
+                }}
+                className="absolute top-4 right-6 text-xl lg:text-3xl focus:outline-none cursor-pointer text-white pointer-events-auto"
+                aria-label="Close button"
+              >
+                &times;
+              </button>
             </div>
           </div>
         </div>

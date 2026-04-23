@@ -6,7 +6,7 @@ function HeroSection() {
 
     console.log(clickedDiv);
     clickedDiv.classList.add("focus");
-    clickedDiv.classList.add("z-100");
+    clickedDiv.classList.add("z-1000");
     const scrollY = window.scrollY;
     document.body.style.position = "fixed";
     document.body.style.top = `-${scrollY}px`;
