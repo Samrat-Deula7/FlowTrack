@@ -23,9 +23,9 @@ const Tasks: React.FC<TasksProps> = ({
   const [AllTeamData, setAllTeamData] = useState<TeamData[]>([]);
   const { getAllTask, UpdateCompletedState, DeleteTask, GetTeamData } =
     useContext(FlowTrackContext);
-    const [focused, setFocused] = useState(false);
+  const [focused, setFocused] = useState(false);
 
-    // useEffect(()=>{setTimeout(()=>{setFocused(false)},3000)},[focused])
+  // useEffect(()=>{setTimeout(()=>{setFocused(false)},3000)},[focused])
 
   const getTasks = async () => {
     const dataSet: Data[] = await getAllTask();
@@ -33,6 +33,7 @@ const Tasks: React.FC<TasksProps> = ({
   };
   const getTeamData = async () => {
     const teamDataSet: TeamData[] = await GetTeamData();
+    console.log(teamDataSet)
     setAllTeamData(teamDataSet);
   };
 
@@ -128,7 +129,6 @@ const Tasks: React.FC<TasksProps> = ({
       }, 2000);
     }
   };
-
 
   return (
     <>
@@ -273,7 +273,6 @@ const Tasks: React.FC<TasksProps> = ({
               >
                 &times;
               </button>
-             
             </div>
           </div>
         </div>

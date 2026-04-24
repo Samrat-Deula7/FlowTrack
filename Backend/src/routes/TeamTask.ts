@@ -177,17 +177,17 @@ router.get(
           "Select * from Team_Table where User_Id=@userId or Team_code=@TeamCode",
         );
 
-        const EachTeamTask = await pool
-          .request()
-          .input(
-            "Teamcode",
-            sql.NVarChar(sql.MAX),
-            Team_code.recordset[0].Team_code,
-          )
-          .query(
-            "select u.Name, t.Team_Tasks from User_Table u INNER JOIN Team_Table t ON u.User_Id = t. User_Id WHERE t.Team_code=@Teamcode",
-          );
-      return res.json([{ dataSet: TeamData.recordset},{ tasks: EachTeamTask.recordset }]);
+        // const EachTeamTask = await pool
+        //   .request()
+        //   .input(
+        //     "Teamcode",
+        //     sql.NVarChar(sql.MAX),
+        //     Team_code.recordset[0].Team_code,
+        //   )
+        //   .query(
+        //     "select u.Name, t.Team_Tasks from User_Table u INNER JOIN Team_Table t ON u.User_Id = t. User_Id WHERE t.Team_code=@Teamcode",
+        //   );
+      return res.json( {dataSet: TeamData.recordset});
     } catch (error) {
       console.error(error);
     }
