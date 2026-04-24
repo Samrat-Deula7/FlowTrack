@@ -25,7 +25,10 @@ const Tasks: React.FC<TasksProps> = ({
     useContext(FlowTrackContext);
   const [focused, setFocused] = useState(false);
 
-  // useEffect(()=>{setTimeout(()=>{setFocused(false)},3000)},[focused])
+const uniqueTeams = AllTeamData.filter(
+  (team, index, self) =>
+    index === self.findIndex((t) => t.Team_Name === team.Team_Name),
+);
 
   const getTasks = async () => {
     const dataSet: Data[] = await getAllTask();
@@ -235,7 +238,7 @@ const Tasks: React.FC<TasksProps> = ({
             {/* Add your content here */}
             {/* Task List */}
             <div className="space-y-3 sm:space-y-4 max-h-[calc(100vh-20rem)] pr-2 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-transparent overflow-y-scroll ">
-              {AllTeamData.map((Task: TeamData) => (
+              {uniqueTeams.map((Task: TeamData) => (
                 <div
                   key={Task.Team_Id}
                   className="flex flex-col w-[100%] h-auto items-center gap-3 sm:gap-4 p-3 sm:p-4 md:p-5 bg-white border-2 border-gray-200 rounded-xl hover:border-gray-300 hover:shadow-md cursor-pointer hover:-translate-y-1 duration-300 hover:border-none hover:bg-transparent cursor-pointer"
@@ -273,6 +276,7 @@ const Tasks: React.FC<TasksProps> = ({
               >
                 &times;
               </button>
+              
             </div>
           </div>
         </div>
