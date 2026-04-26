@@ -143,7 +143,7 @@ const Signup: React.FC<SignupPorps> = ({
 
   return (
     <div
-      className={`fixed top-0 left-0 min-w-screen  bg-transparent z-40 flex flex-col items-center justify-center transition-all duration-300 ease-in-out ${
+      className={`fixed top-0 left-0 min-w-screen  bg-transparent z-2000 flex flex-col items-center justify-center transition-all duration-300 ease-in-out ${
         Signupbtn
           ? "h-screen opacity-100 pointer-events-auto "
           : "h-0 opacity-0 pointer-events-none scale-0"
