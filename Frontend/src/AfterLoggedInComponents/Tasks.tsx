@@ -15,10 +15,8 @@ type TasksProps = {
 
 type IndividualTeamTaskElements = {
   Team_Id: number;
-  User_Id: number;
-  User_Name: string;
   Team_Name: string;
-  Team_Tasks: string;
+  Team_code: string;
 };
 const Tasks: React.FC<TasksProps> = ({
   setAlertPopUp,
@@ -32,10 +30,8 @@ const Tasks: React.FC<TasksProps> = ({
   const [IndividualTeamTask, setIndividualTeamTask] =
     useState<IndividualTeamTaskElements>({
       Team_Id: 1,
-      User_Id: 1,
-      User_Name: "inisiti data",
       Team_Name: "inisiti data",
-      Team_Tasks: "inisiti data",
+      Team_code: "inisiti data",
     });
   const { getAllTask, UpdateCompletedState, DeleteTask, GetTeamData } =
     useContext(FlowTrackContext);
@@ -275,10 +271,8 @@ const Tasks: React.FC<TasksProps> = ({
                     setIndividualTeamTask({
                       ...IndividualTeamTask,
                       Team_Id: Task.Team_Id,
-                      User_Id: Task.User_Id,
-                      User_Name: Task.Name,
                       Team_Name: Task.Team_Name,
-                      Team_Tasks: Task.Team_Tasks,
+                      Team_code: Task.Team_code,
                     });
                   }}
                 >
@@ -304,11 +298,11 @@ const Tasks: React.FC<TasksProps> = ({
             {/* This is the team tasks */}
             <div
               id="teamTasks"
-              className={` bg-[#101820] backdrop-blur-md shadow-lg rounded-xl border border-white/10 p-4 sm:p-6 rounded-xl scale-0 transition pointer-events-auto
+              className={` bg-[#101820] backdrop-blur-md shadow-lg rounded-xl border border-white/10 p-4 sm:p-6 scale-0 transition pointer-events-auto
           ${focused ? "absolute inset-0 z-1000 scale-100 pointer-events-auto" : ""}`}
             >
               <button
-                onClick={(e) => {
+                onClick={() => {
                   setFocused(false);
                 }}
                 className="absolute top-4 right-6 text-xl lg:text-3xl focus:outline-none cursor-pointer text-white pointer-events-auto"
@@ -316,8 +310,12 @@ const Tasks: React.FC<TasksProps> = ({
               >
                 &times;
               </button>
-              <div key={IndividualTeamTask.Team_Id}>
-                <h2>{IndividualTeamTask.Team_Name}</h2>
+              <div key={IndividualTeamTask.Team_Id} >
+                <h2 className="font-bold text-green-500">
+                  {IndividualTeamTask.Team_Name.toUpperCase()}
+                </h2>
+               
+              
               </div>
             </div>
           </div>

@@ -8,7 +8,6 @@ export type Data = {
 };
 
 export type TeamData = {
-  Name: string;
   Team_Id: number;
   User_Id: number;
   Team_Name: string;

@@ -174,7 +174,7 @@ router.get(
           Team_code.recordset[0].Team_code,
         )
         .query(
-          "select u.Name, t.* from User_Table u INNER JOIN Team_Table t ON u.User_Id = t. User_Id WHERE u.User_Id=@userId or t.Team_code=@Teamcode;",
+          "select * from  Team_Table  WHERE User_Id=@userId or Team_code=@Teamcode;",
         );
 
         // const EachTeamTask = await pool
