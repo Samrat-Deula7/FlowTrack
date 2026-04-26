@@ -92,7 +92,7 @@ router.post(
     body(
       "Team_Tasks",
       "Task should be atleast 10 characters and maximum of 150 character",
-    )
+    ),
   ],
   async (req: Request, res: Response) => {
     // The above array will set the restrictions rules and the following code will give error if those rules are broken.
@@ -120,7 +120,6 @@ router.post(
         .input("Team_Name", sql.NVarChar(sql.MAX), parseInt(Team_Name))
         .query("SELECT 1 FROM Team_Table WHERE Team_Name = @Team_Name");
 
-      
       if (TeamName.recordset.length > 0) {
         res.status(400).json({
           error: "Team name already exists! please pick another name",
@@ -133,15 +132,14 @@ router.post(
           .input("Team_Name", sql.VarChar(70), Team_Name.recordset[0].Team_Name)
           .input("Team_Tasks", sql.VarChar(150), Team_Tasks)
           .input("Completed", sql.Bit, Completed)
-          .input("Team_code", sql.NVarChar(sql.MAX), Team_code)
-          .query(`
+          .input("Team_code", sql.NVarChar(sql.MAX), Team_code).query(`
               INSERT INTO Team_Table VALUES (@User_Id, @Team_Name, @Team_Tasks, @Completed,@Team_code)
             `);
         res
           .status(200)
           .send([
             { success: "Team Has been created !" },
-            { Team_Name: Team_Name.recordset[0].Team_Name }
+            { Team_Name: Team_Name.recordset[0].Team_Name },
           ]);
       }
     } catch (error) {
@@ -177,17 +175,40 @@ router.get(
           "select * from  Team_Table  WHERE User_Id=@userId or Team_code=@Teamcode;",
         );
 
-        // const EachTeamTask = await pool
-        //   .request()
-        //   .input(
-        //     "Teamcode",
-        //     sql.NVarChar(sql.MAX),
-        //     Team_code.recordset[0].Team_code,
-        //   )
-        //   .query(
-        //     "select u.Name, t.Team_Tasks from User_Table u INNER JOIN Team_Table t ON u.User_Id = t. User_Id WHERE t.Team_code=@Teamcode",
-        //   );
-      return res.json( {dataSet: TeamData.recordset});
+      return res.json({ dataSet: TeamData.recordset });
+    } catch (error) {
+      console.error(error);
+    }
+  },
+);
+
+router.get(
+  "/getTeamTasks",
+  authenticateuser,
+  async (req: Request, res: Response) => {
+    try {
+      const payload = req.user as { user: { id: string } };
+      const id = parseInt(payload.user.id);
+
+      const pool = await sql.connect(config);
+
+      let Team_code: any = await pool
+        .request()
+        .input("userId", sql.Int, id)
+        .query("select Team_code from Team_Table WHERE User_Id = @userId");
+
+      const TeamTasks = await pool
+        .request()
+        .input(
+          "TeamCode",
+          sql.NVarChar(sql.MAX),
+          Team_code.recordset[0].Team_code,
+        )
+        .query(
+          "select u.Name , t.Team_Tasks from User_Table u Inner join Team_Table t on u.User_Id=t.User_Id where Team_code=@TeamCode",
+        );
+
+      return res.status(200).json({ tasks: TeamTasks.recordset });
     } catch (error) {
       console.error(error);
     }
