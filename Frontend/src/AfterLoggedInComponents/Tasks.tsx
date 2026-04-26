@@ -12,6 +12,14 @@ type TasksProps = {
   setAlertPopUp: React.Dispatch<React.SetStateAction<AlertType>>;
   AlertPopUp: AlertType;
 };
+
+type IndividualTeamTaskElements = {
+  Team_Id: number;
+  User_Id: number;
+  User_Name: string;
+  Team_Name: string;
+  Team_Tasks: string;
+};
 const Tasks: React.FC<TasksProps> = ({
   setAlertPopUp,
   AlertPopUp,
@@ -21,14 +29,34 @@ const Tasks: React.FC<TasksProps> = ({
   const [Task, setTask] = useState({ task: "", completed: false });
   const [AllTasks, setAllTasks] = useState<Data[]>([]);
   const [AllTeamData, setAllTeamData] = useState<TeamData[]>([]);
+  const [IndividualTeamTask, setIndividualTeamTask] =
+    useState<IndividualTeamTaskElements>({
+      Team_Id: 1,
+      User_Id: 1,
+      User_Name: "inisiti data",
+      Team_Name: "inisiti data",
+      Team_Tasks: "inisiti data",
+    });
   const { getAllTask, UpdateCompletedState, DeleteTask, GetTeamData } =
     useContext(FlowTrackContext);
   const [focused, setFocused] = useState(false);
 
-const uniqueTeams = AllTeamData.filter(
-  (team, index, self) =>
-    index === self.findIndex((t) => t.Team_Name === team.Team_Name),
-);
+  const uniqueTeams = AllTeamData.filter(
+    (team, index, self) =>
+      index === self.findIndex((t) => t.Team_Name === team.Team_Name),
+  );
+
+  // const focusOnTeamData = (
+  //   Team_Id: number,
+  //   User_Id: number,
+  //   User_Name: string,
+  //   Team_Name: string,
+  //   Team_Tasks: string,
+  // ): void => {
+  //   setFocused(true);
+  //   // setIndividualTeamTask({...IndividualTeamTask,Team_Id:e.Team_Id,User_Id:e.User_Id,User_Name:e.Name,Team_Name:e.Team_Name,Team_Tasks:e.Team_Tasks})
+  //   console.log(Team_Id);
+  // };
 
   const getTasks = async () => {
     const dataSet: Data[] = await getAllTask();
@@ -36,7 +64,7 @@ const uniqueTeams = AllTeamData.filter(
   };
   const getTeamData = async () => {
     const teamDataSet: TeamData[] = await GetTeamData();
-    console.log(teamDataSet)
+    console.log(teamDataSet);
     setAllTeamData(teamDataSet);
   };
 
@@ -242,8 +270,20 @@ const uniqueTeams = AllTeamData.filter(
                 <div
                   key={Task.Team_Id}
                   className="flex flex-col w-[100%] h-auto items-center gap-3 sm:gap-4 p-3 sm:p-4 md:p-5 bg-white border-2 border-gray-200 rounded-xl hover:border-gray-300 hover:shadow-md cursor-pointer hover:-translate-y-1 duration-300 hover:border-none hover:bg-transparent cursor-pointer"
-                  onClick={() => setFocused(true)}
+                  onClick={() => {
+                    setFocused(true);
+                    setIndividualTeamTask({
+                      ...IndividualTeamTask,
+                      Team_Id: Task.Team_Id,
+                      User_Id: Task.User_Id,
+                      User_Name: Task.Name,
+                      Team_Name: Task.Team_Name,
+                      Team_Tasks: Task.Team_Tasks,
+                    });
+                  }}
                 >
+                  {/* Team_Id: number; User_Id: number; User_Name: string;
+                  Team_Name: string; Team_Tasks: string; */}
                   <div className="flex w-[100%] h-auto justify-around  items-center">
                     <h2 className="text-black font-medium">
                       Team:
@@ -276,7 +316,9 @@ const uniqueTeams = AllTeamData.filter(
               >
                 &times;
               </button>
-              
+              <div key={IndividualTeamTask.Team_Id}>
+                <h2>{IndividualTeamTask.Team_Name}</h2>
+              </div>
             </div>
           </div>
         </div>
