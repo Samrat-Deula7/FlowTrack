@@ -4,7 +4,11 @@ import Tick from "../assets/check-mark.png";
 import Delete from "../assets/trash.png";
 import FlowTrackContext from "../../context/FlowtrackContext";
 import { type AlertType } from "../Alert";
-import { type Data, type TeamData } from "../../context/FlowtrackState";
+import {
+  type Data,
+  type TeamData,
+  type TeamTasks,
+} from "../../context/FlowtrackState";
 import Addbtn from "../assets/add.gif";
 
 type TasksProps = {
@@ -33,8 +37,14 @@ const Tasks: React.FC<TasksProps> = ({
       Team_Name: "inisiti data",
       Team_code: "inisiti data",
     });
-  const { getAllTask, UpdateCompletedState, DeleteTask, GetTeamData } =
-    useContext(FlowTrackContext);
+  const [TeamTasks, setTeamTasks] = useState<TeamTasks[]>([]);
+  const {
+    getAllTask,
+    UpdateCompletedState,
+    DeleteTask,
+    GetTeamData,
+    GetTeamTasks,
+  } = useContext(FlowTrackContext);
   const [focused, setFocused] = useState(false);
 
   const uniqueTeams = AllTeamData.filter(
@@ -266,7 +276,7 @@ const Tasks: React.FC<TasksProps> = ({
                 <div
                   key={Task.Team_Id}
                   className="flex flex-col w-[100%] h-auto items-center gap-3 sm:gap-4 p-3 sm:p-4 md:p-5 bg-white border-2 border-gray-200 rounded-xl hover:border-gray-300 hover:shadow-md cursor-pointer hover:-translate-y-1 duration-300 hover:border-none hover:bg-transparent cursor-pointer"
-                  onClick={() => {
+                  onClick={async () => {
                     setFocused(true);
                     setIndividualTeamTask({
                       ...IndividualTeamTask,
@@ -274,6 +284,9 @@ const Tasks: React.FC<TasksProps> = ({
                       Team_Name: Task.Team_Name,
                       Team_code: Task.Team_code,
                     });
+                    const teamTasks = await GetTeamTasks(Task.Team_code);
+
+                    setTeamTasks(teamTasks);
                   }}
                 >
                   {/* Team_Id: number; User_Id: number; User_Name: string;
@@ -310,12 +323,16 @@ const Tasks: React.FC<TasksProps> = ({
               >
                 &times;
               </button>
-              <div key={IndividualTeamTask.Team_Id} >
+              <div key={IndividualTeamTask.Team_Id}>
                 <h2 className="font-bold text-green-500">
                   {IndividualTeamTask.Team_Name.toUpperCase()}
                 </h2>
-               
-              
+                {TeamTasks.map((tasks: TeamTasks) => (
+                  <div>
+                    <h2>{tasks.Name}</h2>
+                    <h2>{tasks.Team_Tasks}</h2>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
