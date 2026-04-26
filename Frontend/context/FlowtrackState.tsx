@@ -113,7 +113,7 @@ const FlowtrackState: React.FC<{ children: React.ReactNode }> = ({
     }
   };
 
-  const GetTeamTasks=async()=>{
+  const GetTeamTasks = async (Task_code: string) => {
     const FlowTrackAuthtoken = localStorage.getItem("FlowTrackToken");
     const url = "http://localhost:3000/api/teamtasks/getTeamTasks";
     try {
@@ -122,6 +122,7 @@ const FlowtrackState: React.FC<{ children: React.ReactNode }> = ({
         headers: {
           "Content-Type": "application/json",
           FlowTrackAuthtoken: FlowTrackAuthtoken || "",
+          Team_code: Task_code,
         },
       });
       const result = await response.json();
@@ -133,7 +134,7 @@ const FlowtrackState: React.FC<{ children: React.ReactNode }> = ({
       alert(error.message);
       return [];
     }
-  }
+  };
   return (
     <FlowtrackContext.Provider
       value={{ getAllTask, UpdateCompletedState, DeleteTask, GetTeamData,GetTeamTasks }}

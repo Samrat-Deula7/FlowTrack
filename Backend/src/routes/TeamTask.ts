@@ -187,22 +187,18 @@ router.get(
   authenticateuser,
   async (req: Request, res: Response) => {
     try {
-      const payload = req.user as { user: { id: string } };
-      const id = parseInt(payload.user.id);
+      const Team_code: any = req.header("Team_code");
+    
 
       const pool = await sql.connect(config);
 
-      let Team_code: any = await pool
-        .request()
-        .input("userId", sql.Int, id)
-        .query("select Team_code from Team_Table WHERE User_Id = @userId");
-
+     
       const TeamTasks = await pool
         .request()
         .input(
           "TeamCode",
           sql.NVarChar(sql.MAX),
-          Team_code.recordset[0].Team_code,
+          Team_code,
         )
         .query(
           "select u.Name , t.Team_Tasks from User_Table u Inner join Team_Table t on u.User_Id=t.User_Id where Team_code=@TeamCode",
