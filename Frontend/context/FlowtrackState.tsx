@@ -15,6 +15,11 @@ export type TeamData = {
   Completed: boolean;
   Team_code: string;
 };
+
+export type TeamTasks = {
+  Name: string;
+  Team_Tasks:string;
+};
 const FlowtrackState: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
@@ -108,9 +113,30 @@ const FlowtrackState: React.FC<{ children: React.ReactNode }> = ({
     }
   };
 
+  const GetTeamTasks=async()=>{
+    const FlowTrackAuthtoken = localStorage.getItem("FlowTrackToken");
+    const url = "http://localhost:3000/api/teamtasks/getTeamTasks";
+    try {
+      const response = await fetch(url, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          FlowTrackAuthtoken: FlowTrackAuthtoken || "",
+        },
+      });
+      const result = await response.json();
+      if (result.tasks && Array.isArray(result.tasks)) {
+        return result.tasks as TeamTasks[];
+      }
+      return [];
+    } catch (error: any) {
+      alert(error.message);
+      return [];
+    }
+  }
   return (
     <FlowtrackContext.Provider
-      value={{ getAllTask, UpdateCompletedState, DeleteTask, GetTeamData }}
+      value={{ getAllTask, UpdateCompletedState, DeleteTask, GetTeamData,GetTeamTasks }}
     >
       {children}
     </FlowtrackContext.Provider>
