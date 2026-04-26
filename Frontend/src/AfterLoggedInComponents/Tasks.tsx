@@ -334,7 +334,7 @@ const Tasks: React.FC<TasksProps> = ({
                   >
                     <button
                       onClick={() =>
-                        UpdateState(IndividualTeamTask.Team_Id, tasks.Completed)
+                        UpdateState(tasks.Team_Id, tasks.Completed)
                       }
                       className="flex-shrink-0 w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 border-2  cursor-pointer border-gray-400 rounded flex items-center justify-center hover:bg-gray-50 hover:border-gray-500 transition-all duration-200"
                     >

@@ -57,7 +57,12 @@ const NavBar: React.FC<NavProps> = ({
               setTimeout(() => {
                 setLoggedin?.(false);
                 localStorage.removeItem("FlowTrackToken");
-                setAlertPopUp({ ...AlertPopUp, alert: false });
+                setAlertPopUp({
+                  ...AlertPopUp,
+                  alert: false,
+                  type: "success",
+                  msg: "Logged out Successfully",
+                });
               }, 2000);
             }}
           >
