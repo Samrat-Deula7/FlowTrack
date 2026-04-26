@@ -188,20 +188,12 @@ router.get(
   async (req: Request, res: Response) => {
     try {
       const Team_code: any = req.header("Team_code");
-    
-
-      const pool = await sql.connect(config);
-
-     
+      const pool = await sql.connect(config);     
       const TeamTasks = await pool
         .request()
-        .input(
-          "TeamCode",
-          sql.NVarChar(sql.MAX),
-          Team_code,
-        )
+        .input("TeamCode", sql.NVarChar(sql.MAX), Team_code)
         .query(
-          "select u.Name , t.Team_Tasks from User_Table u Inner join Team_Table t on u.User_Id=t.User_Id where Team_code=@TeamCode",
+          "select u.Name , t.Team_Tasks, t.Completed from User_Table u Inner join Team_Table t on u.User_Id=t.User_Id where Team_code=@TeamCode",
         );
 
       return res.status(200).json({ tasks: TeamTasks.recordset });

@@ -328,9 +328,53 @@ const Tasks: React.FC<TasksProps> = ({
                   {IndividualTeamTask.Team_Name.toUpperCase()}
                 </h2>
                 {TeamTasks.map((tasks: TeamTasks) => (
-                  <div>
-                    <h2>{tasks.Name}</h2>
-                    <h2>{tasks.Team_Tasks}</h2>
+                  <div
+                    key={IndividualTeamTask.Team_Id}
+                    className="flex items-center gap-3 sm:gap-4 p-3 sm:p-4 md:p-5 bg-white border-2 border-gray-200 rounded-xl hover:border-gray-300 hover:shadow-md transition-all duration-200"
+                  >
+                    <button
+                      onClick={() =>
+                        UpdateState(IndividualTeamTask.Team_Id, tasks.Completed)
+                      }
+                      className="flex-shrink-0 w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 border-2  cursor-pointer border-gray-400 rounded flex items-center justify-center hover:bg-gray-50 hover:border-gray-500 transition-all duration-200"
+                    >
+                      {tasks.Completed && (
+                        <img
+                          src={Tick}
+                          alt="tick"
+                          className="bg-white rounded-full w-full h-full p-0.5 cursor-pointer"
+                        />
+                      )}
+                    </button>
+                    <span
+                      className={`flex-1 text-sm sm:text-base md:text-lg break-words leading-relaxed ${
+                        tasks.Completed
+                          ? "text-gray-400 line-through"
+                          : "text-gray-700"
+                      }`}
+                    >
+                      {tasks.Name}
+                    </span>
+                    <span
+                      className={`flex-1 text-sm sm:text-base md:text-lg break-words leading-relaxed ${
+                        tasks.Completed
+                          ? "text-gray-400 line-through"
+                          : "text-gray-700"
+                      }`}
+                    >
+                      {tasks.Team_Tasks}
+                    </span>
+
+                    <button
+                      onClick={() => HandleDelete(IndividualTeamTask.Team_Id)}
+                      className="flex-shrink-0 text-gray-400 hover:text-red-500 transition-colors duration-200  cursor-pointer"
+                    >
+                      <img
+                        src={Delete}
+                        alt="delete"
+                        className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7  cursor-pointer"
+                      />
+                    </button>
                   </div>
                 ))}
               </div>

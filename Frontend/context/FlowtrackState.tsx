@@ -18,7 +18,8 @@ export type TeamData = {
 
 export type TeamTasks = {
   Name: string;
-  Team_Tasks:string;
+  Team_Tasks: string;
+  Completed: boolean;
 };
 const FlowtrackState: React.FC<{ children: React.ReactNode }> = ({
   children,
