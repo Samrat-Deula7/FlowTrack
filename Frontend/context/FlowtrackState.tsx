@@ -17,6 +17,7 @@ export type TeamData = {
 };
 
 export type TeamTasks = {
+  Team_Id:number;
   Name: string;
   Team_Tasks: string;
   Completed: boolean;

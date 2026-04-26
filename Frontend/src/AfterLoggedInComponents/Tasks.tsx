@@ -323,13 +323,13 @@ const Tasks: React.FC<TasksProps> = ({
               >
                 &times;
               </button>
-              <div key={IndividualTeamTask.Team_Id}>
+              <div>
                 <h2 className="font-bold text-green-500">
                   {IndividualTeamTask.Team_Name.toUpperCase()}
                 </h2>
                 {TeamTasks.map((tasks: TeamTasks) => (
                   <div
-                    key={IndividualTeamTask.Team_Id}
+                    key={tasks.Team_Id}
                     className="flex items-center gap-3 sm:gap-4 p-3 sm:p-4 md:p-5 bg-white border-2 border-gray-200 rounded-xl hover:border-gray-300 hover:shadow-md transition-all duration-200"
                   >
                     <button

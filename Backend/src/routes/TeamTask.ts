@@ -193,7 +193,7 @@ router.get(
         .request()
         .input("TeamCode", sql.NVarChar(sql.MAX), Team_code)
         .query(
-          "select u.Name , t.Team_Tasks, t.Completed from User_Table u Inner join Team_Table t on u.User_Id=t.User_Id where Team_code=@TeamCode",
+          "select u.Name ,t.Team_Id, t.Team_Tasks, t.Completed from User_Table u Inner join Team_Table t on u.User_Id=t.User_Id where Team_code=@TeamCode",
         );
 
       return res.status(200).json({ tasks: TeamTasks.recordset });
