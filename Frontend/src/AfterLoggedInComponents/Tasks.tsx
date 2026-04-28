@@ -41,6 +41,7 @@ const Tasks: React.FC<TasksProps> = ({
   const {
     getAllTask,
     UpdateCompletedState,
+    UpdateTeamTableCompleteState,
     DeleteTask,
     GetTeamData,
     GetTeamTasks,
@@ -77,6 +78,12 @@ const Tasks: React.FC<TasksProps> = ({
   const UpdateState = (id: any, completed: any) => {
     completed = !completed;
     UpdateCompletedState(id, completed);
+    getTasks();
+  };
+  const UpdateTeamtableState = (id: any, completed: any) => {
+    completed = !completed;
+    console.log(id,completed)
+    UpdateTeamTableCompleteState(id, completed);
     getTasks();
   };
 
@@ -333,9 +340,8 @@ const Tasks: React.FC<TasksProps> = ({
                     className="flex items-center gap-3 sm:gap-4 p-3 sm:p-4 md:p-5 bg-white border-2 border-gray-200 rounded-xl hover:border-gray-300 hover:shadow-md transition-all duration-200"
                   >
                     <button
-                      onClick={() =>
-                        UpdateState(tasks.Team_Id, tasks.Completed)
-                      }
+                      onClick={() =>{
+                        UpdateTeamtableState(tasks.Team_Id, tasks.Completed);}}
                       className="flex-shrink-0 w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 border-2  cursor-pointer border-gray-400 rounded flex items-center justify-center hover:bg-gray-50 hover:border-gray-500 transition-all duration-200"
                     >
                       {tasks.Completed && (

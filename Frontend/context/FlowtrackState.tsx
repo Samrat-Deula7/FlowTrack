@@ -72,6 +72,29 @@ const FlowtrackState: React.FC<{ children: React.ReactNode }> = ({
       return {};
     }
   };
+  const UpdateTeamTableCompleteState = async (
+    Team_Id: number,
+    Completed: boolean,
+  ): Promise<object> => {
+    const FlowTrackAuthtoken = localStorage.getItem("FlowTrackToken");
+    const url =
+      "http://localhost:3000/api/teamtasks/UpdateTeamTableCompleteState";
+    try {
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          FlowTrackAuthtoken: FlowTrackAuthtoken || "",
+        },
+        body: JSON.stringify({ Team_Id: Team_Id, Completed: Completed }),
+      });
+      const result: object = await response.json();
+      return result;
+    } catch (error: any) {
+      alert(error.message);
+      return {};
+    }
+  };
 
   const DeleteTask = async (Task_id: number) => {
     const FlowTrackAuthtoken = localStorage.getItem("FlowTrackToken");
@@ -139,7 +162,7 @@ const FlowtrackState: React.FC<{ children: React.ReactNode }> = ({
   };
   return (
     <FlowtrackContext.Provider
-      value={{ getAllTask, UpdateCompletedState, DeleteTask, GetTeamData,GetTeamTasks }}
+      value={{ getAllTask, UpdateCompletedState,UpdateTeamTableCompleteState, DeleteTask, GetTeamData,GetTeamTasks }}
     >
       {children}
     </FlowtrackContext.Provider>

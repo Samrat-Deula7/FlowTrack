@@ -203,4 +203,38 @@ router.get(
   },
 );
 
+// Update complete state API
+router.post(
+  "/UpdateTeamTableCompleteState",
+  authenticateuser, 
+  async (req: Request, res: Response) => {
+    try {
+      const pool = await sql.connect(config);
+      let {Team_Id, Completed } = req.body;
+      if (Completed == 0) {
+        Completed = 0;
+      } else {
+        Completed = 1;
+      }
+      const payload = req.user as { user: { id: string } };
+      const id = parseInt(payload.user.id);
+      // Insert query with bound parameters
+      
+      await pool
+        .request()
+        .input("Userid", sql.Int, id)
+        .input("Team_Id", sql.Int, Team_Id)
+        .input("Completed", sql.Int, Completed).query(`
+        Update Team_Table set Completed = @Completed where User_Id = @Userid and Team_Id = @Team_Id
+      `);
+        
+      res.status(200).send({ success: "Task has been Completed !" });
+    } catch (err) {
+      console.error(err);
+      res.status(500).send("Some error occurred");
+    }
+    
+  },
+);
+
 export default router;
