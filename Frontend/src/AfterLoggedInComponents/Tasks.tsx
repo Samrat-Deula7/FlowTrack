@@ -31,6 +31,7 @@ const Tasks: React.FC<TasksProps> = ({
 }) => {
   let TaskInInput = false;
   const [Task, setTask] = useState({ task: "", completed: false });
+  const [TeamTask, setTeamTask] = useState({ task: "", completed: false });
   const [AllTasks, setAllTasks] = useState<Data[]>([]);
   const [AllTeamData, setAllTeamData] = useState<TeamData[]>([]);
   const [IndividualTeamTask, setIndividualTeamTask] =
@@ -136,14 +137,21 @@ const Tasks: React.FC<TasksProps> = ({
       });
     }, 2000);
   };
-  useEffect(() => {
-    getTasks();
+
+  useEffect(()=>{
+getTasks();
     getTeamData();
+  },[])
+  useEffect(() => {
+    
     getEachTeamData();
-  }, [Task, TrackChangedState.Completed]);
+  }, [ TrackChangedState.Completed]);
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTask({ ...Task, [e.target.name]: e.target.value });
+  };
+  const onTeamTaskChanged = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTeamTask({ ...TeamTask, [e.target.name]: e.target.value });
   };
 
   const addTask = async () => {
@@ -299,9 +307,6 @@ const Tasks: React.FC<TasksProps> = ({
               <input
                 type="text"
                 placeholder="Join Team with code ...."
-                // value={searchQuery}
-                // onChange={(e) => setSearchQuery(e.target.value)}
-                // onKeyPress={handleKeyPress}
                 className="flex-1 outline-none text-gray-700 placeholder-gray-400 text-sm sm:text-base min-w-0"
               />
 
@@ -319,22 +324,15 @@ const Tasks: React.FC<TasksProps> = ({
                 <div
                   key={Task.Team_Id}
                   className="flex flex-col w-[100%] h-auto items-center gap-3 sm:gap-4 p-3 sm:p-4 md:p-5 bg-white border-2 border-gray-200 rounded-xl hover:border-gray-300 hover:shadow-md cursor-pointer hover:-translate-y-1 duration-300 hover:border-none hover:bg-transparent cursor-pointer"
-                  // onClick={async () => {
-                  //   setFocused(true);
-                  //   setIndividualTeamTask({
-                  //     ...IndividualTeamTask,
-                  //     Team_Id: Task.Team_Id,
-                  //     Team_Name: Task.Team_Name,
-                  //     Team_code: Task.Team_code,
-                  //   });
-                    // const teamTasks = await GetTeamTasks(Task.Team_code);
-
-                    // setTeamTasks(teamTasks);
-                  // }}
-                  onClick={()=>{ setFocused(true); focusOnTeamData(Task.Team_Id,Task.Team_Name,Task.Team_code) }}
+                  onClick={() => {
+                    setFocused(true);
+                    focusOnTeamData(
+                      Task.Team_Id,
+                      Task.Team_Name,
+                      Task.Team_code,
+                    );
+                  }}
                 >
-                  {/* Team_Id: number; User_Id: number; User_Name: string;
-                  Team_Name: string; Team_Tasks: string; */}
                   <div className="flex w-[100%] h-auto justify-around  items-center">
                     <h2 className="text-black font-medium">
                       Team:
@@ -355,7 +353,7 @@ const Tasks: React.FC<TasksProps> = ({
             {/* This is the team tasks */}
             <div
               id="teamTasks"
-              className={` bg-[#101820] backdrop-blur-md shadow-lg rounded-xl border border-white/10 p-4 sm:p-6 scale-0 transition pointer-events-auto
+              className={` bg-[#101820] backdrop-blur-md shadow-lg rounded-xl border border-white/10 p-4 sm:p-6 scale-0 transition pointer-events-auto 
           ${focused ? "absolute inset-0 z-1000 scale-100 pointer-events-auto" : ""}`}
             >
               <button
@@ -367,64 +365,92 @@ const Tasks: React.FC<TasksProps> = ({
               >
                 &times;
               </button>
-              <div>
-                <h2 className="font-bold text-green-500">
+              <div className=" h-full ">
+                <h2 className="font-bold text-green-500 mb-4">
                   {IndividualTeamTask.Team_Name.toUpperCase()}
                 </h2>
-                {TeamTasks.map((tasks: TeamTasks) => (
-                  <div
-                    key={tasks.Team_Id}
-                    className="flex items-center gap-3 sm:gap-4 p-3 sm:p-4 md:p-5 bg-white border-2 border-gray-200 rounded-xl hover:border-gray-300 hover:shadow-md transition-all duration-200"
-                  >
-                    <button
-                      onClick={() => {
-                        UpdateTeamtableState(tasks.Team_Id, tasks.Completed);
-                        setTrackChangedState({
-                          ...TrackChangedState,
-                          Team_code: IndividualTeamTask.Team_code,Completed:tasks.Completed
-                        });
-                      }}
-                      className="flex-shrink-0 w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 border-2  cursor-pointer border-gray-400 rounded flex items-center justify-center hover:bg-gray-50 hover:border-gray-500 transition-all duration-200"
-                    >
-                      {tasks.Completed && (
-                        <img
-                          src={Tick}
-                          alt="tick"
-                          className="bg-white rounded-full w-full h-full p-0.5 cursor-pointer"
-                        />
-                      )}
-                    </button>
-                    <span
-                      className={`flex-1 text-sm sm:text-base md:text-lg break-words leading-relaxed ${
-                        tasks.Completed
-                          ? "text-gray-400 line-through"
-                          : "text-gray-700"
-                      }`}
-                    >
-                      {tasks.Name}
-                    </span>
-                    <span
-                      className={`flex-1 text-sm sm:text-base md:text-lg break-words leading-relaxed ${
-                        tasks.Completed
-                          ? "text-gray-400 line-through"
-                          : "text-gray-700"
-                      }`}
-                    >
-                      {tasks.Team_Tasks}
-                    </span>
 
-                    <button
-                      onClick={() => HandleDelete(IndividualTeamTask.Team_Id)}
-                      className="flex-shrink-0 text-gray-400 hover:text-red-500 transition-colors duration-200  cursor-pointer"
+                {/* Input for adding team task */}
+                <div className="flex gap-2 sm:gap-3 mb-5 sm:mb-6">
+                  <input
+                    id="TaskInput"
+                    type="text"
+                    value={TeamTask.task}
+                    name="task"
+                    onChange={onTeamTaskChanged}
+                    placeholder="Add new task"
+                    className="flex-1 px-3 sm:px-4 md:px-5 py-2 sm:py-3 text-sm sm:text-base md:text-lg text-gray-500 placeholder-gray-400 border-b-2 border-gray-300 focus:border-gray-400 focus:outline-none bg-transparent transition-colors"
+                  />
+                  <button
+                    onClick={addTask}
+                    className={`w-9 h-9 sm:w-10 sm:h-10 md:w-12 md:h-12 cursor-pointer bg-gray-700 hover:bg-gray-800 active:bg-gray-900 text-white rounded-full flex items-center justify-center transition-all duration-200 flex-shrink-0 shadow-md hover:shadow-lg${TaskInInput ? "" : "cursor-not-allowed"}`}
+                  >
+                    <img
+                      src={Add}
+                      alt="add"
+                      className="bg-white rounded-full w-full h-full p-1.5 sm:p-2 "
+                    />
+                  </button>
+                </div>
+
+                {/* team tasks */}
+                <div className=" h-160 overflow-y-scroll">
+                  {TeamTasks.map((tasks: TeamTasks) => (
+                    <div
+                      key={tasks.Team_Id}
+                      className="flex items-center gap-3 sm:gap-4 p-3 sm:p-4 md:p-5 bg-white border-2 border-gray-200 rounded-xl hover:border-gray-300 hover:shadow-md transition-all duration-200 "
                     >
-                      <img
-                        src={Delete}
-                        alt="delete"
-                        className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7  cursor-pointer"
-                      />
-                    </button>
-                  </div>
-                ))}
+                      <button
+                        onClick={() => {
+                          UpdateTeamtableState(tasks.Team_Id, tasks.Completed);
+                          setTrackChangedState({
+                            ...TrackChangedState,
+                            Team_code: IndividualTeamTask.Team_code,
+                            Completed: tasks.Completed,
+                          });
+                        }}
+                        className="flex-shrink-0 w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 border-2  cursor-pointer border-gray-400 rounded flex items-center justify-center hover:bg-gray-50 hover:border-gray-500 transition-all duration-200"
+                      >
+                        {tasks.Completed && (
+                          <img
+                            src={Tick}
+                            alt="tick"
+                            className="bg-white rounded-full w-full h-full p-0.5 cursor-pointer"
+                          />
+                        )}
+                      </button>
+                      <span
+                        className={`flex-1 text-sm sm:text-base md:text-lg break-words leading-relaxed ${
+                          tasks.Completed
+                            ? "text-gray-400 line-through"
+                            : "text-gray-700"
+                        }`}
+                      >
+                        {tasks.Name}
+                      </span>
+                      <span
+                        className={`flex-1 text-sm sm:text-base md:text-lg break-words leading-relaxed ${
+                          tasks.Completed
+                            ? "text-gray-400 line-through"
+                            : "text-gray-700"
+                        }`}
+                      >
+                        {tasks.Team_Tasks}
+                      </span>
+
+                      <button
+                        onClick={() => HandleDelete(IndividualTeamTask.Team_Id)}
+                        className="flex-shrink-0 text-gray-400 hover:text-red-500 transition-colors duration-200  cursor-pointer"
+                      >
+                        <img
+                          src={Delete}
+                          alt="delete"
+                          className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7  cursor-pointer"
+                        />
+                      </button>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
