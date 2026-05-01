@@ -38,6 +38,10 @@ const Tasks: React.FC<TasksProps> = ({
       Team_code: "inisiti data",
     });
   const [TeamTasks, setTeamTasks] = useState<TeamTasks[]>([]);
+  const [TrackChangedState, setTrackChangedState] = useState({
+    Team_code:"",
+    Completed:false
+  });
   const {
     getAllTask,
     UpdateCompletedState,
@@ -53,17 +57,17 @@ const Tasks: React.FC<TasksProps> = ({
       index === self.findIndex((t) => t.Team_Name === team.Team_Name),
   );
 
-  // const focusOnTeamData = (
-  //   Team_Id: number,
-  //   User_Id: number,
-  //   User_Name: string,
-  //   Team_Name: string,
-  //   Team_Tasks: string,
-  // ): void => {
-  //   setFocused(true);
-  //   // setIndividualTeamTask({...IndividualTeamTask,Team_Id:e.Team_Id,User_Id:e.User_Id,User_Name:e.Name,Team_Name:e.Team_Name,Team_Tasks:e.Team_Tasks})
-  //   console.log(Team_Id);
-  // };
+  const focusOnTeamData = async (
+    Team_Id: number,
+    Team_Name: string,
+    Team_code: string,
+  ) => {
+    setFocused(true);
+    setIndividualTeamTask({...IndividualTeamTask,Team_Id:Team_Id,Team_Name:Team_Name,Team_code:Team_code})
+    let teamTasks = await GetTeamTasks(Team_code);
+    setTeamTasks(teamTasks);
+    console.log(Team_Id);
+  };
 
   const getTasks = async () => {
     const dataSet: Data[] = await getAllTask();
@@ -74,6 +78,11 @@ const Tasks: React.FC<TasksProps> = ({
     console.log(teamDataSet);
     setAllTeamData(teamDataSet);
   };
+
+  const getEachTeamData=async()=>{
+     let data = await GetTeamTasks(TrackChangedState.Team_code);
+     setTeamTasks(data);
+  }
 
   const UpdateState = (id: any, completed: any) => {
     completed = !completed;
@@ -104,7 +113,8 @@ const Tasks: React.FC<TasksProps> = ({
   useEffect(() => {
     getTasks();
     getTeamData();
-  }, [Task]);
+    getEachTeamData();
+  }, [Task, TrackChangedState.Completed]);
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTask({ ...Task, [e.target.name]: e.target.value });
@@ -283,18 +293,19 @@ const Tasks: React.FC<TasksProps> = ({
                 <div
                   key={Task.Team_Id}
                   className="flex flex-col w-[100%] h-auto items-center gap-3 sm:gap-4 p-3 sm:p-4 md:p-5 bg-white border-2 border-gray-200 rounded-xl hover:border-gray-300 hover:shadow-md cursor-pointer hover:-translate-y-1 duration-300 hover:border-none hover:bg-transparent cursor-pointer"
-                  onClick={async () => {
-                    setFocused(true);
-                    setIndividualTeamTask({
-                      ...IndividualTeamTask,
-                      Team_Id: Task.Team_Id,
-                      Team_Name: Task.Team_Name,
-                      Team_code: Task.Team_code,
-                    });
-                    const teamTasks = await GetTeamTasks(Task.Team_code);
+                  // onClick={async () => {
+                  //   setFocused(true);
+                  //   setIndividualTeamTask({
+                  //     ...IndividualTeamTask,
+                  //     Team_Id: Task.Team_Id,
+                  //     Team_Name: Task.Team_Name,
+                  //     Team_code: Task.Team_code,
+                  //   });
+                    // const teamTasks = await GetTeamTasks(Task.Team_code);
 
-                    setTeamTasks(teamTasks);
-                  }}
+                    // setTeamTasks(teamTasks);
+                  // }}
+                  onClick={()=>{ setFocused(true); focusOnTeamData(Task.Team_Id,Task.Team_Name,Task.Team_code) }}
                 >
                   {/* Team_Id: number; User_Id: number; User_Name: string;
                   Team_Name: string; Team_Tasks: string; */}
@@ -340,8 +351,13 @@ const Tasks: React.FC<TasksProps> = ({
                     className="flex items-center gap-3 sm:gap-4 p-3 sm:p-4 md:p-5 bg-white border-2 border-gray-200 rounded-xl hover:border-gray-300 hover:shadow-md transition-all duration-200"
                   >
                     <button
-                      onClick={() =>{
-                        UpdateTeamtableState(tasks.Team_Id, tasks.Completed);}}
+                      onClick={() => {
+                        UpdateTeamtableState(tasks.Team_Id, tasks.Completed);
+                        setTrackChangedState({
+                          ...TrackChangedState,
+                          Team_code: IndividualTeamTask.Team_code,Completed:tasks.Completed
+                        });
+                      }}
                       className="flex-shrink-0 w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 border-2  cursor-pointer border-gray-400 rounded flex items-center justify-center hover:bg-gray-50 hover:border-gray-500 transition-all duration-200"
                     >
                       {tasks.Completed && (
