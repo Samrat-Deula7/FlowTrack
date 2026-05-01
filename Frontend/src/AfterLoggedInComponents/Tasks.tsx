@@ -8,6 +8,7 @@ import {
   type Data,
   type TeamData,
   type TeamTasks,
+  type addTeamTask,
 } from "../../context/FlowtrackState";
 import Addbtn from "../assets/add.gif";
 
@@ -173,7 +174,7 @@ const Tasks: React.FC<TasksProps> = ({
 
   const AddTeamTask = async () => {
     console.log(TeamTask);
-    const teamtask = await addTeamTask(TeamTask);
+    const teamtask = await addTeamTask(TeamTask as addTeamTask);
     console.log(teamtask);
 
     if (teamtask != "") {
@@ -199,7 +200,8 @@ const Tasks: React.FC<TasksProps> = ({
         Completed: false,
         Team_code: "",
       });
-      getEachTeamData();
+       getTasks();
+       getEachTeamData();
     }else{
        setAlertPopUp({
          ...AlertPopUp,
@@ -453,7 +455,13 @@ const Tasks: React.FC<TasksProps> = ({
                     className="flex-1 px-3 sm:px-4 md:px-5 py-2 sm:py-3 text-sm sm:text-base md:text-lg text-gray-500 placeholder-gray-400 border-b-2 border-gray-300 focus:border-gray-400 focus:outline-none bg-transparent transition-colors"
                   />
                   <button
-                    onClick={AddTeamTask}
+                    onClick={()=>{AddTeamTask();
+                       setTrackChangedState({
+                         ...TrackChangedState,
+                         Team_code: IndividualTeamTask.Team_code,
+                         Completed:false,
+                       });
+                    }}
                     className={`w-9 h-9 sm:w-10 sm:h-10 md:w-12 md:h-12 cursor-pointer bg-gray-700 hover:bg-gray-800 active:bg-gray-900 text-white rounded-full flex items-center justify-center transition-all duration-200 flex-shrink-0 shadow-md hover:shadow-lg${TaskInInput ? "" : "cursor-not-allowed"}`}
                   >
                     <img
