@@ -263,7 +263,7 @@ router.post(
       res.status(200).send({ success: "Team Task saved !" });
     } catch (err) {
       console.error(err);
-      res.status(500).send("Some error occurred");
+      res.status(500).send("Failed to add Team Task");
     }
   },
 );

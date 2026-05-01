@@ -14,7 +14,7 @@ type FlowtrackContextType = {
   DeleteTask: (Task_id: number) => void;
   GetTeamData: () => Promise<TeamData[]>;
   GetTeamTasks: (Task_code: string) => Promise<TeamTasks[]>;
-  addTeamTask:(TeamTask:object)=>string;
+  addTeamTask:(TeamTask:object)=>Promise<string>;
 };
 const FlowtrackContext = createContext<FlowtrackContextType>({
   // Needed to put async here because the function getAllTask return and Promise
@@ -24,7 +24,7 @@ const FlowtrackContext = createContext<FlowtrackContextType>({
   DeleteTask: () => {}, // This means that the function returns void
   GetTeamData: async () => [],
   GetTeamTasks: async () => [],
-  addTeamTask: () => "Team Task saved !",
+  addTeamTask: async () => "Team Task saved !",
 });
 
 export default FlowtrackContext;

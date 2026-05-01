@@ -151,6 +151,7 @@ const Tasks: React.FC<TasksProps> = ({
     getTasks();
     getTeamData();
   }, []);
+
   useEffect(() => {
     getEachTeamData();
   }, [TrackChangedState.Completed]);
@@ -159,24 +160,51 @@ const Tasks: React.FC<TasksProps> = ({
     setTask({ ...Task, [e.target.name]: e.target.value });
   };
   const onTeamTaskChanged = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTeamTask({ ...TeamTask, [e.target.name]: e.target.value });
+    setTeamTask({
+      ...TeamTask,
+      Team_Name: IndividualTeamTask.Team_Name,
+      [e.target.name]: e.target.value,
+      Completed: false,
+      Team_code: IndividualTeamTask.Team_code,
+    });
+
     console.log(TeamTask);
   };
 
   const AddTeamTask = async () => {
-    setTeamTask({
-      ...TeamTask,
-      Team_Name: IndividualTeamTask.Team_Name,
-      Completed: false,
-      Team_code: IndividualTeamTask.Team_code,
-    });
+    console.log(TeamTask);
     const teamtask = await addTeamTask(TeamTask);
     console.log(teamtask);
-    if(teamtask != ""){
+
+    if (teamtask != "") {
+      setAlertPopUp({
+        ...AlertPopUp,
+        alert: true,
+        type: "success",
+        msg: teamtask,
+      });
+
+      setTimeout(() => {
+        getTasks();
+        setAlertPopUp({
+          ...AlertPopUp,
+          alert: false,
+          type: "success",
+          msg: teamtask,
+        });
+      }, 2000);
+      setTeamTask({
+        Team_Name: "",
+        TeamTask: "",
+        Completed: false,
+        Team_code: "",
+      });
+      getEachTeamData();
+    }else{
        setAlertPopUp({
          ...AlertPopUp,
          alert: true,
-         type: "success",
+         type: "failure",
          msg: teamtask,
        });
 
@@ -185,13 +213,17 @@ const Tasks: React.FC<TasksProps> = ({
          setAlertPopUp({
            ...AlertPopUp,
            alert: false,
-           type: "success",
+           type: "failure",
            msg: teamtask,
          });
        }, 2000);
+       setTeamTask({
+         Team_Name: "",
+         TeamTask: "",
+         Completed: false,
+         Team_code: "",
+       });
     }
-    let data = await GetTeamTasks(TrackChangedState.Team_code);
-    setTeamTasks(data);
   };
   const addTask = async () => {
     const FlowTrackAuthtoken = localStorage.getItem("FlowTrackToken");
