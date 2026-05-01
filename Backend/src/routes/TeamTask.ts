@@ -188,7 +188,7 @@ router.get(
   async (req: Request, res: Response) => {
     try {
       const Team_code: any = req.header("Team_code");
-      const pool = await sql.connect(config);     
+      const pool = await sql.connect(config);
       const TeamTasks = await pool
         .request()
         .input("TeamCode", sql.NVarChar(sql.MAX), Team_code)
@@ -206,11 +206,11 @@ router.get(
 // Update complete state API
 router.post(
   "/UpdateTeamTableCompleteState",
-  authenticateuser, 
+  authenticateuser,
   async (req: Request, res: Response) => {
     try {
       const pool = await sql.connect(config);
-      let {Team_Id, Completed } = req.body;
+      let { Team_Id, Completed } = req.body;
       if (Completed == 0) {
         Completed = 0;
       } else {
@@ -219,7 +219,7 @@ router.post(
       const payload = req.user as { user: { id: string } };
       const id = parseInt(payload.user.id);
       // Insert query with bound parameters
-      
+
       let sqlResponse = await pool
         .request()
         .input("Userid", sql.Int, id)
@@ -227,14 +227,44 @@ router.post(
         .input("Completed", sql.Int, Completed).query(`
         Update Team_Table set Completed = @Completed where User_Id = @Userid and Team_Id = @Team_Id
       `);
-      
+
       res.send(sqlResponse.rowsAffected);
       res.status(200).send({ success: "Task has been Completed !" });
     } catch (err) {
       console.error(err);
       res.status(500).send("Some error occurred");
     }
-    
+  },
+);
+
+// CreateTask API
+router.post(
+  "/CreateTeamTask",
+  authenticateuser,
+  async (req: Request, res: Response) => {
+    try {
+      const pool = await sql.connect(config);
+      let { Team_Name, TeamTask, Completed, Team_code } = req.body;
+      if (Completed == undefined) {
+        Completed = 0;
+      }
+      const payload = req.user as { user: { id: string } };
+      const id = parseInt(payload.user.id);
+      // Insert query with bound parameters
+      await pool
+        .request()
+        .input("Userid", sql.Int, id)
+        .input("Team_Name", sql.VarChar(70), Team_Name)
+        .input("TeamTask", sql.VarChar(150), TeamTask)
+        .input("completed", sql.Bit, Completed)
+        .input("Team_code", sql.NVarChar(sql.MAX), Team_code).query(`
+        insert into Team_Table Values (@Userid,@Team_Name,@TeamTask,@completed,@Team_code)
+      `);
+      res.status(200).send({ success: "Team Task saved !" });
+    } catch (err) {
+      console.error(err);
+      res.status(500).send("Some error occurred");
+    }
   },
 );
 
