@@ -200,31 +200,35 @@ const Tasks: React.FC<TasksProps> = ({
         Completed: false,
         Team_code: "",
       });
-       getTasks();
-       getEachTeamData();
-    }else{
-       setAlertPopUp({
-         ...AlertPopUp,
-         alert: true,
-         type: "failure",
-         msg: teamtask,
-       });
-
-       setTimeout(() => {
-         getTasks();
-         setAlertPopUp({
-           ...AlertPopUp,
-           alert: false,
-           type: "failure",
-           msg: teamtask,
-         });
-       }, 2000);
-       setTeamTask({
-         Team_Name: "",
-         TeamTask: "",
+      getTasks();
+       setTrackChangedState({
+         ...TrackChangedState,
+         Team_code: IndividualTeamTask.Team_code,
          Completed: false,
-         Team_code: "",
        });
+    } else {
+      setAlertPopUp({
+        ...AlertPopUp,
+        alert: true,
+        type: "failure",
+        msg: teamtask,
+      });
+
+      setTimeout(() => {
+        getTasks();
+        setAlertPopUp({
+          ...AlertPopUp,
+          alert: false,
+          type: "failure",
+          msg: teamtask,
+        });
+      }, 2000);
+      setTeamTask({
+        Team_Name: "",
+        TeamTask: "",
+        Completed: false,
+        Team_code: "",
+      });
     }
   };
   const addTask = async () => {
@@ -455,13 +459,7 @@ const Tasks: React.FC<TasksProps> = ({
                     className="flex-1 px-3 sm:px-4 md:px-5 py-2 sm:py-3 text-sm sm:text-base md:text-lg text-gray-500 placeholder-gray-400 border-b-2 border-gray-300 focus:border-gray-400 focus:outline-none bg-transparent transition-colors"
                   />
                   <button
-                    onClick={()=>{AddTeamTask();
-                       setTrackChangedState({
-                         ...TrackChangedState,
-                         Team_code: IndividualTeamTask.Team_code,
-                         Completed:false,
-                       });
-                    }}
+                    onClick={AddTeamTask}
                     className={`w-9 h-9 sm:w-10 sm:h-10 md:w-12 md:h-12 cursor-pointer bg-gray-700 hover:bg-gray-800 active:bg-gray-900 text-white rounded-full flex items-center justify-center transition-all duration-200 flex-shrink-0 shadow-md hover:shadow-lg${TaskInInput ? "" : "cursor-not-allowed"}`}
                   >
                     <img
