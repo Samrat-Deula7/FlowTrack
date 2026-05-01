@@ -11,7 +11,6 @@ import {
 } from "../../context/FlowtrackState";
 import Addbtn from "../assets/add.gif";
 
-
 type TasksProps = {
   setAddTeambtn: React.Dispatch<React.SetStateAction<boolean>>;
   setAlertPopUp: React.Dispatch<React.SetStateAction<AlertType>>;
@@ -31,7 +30,12 @@ const Tasks: React.FC<TasksProps> = ({
 }) => {
   let TaskInInput = false;
   const [Task, setTask] = useState({ task: "", completed: false });
-  const [TeamTask, setTeamTask] = useState({ task: "", completed: false });
+  const [TeamTask, setTeamTask] = useState({
+    Team_Name: "",
+    TeamTask: "",
+    Completed: false,
+    Team_code: "",
+  });
   const [AllTasks, setAllTasks] = useState<Data[]>([]);
   const [AllTeamData, setAllTeamData] = useState<TeamData[]>([]);
   const [IndividualTeamTask, setIndividualTeamTask] =
@@ -42,8 +46,8 @@ const Tasks: React.FC<TasksProps> = ({
     });
   const [TeamTasks, setTeamTasks] = useState<TeamTasks[]>([]);
   const [TrackChangedState, setTrackChangedState] = useState({
-    Team_code:"",
-    Completed:false
+    Team_code: "",
+    Completed: false,
   });
   const {
     getAllTask,
@@ -52,6 +56,7 @@ const Tasks: React.FC<TasksProps> = ({
     DeleteTask,
     GetTeamData,
     GetTeamTasks,
+    addTeamTask,
   } = useContext(FlowTrackContext);
   const [focused, setFocused] = useState(false);
 
@@ -66,10 +71,14 @@ const Tasks: React.FC<TasksProps> = ({
     Team_code: string,
   ) => {
     setFocused(true);
-    setIndividualTeamTask({...IndividualTeamTask,Team_Id:Team_Id,Team_Name:Team_Name,Team_code:Team_code})
+    setIndividualTeamTask({
+      ...IndividualTeamTask,
+      Team_Id: Team_Id,
+      Team_Name: Team_Name,
+      Team_code: Team_code,
+    });
     let teamTasks = await GetTeamTasks(Team_code);
     setTeamTasks(teamTasks);
-    console.log(Team_Id);
   };
 
   const getTasks = async () => {
@@ -82,10 +91,10 @@ const Tasks: React.FC<TasksProps> = ({
     setAllTeamData(teamDataSet);
   };
 
-  const getEachTeamData=async()=>{
-     let data = await GetTeamTasks(TrackChangedState.Team_code);
-     setTeamTasks(data);
-  }
+  const getEachTeamData = async () => {
+    let data = await GetTeamTasks(TrackChangedState.Team_code);
+    setTeamTasks(data);
+  };
 
   const UpdateState = (id: any, completed: any) => {
     completed = !completed;
@@ -94,10 +103,10 @@ const Tasks: React.FC<TasksProps> = ({
   };
   const UpdateTeamtableState = async (id: any, completed: any) => {
     completed = !completed;
-    console.log(id,completed)
-    let updateResponse:any=await UpdateTeamTableCompleteState(id, completed);
-    console.log(updateResponse)
-    if(updateResponse[0] == 0 ){
+    console.log(id, completed);
+    let updateResponse: any = await UpdateTeamTableCompleteState(id, completed);
+    console.log(updateResponse);
+    if (updateResponse[0] == 0) {
       setAlertPopUp({
         ...AlertPopUp,
         alert: true,
@@ -138,22 +147,52 @@ const Tasks: React.FC<TasksProps> = ({
     }, 2000);
   };
 
-  useEffect(()=>{
-getTasks();
-    getTeamData();
-  },[])
   useEffect(() => {
-    
+    getTasks();
+    getTeamData();
+  }, []);
+  useEffect(() => {
     getEachTeamData();
-  }, [ TrackChangedState.Completed]);
+  }, [TrackChangedState.Completed]);
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTask({ ...Task, [e.target.name]: e.target.value });
   };
   const onTeamTaskChanged = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTeamTask({ ...TeamTask, [e.target.name]: e.target.value });
+    console.log(TeamTask);
   };
 
+  const AddTeamTask = async () => {
+    setTeamTask({
+      ...TeamTask,
+      Team_Name: IndividualTeamTask.Team_Name,
+      Completed: false,
+      Team_code: IndividualTeamTask.Team_code,
+    });
+    const teamtask = await addTeamTask(TeamTask);
+    console.log(teamtask);
+    if(teamtask != ""){
+       setAlertPopUp({
+         ...AlertPopUp,
+         alert: true,
+         type: "success",
+         msg: teamtask,
+       });
+
+       setTimeout(() => {
+         getTasks();
+         setAlertPopUp({
+           ...AlertPopUp,
+           alert: false,
+           type: "success",
+           msg: teamtask,
+         });
+       }, 2000);
+    }
+    let data = await GetTeamTasks(TrackChangedState.Team_code);
+    setTeamTasks(data);
+  };
   const addTask = async () => {
     const FlowTrackAuthtoken = localStorage.getItem("FlowTrackToken");
     const url = "http://localhost:3000/api/tasks/CreateTask";
@@ -375,14 +414,14 @@ getTasks();
                   <input
                     id="TaskInput"
                     type="text"
-                    value={TeamTask.task}
-                    name="task"
+                    value={TeamTask.TeamTask}
+                    name="TeamTask"
                     onChange={onTeamTaskChanged}
                     placeholder="Add new task"
                     className="flex-1 px-3 sm:px-4 md:px-5 py-2 sm:py-3 text-sm sm:text-base md:text-lg text-gray-500 placeholder-gray-400 border-b-2 border-gray-300 focus:border-gray-400 focus:outline-none bg-transparent transition-colors"
                   />
                   <button
-                    onClick={addTask}
+                    onClick={AddTeamTask}
                     className={`w-9 h-9 sm:w-10 sm:h-10 md:w-12 md:h-12 cursor-pointer bg-gray-700 hover:bg-gray-800 active:bg-gray-900 text-white rounded-full flex items-center justify-center transition-all duration-200 flex-shrink-0 shadow-md hover:shadow-lg${TaskInInput ? "" : "cursor-not-allowed"}`}
                   >
                     <img
