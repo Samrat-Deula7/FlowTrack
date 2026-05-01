@@ -11,6 +11,7 @@ import {
 } from "../../context/FlowtrackState";
 import Addbtn from "../assets/add.gif";
 
+
 type TasksProps = {
   setAddTeambtn: React.Dispatch<React.SetStateAction<boolean>>;
   setAlertPopUp: React.Dispatch<React.SetStateAction<AlertType>>;
@@ -22,6 +23,7 @@ type IndividualTeamTaskElements = {
   Team_Name: string;
   Team_code: string;
 };
+
 const Tasks: React.FC<TasksProps> = ({
   setAlertPopUp,
   AlertPopUp,
@@ -89,10 +91,29 @@ const Tasks: React.FC<TasksProps> = ({
     UpdateCompletedState(id, completed);
     getTasks();
   };
-  const UpdateTeamtableState = (id: any, completed: any) => {
+  const UpdateTeamtableState = async (id: any, completed: any) => {
     completed = !completed;
     console.log(id,completed)
-    UpdateTeamTableCompleteState(id, completed);
+    let updateResponse:any=await UpdateTeamTableCompleteState(id, completed);
+    console.log(updateResponse)
+    if(updateResponse[0] == 0 ){
+      setAlertPopUp({
+        ...AlertPopUp,
+        alert: true,
+        type: "failure",
+        msg: "You can only update the task that you created !!!",
+      });
+
+      setTimeout(() => {
+        getTasks();
+        setAlertPopUp({
+          ...AlertPopUp,
+          alert: false,
+          type: "failure",
+          msg: "You can only update the task that you created !!!",
+        });
+      }, 2000);
+    }
     getTasks();
   };
 
@@ -107,7 +128,12 @@ const Tasks: React.FC<TasksProps> = ({
 
     setTimeout(() => {
       getTasks();
-      setAlertPopUp({ ...AlertPopUp, alert: false });
+      setAlertPopUp({
+        ...AlertPopUp,
+        alert: false,
+        type: "success",
+        msg: "Task deleted successfully",
+      });
     }, 2000);
   };
   useEffect(() => {

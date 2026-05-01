@@ -88,7 +88,7 @@ const FlowtrackState: React.FC<{ children: React.ReactNode }> = ({
         },
         body: JSON.stringify({ Team_Id: Team_Id, Completed: Completed }),
       });
-      const result: object = await response.json();
+      const result = await response.json();
       return result;
     } catch (error: any) {
       alert(error.message);
