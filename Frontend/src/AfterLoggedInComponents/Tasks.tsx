@@ -173,62 +173,67 @@ const Tasks: React.FC<TasksProps> = ({
   };
 
   const AddTeamTask = async () => {
-    console.log(TeamTask);
-    const teamtask = await addTeamTask(TeamTask as addTeamTask);
-    console.log(teamtask);
+    if (TeamTask.TeamTask != "") TaskInInput = true;
 
-    if (teamtask != "") {
-      setAlertPopUp({
-        ...AlertPopUp,
-        alert: true,
-        type: "success",
-        msg: teamtask,
-      });
+    if (TaskInInput) {
+      console.log(TeamTask);
+      const teamtask = await addTeamTask(TeamTask as addTeamTask);
+      console.log(teamtask);
 
-      setTimeout(() => {
-        getTasks();
+      if (teamtask != "") {
+        //  setTrackChangedState({
+        //    ...TrackChangedState,
+        //    Team_code: IndividualTeamTask.Team_code,
+        //    Completed: false,
+        //  });
         setAlertPopUp({
           ...AlertPopUp,
-          alert: false,
+          alert: true,
           type: "success",
           msg: teamtask,
         });
-      }, 2000);
-      setTeamTask({
-        Team_Name: "",
-        TeamTask: "",
-        Completed: false,
-        Team_code: "",
-      });
-      getTasks();
-       setTrackChangedState({
-         ...TrackChangedState,
-         Team_code: IndividualTeamTask.Team_code,
-         Completed: false,
-       });
-    } else {
-      setAlertPopUp({
-        ...AlertPopUp,
-        alert: true,
-        type: "failure",
-        msg: teamtask,
-      });
 
-      setTimeout(() => {
-        getTasks();
+        setTimeout(() => {
+          getTasks();
+          setAlertPopUp({
+            ...AlertPopUp,
+            alert: false,
+            type: "success",
+            msg: teamtask,
+          });
+        }, 2000);
+        setTeamTask({
+          Team_Name: "",
+          TeamTask: "",
+          Completed: false,
+          Team_code: "",
+        });
+      } else {
         setAlertPopUp({
           ...AlertPopUp,
-          alert: false,
+          alert: true,
           type: "failure",
           msg: teamtask,
         });
-      }, 2000);
-      setTeamTask({
-        Team_Name: "",
-        TeamTask: "",
-        Completed: false,
-        Team_code: "",
-      });
+
+        setTimeout(() => {
+          getTasks();
+          setAlertPopUp({
+            ...AlertPopUp,
+            alert: false,
+            type: "failure",
+            msg: teamtask,
+          });
+        }, 2000);
+        setTeamTask({
+          Team_Name: "",
+          TeamTask: "",
+          Completed: false,
+          Team_code: "",
+        });
+      }
+      getEachTeamData();
+     
     }
   };
   const addTask = async () => {
