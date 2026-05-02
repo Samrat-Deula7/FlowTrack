@@ -25,6 +25,7 @@ function App() {
   const [Loginbtn, setLoginbtn] = useState(false);
   const [Signupbtn, setSignupbtn] = useState(false);
   const [AddTeambtn,setAddTeambtn]=useState(false);
+  const [menuOpen, setmenuOpen]=useState(false);
   const [AlertPopUp, setAlertPopUp] = useState<AlertType>({
     alert: false,
     type: "failure",
@@ -86,6 +87,8 @@ function App() {
                   setLoggedin={setLoggedin}
                   setAlertPopUp={setAlertPopUp}
                   AlertPopUp={AlertPopUp}
+                  setmenuOpen={setmenuOpen}
+                  menuOpen={menuOpen}
                 />
                 <AfterLoggedIn />
               </>
@@ -101,6 +104,8 @@ function App() {
                   setLoggedin={setLoggedin}
                   setAlertPopUp={setAlertPopUp}
                   AlertPopUp={AlertPopUp}
+                  setmenuOpen={setmenuOpen}
+                  menuOpen={menuOpen}
                 />
                 <AddTeam
                   AddTeambtn={AddTeambtn}
@@ -124,6 +129,8 @@ function App() {
                   setLoggedin={setLoggedin}
                   setAlertPopUp={setAlertPopUp}
                   AlertPopUp={AlertPopUp}
+                  setmenuOpen={setmenuOpen}
+                  menuOpen={menuOpen}
                 />
                 <AddTeam
                   AddTeambtn={AddTeambtn}
@@ -143,6 +150,8 @@ function App() {
                   setLoggedin={setLoggedin}
                   setAlertPopUp={setAlertPopUp}
                   AlertPopUp={AlertPopUp}
+                  setmenuOpen={setmenuOpen}
+                  menuOpen={menuOpen}
                 />
                 <Visualization />
               </>
@@ -156,6 +165,8 @@ function App() {
                   setLoggedin={setLoggedin}
                   setAlertPopUp={setAlertPopUp}
                   AlertPopUp={AlertPopUp}
+                  setmenuOpen={setmenuOpen}
+                  menuOpen={menuOpen}
                 />
                 <History />
               </>
@@ -169,6 +180,8 @@ function App() {
                   setLoggedin={setLoggedin}
                   setAlertPopUp={setAlertPopUp}
                   AlertPopUp={AlertPopUp}
+                  setmenuOpen={setmenuOpen}
+                  menuOpen={menuOpen}
                 />
                 <Iteration />
               </>
