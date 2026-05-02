@@ -72,6 +72,7 @@ const NavBar: React.FC<NavProps> = ({
           <div
             className=" w-7 h-5 relative -left-4 cursor-pointer z-40 text-white md:hidden"
             // onClick={() => setmenuOpen((prev) => !prev)}
+            onClick={()=>console.log("opened the mobile nav")}
           >
             &#9776;
           </div>

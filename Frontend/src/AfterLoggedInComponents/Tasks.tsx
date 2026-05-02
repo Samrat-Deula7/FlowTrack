@@ -85,7 +85,6 @@ const Tasks: React.FC<TasksProps> = ({
   };
   const getTeamData = async () => {
     const teamDataSet: TeamData[] = await GetTeamData();
-    console.log(teamDataSet);
     setAllTeamData(teamDataSet);
   };
 
@@ -96,9 +95,7 @@ const Tasks: React.FC<TasksProps> = ({
   };
   const UpdateTeamtableState = async (id: any, completed: any) => {
     completed = !completed;
-    console.log(id, completed);
     let updateResponse: any = await UpdateTeamTableCompleteState(id, completed);
-    console.log(updateResponse);
     let teamTasks = await GetTeamTasks(IndividualTeamTask.Team_code);
     setTeamTasks(teamTasks);
     // getEachTeamData();
@@ -163,16 +160,13 @@ const Tasks: React.FC<TasksProps> = ({
       Team_code: IndividualTeamTask.Team_code,
     });
 
-    console.log(TeamTask);
   };
 
   const AddTeamTask = async () => {
     if (TeamTask.TeamTask != "") TaskInInput = true;
 
     if (TaskInInput) {
-      console.log(TeamTask);
       const teamtask = await addTeamTask(TeamTask as addTeamTask);
-      console.log(teamtask);
       let data = await GetTeamTasks(IndividualTeamTask.Team_code);
       setTeamTasks(data);
       if (teamtask != "") {
@@ -367,7 +361,7 @@ const Tasks: React.FC<TasksProps> = ({
           </div>
 
           {/* Side Panel */}
-          <div className="w-full lg:w-96 xl:w-[35rem] 2xl:w-[43rem]  min-h-[20rem] sm:min-h-[24rem] md:min-h-[28rem] lg:min-h-[32rem] xl:min-h-[36rem] bg-white/20 backdrop-blur-md shadow-lg rounded-xl border border-white/10 p-4 sm:p-6 ">
+          <div className="w-full lg:w-96 xl:w-[35rem] 2xl:w-[43rem]  min-h-[20rem] sm:min-h-[24rem] md:min-h-[15rem] lg:min-h-[32rem] xl:min-h-[36rem] bg-white/20 backdrop-blur-md shadow-lg rounded-xl border border-white/10 p-4 sm:p-6 ">
             <h1 className="text-center font-bold text-white  text-2xl ">
               Your Teams
             </h1>
