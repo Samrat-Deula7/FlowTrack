@@ -464,7 +464,9 @@ const Tasks: React.FC<TasksProps> = ({
                 </div>
 
                 {/* team tasks */}
-                <div className=" h-160 overflow-y-scroll">
+                <div
+                  className=" h-[80%] overflow-y-scroll"
+                >
                   {TeamTasks.map((tasks: TeamTasks) => (
                     <div
                       key={tasks.Team_Id}
