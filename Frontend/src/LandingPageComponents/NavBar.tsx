@@ -27,7 +27,7 @@ const NavBar: React.FC<NavBarProps> = ({ setLoginbtn, setSignupbtn }) => {
           <img src={Logo} alt="logo" className="w-7" />
           <h1 className="text-white font-bold">
             <div className="flex">
-              Flow <span className="text-green-500">Track</span>
+              Team <span className="text-green-500">Track</span>
             </div>
           </h1>
         </div>

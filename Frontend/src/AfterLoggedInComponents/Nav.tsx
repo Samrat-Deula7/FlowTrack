@@ -38,7 +38,7 @@ const NavBar: React.FC<NavProps> = ({
             <h1 className="text-white font-bold">
               <div className="flex">
                 <Link to="/">
-                  Flow<span className="text-green-500">Track</span>
+                  Team<span className="text-green-500">Track</span>
                 </Link>
               </div>
             </h1>
