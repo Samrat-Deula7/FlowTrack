@@ -229,7 +229,6 @@ router.post(
       `);
 
       res.send(sqlResponse.rowsAffected);
-      res.status(200).send({ success: "Task has been Completed !" });
     } catch (err) {
       console.error(err);
       res.status(500).send("Some error occurred");

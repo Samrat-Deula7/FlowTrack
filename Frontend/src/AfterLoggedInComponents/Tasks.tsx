@@ -107,6 +107,7 @@ const Tasks: React.FC<TasksProps> = ({
     console.log(id, completed);
     let updateResponse: any = await UpdateTeamTableCompleteState(id, completed);
     console.log(updateResponse);
+    getEachTeamData();
     if (updateResponse[0] == 0) {
       setAlertPopUp({
         ...AlertPopUp,
@@ -125,7 +126,7 @@ const Tasks: React.FC<TasksProps> = ({
         });
       }, 2000);
     }
-    getTasks();
+    
   };
 
   const HandleDelete = (id: any) => {
@@ -153,9 +154,9 @@ const Tasks: React.FC<TasksProps> = ({
     getTeamData();
   }, []);
 
-  useEffect(() => {
-    getEachTeamData();
-  }, [TrackChangedState.Completed]);
+  // useEffect(() => {
+  //   getEachTeamData();
+  // }, [TrackChangedState.Completed]);
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTask({ ...Task, [e.target.name]: e.target.value });
@@ -232,8 +233,10 @@ const Tasks: React.FC<TasksProps> = ({
           Team_code: "",
         });
       }
-      getEachTeamData();
-     
+
+      let data = await GetTeamTasks(IndividualTeamTask.Team_code);
+      setTeamTasks(data);
+      console.log(data)
     }
   };
   const addTask = async () => {
@@ -407,12 +410,13 @@ const Tasks: React.FC<TasksProps> = ({
                   key={Task.Team_Id}
                   className="flex flex-col w-[100%] h-auto items-center gap-3 sm:gap-4 p-3 sm:p-4 md:p-5 bg-white border-2 border-gray-200 rounded-xl hover:border-gray-300 hover:shadow-md cursor-pointer hover:-translate-y-1 duration-300 hover:border-none hover:bg-transparent cursor-pointer"
                   onClick={() => {
+                     focusOnTeamData(
+                       Task.Team_Id,
+                       Task.Team_Name,
+                       Task.Team_code,
+                     );
                     setFocused(true);
-                    focusOnTeamData(
-                      Task.Team_Id,
-                      Task.Team_Name,
-                      Task.Team_code,
-                    );
+                   
                   }}
                 >
                   <div className="flex w-[100%] h-auto justify-around  items-center">
@@ -484,12 +488,13 @@ const Tasks: React.FC<TasksProps> = ({
                     >
                       <button
                         onClick={() => {
-                          UpdateTeamtableState(tasks.Team_Id, tasks.Completed);
                           setTrackChangedState({
                             ...TrackChangedState,
                             Team_code: IndividualTeamTask.Team_code,
                             Completed: tasks.Completed,
                           });
+                          UpdateTeamtableState(tasks.Team_Id, tasks.Completed);
+                          
                         }}
                         className="flex-shrink-0 w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 border-2  cursor-pointer border-gray-400 rounded flex items-center justify-center hover:bg-gray-50 hover:border-gray-500 transition-all duration-200"
                       >
