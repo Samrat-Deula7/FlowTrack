@@ -34,7 +34,6 @@ CREATE TABLE Team_Table(
     Team_Tasks VARCHAR(150) NOT NULL,
     Completed BIT NOT NULL DEFAULT 0,
     Team_code NVARCHAR(MAX),
-
     FOREIGN KEY (User_Id) REFERENCES User_Table(User_Id)
 );
 
