@@ -119,6 +119,25 @@ const FlowtrackState: React.FC<{ children: React.ReactNode }> = ({
       alert(error.message);
     }
   };
+  const DeleteTeamTask = async (Team_Id: number) => {
+    const FlowTrackAuthtoken = localStorage.getItem("FlowTrackToken");
+    const url = "http://localhost:3000/api/teamtasks/DeleteTeamTask";
+    try {
+      const response =await fetch(url, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          FlowTrackAuthtoken: FlowTrackAuthtoken || "",
+        },
+        body: JSON.stringify({ Team_Id: Team_Id }),
+      });
+      const result = await response.json();
+      return result;
+    } catch (error: any) {
+      alert(error.message);
+      return {}
+    }
+  };
 
   // Following are the API of TeamTasks route
 
@@ -203,6 +222,7 @@ const FlowtrackState: React.FC<{ children: React.ReactNode }> = ({
         UpdateCompletedState,
         UpdateTeamTableCompleteState,
         DeleteTask,
+        DeleteTeamTask,
         GetTeamData,
         GetTeamTasks,
         addTeamTask,

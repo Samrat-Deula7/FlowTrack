@@ -52,6 +52,7 @@ const Tasks: React.FC<TasksProps> = ({
     UpdateCompletedState,
     UpdateTeamTableCompleteState,
     DeleteTask,
+    DeleteTeamTask,
     GetTeamData,
     GetTeamTasks,
     addTeamTask,
@@ -93,6 +94,7 @@ const Tasks: React.FC<TasksProps> = ({
     UpdateCompletedState(id, completed);
     getTasks();
   };
+  
   const UpdateTeamtableState = async (id: any, completed: any) => {
     completed = !completed;
     let updateResponse: any = await UpdateTeamTableCompleteState(id, completed);
@@ -121,6 +123,26 @@ const Tasks: React.FC<TasksProps> = ({
 
   const HandleDelete = (id: any) => {
     DeleteTask(id);
+    setAlertPopUp({
+      ...AlertPopUp,
+      alert: true,
+      type: "success",
+      msg: "Task deleted successfully",
+    });
+
+    setTimeout(() => {
+      getTasks();
+      setAlertPopUp({
+        ...AlertPopUp,
+        alert: false,
+        type: "success",
+        msg: "Task deleted successfully",
+      });
+    }, 2000);
+  };
+  const HandleDeleteTeamData =async (id: any) => {
+    let resData=await DeleteTeamTask(id);
+    console.log(resData)
     setAlertPopUp({
       ...AlertPopUp,
       alert: true,
@@ -458,9 +480,7 @@ const Tasks: React.FC<TasksProps> = ({
                 </div>
 
                 {/* team tasks */}
-                <div
-                  className=" h-[80%] overflow-y-scroll"
-                >
+                <div className=" h-[80%] overflow-y-scroll">
                   {TeamTasks.map((tasks: TeamTasks) => (
                     <div
                       key={tasks.Team_Id}
@@ -500,7 +520,9 @@ const Tasks: React.FC<TasksProps> = ({
                       </span>
 
                       <button
-                        onClick={() => HandleDelete(IndividualTeamTask.Team_Id)}
+                        onClick={() =>
+                          HandleDeleteTeamData(IndividualTeamTask.Team_Id)
+                        }
                         className="flex-shrink-0 text-gray-400 hover:text-red-500 transition-colors duration-200  cursor-pointer"
                       >
                         <img

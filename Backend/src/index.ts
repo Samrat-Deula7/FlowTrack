@@ -9,7 +9,7 @@ const PORT = process.env.PORT || 3000;
 app.use(cors())
 app.use(express.json())
 
-app.use(cors())
+// app.use(cors())
 app.use("/api/tasks", tasksRouter);
 app.use("/api/teamtasks", teamtaskRouter);
 
