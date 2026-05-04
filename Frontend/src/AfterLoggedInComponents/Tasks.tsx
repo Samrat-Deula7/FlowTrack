@@ -37,6 +37,8 @@ const Tasks: React.FC<TasksProps> = ({
     Completed: false,
     Team_code: "",
   });
+  // const [TeamCode, setTeamCode]=useState({TeamCode:[]});
+  const TeamCode:Array<string>=[]
   const [AllTasks, setAllTasks] = useState<Data[]>([]);
   const [AllTeamData, setAllTeamData] = useState<TeamData[]>([]);
   const [IndividualTeamTask, setIndividualTeamTask] =
@@ -166,13 +168,12 @@ const Tasks: React.FC<TasksProps> = ({
     getTeamData();
   }, []);
 
-  // useEffect(() => {
-  //   getEachTeamData();
-  // }, [TrackChangedState.Completed]);
+ 
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTask({ ...Task, [e.target.name]: e.target.value });
   };
+
   const onTeamTaskChanged = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTeamTask({
       ...TeamTask,
@@ -181,8 +182,15 @@ const Tasks: React.FC<TasksProps> = ({
       Completed: false,
       Team_code: IndividualTeamTask.Team_code,
     });
-
   };
+
+  // const onJoinTeamChanged = ()=>{
+  //   const Code = document.getElementById("TeamCode");
+  //   console.log(Code)
+  //   // TeamCode.push;
+  //   // console.log(TeamCode)
+  // }
+
 
   const AddTeamTask = async () => {
     if (TeamTask.TeamTask != "") TaskInInput = true;
@@ -390,12 +398,49 @@ const Tasks: React.FC<TasksProps> = ({
             <br />
             <div className="flex justify-around items-center bg-white rounded-full shadow-lg px-3 sm:px-4 py-2 w-full mt-2 mb-10">
               <h2 className="mr-3 font-medium">Code: </h2>
-              <input
-                type="text"
-                placeholder="Join Team with code ...."
-                className="flex-1 outline-none text-gray-700 placeholder-gray-400 text-sm sm:text-base min-w-0"
-              />
 
+              <div className="flex outline-none text-gray-700  text-sm sm:text-base min-w-0 space-x-1">
+                <div className="flex">
+                  <p className="font-bold">|</p>
+                  <input
+                    type="text"
+                    id="TeamCode"
+                    className=" w-5 font-bold text-xl "
+                  />
+                  <p className="font-bold">|</p>
+                </div>
+                <div className="flex">
+                  <input
+                    type="text"
+                    id="TeamCode"
+                    className=" w-5 font-bold text-xl "
+                  />
+                  <p className="font-bold">|</p>
+                </div>
+                <div className="flex">
+                  <input
+                    type="text"
+                    id="TeamCode"
+                    className=" w-5 font-bold text-xl "
+                  />
+                  <p className="font-bold">|</p>
+                </div>
+                <div className="flex">
+                  <input
+                    type="text"
+                    id="TeamCode"
+                    className=" w-5 font-bold text-xl "
+                  />
+                  <p className="font-bold">|</p>
+                </div>
+              </div>
+              <button
+                // onClick={handleSearch}
+                className="bg-green-500 hover:bg-green-600 text-white px-3 sm:px-5 lg:px-6 py-2 rounded-full ml-2 transition-colors cursor-pointer text-xs sm:text-sm lg:text-base whitespace-nowrap"
+                // onClick={onJoinTeamChanged}
+              >
+                Join
+              </button>
               <img
                 src={Addbtn}
                 alt="add team"
