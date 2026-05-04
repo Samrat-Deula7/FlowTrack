@@ -2,6 +2,8 @@ import React, { useState, useContext, useEffect } from "react";
 import Add from "../assets/add.png";
 import Tick from "../assets/check-mark.png";
 import Delete from "../assets/trash.png";
+import OpeningB from "../assets/open-bracket.png"
+import ClosingB from "../assets/close-bracket.png"
 import FlowTrackContext from "../../context/FlowtrackContext";
 import { type AlertType } from "../Alert";
 import {
@@ -400,8 +402,8 @@ const Tasks: React.FC<TasksProps> = ({
               <h2 className="mr-3 font-medium">Code: </h2>
 
               <div className="flex outline-none text-gray-700  text-sm sm:text-base min-w-0 space-x-1">
-                <div className="flex">
-                  <p className="font-bold">|</p>
+                <div className="flex items-center">
+                  <img src={OpeningB} alt="" className="h-6" />
                   <input
                     type="text"
                     id="TeamCode"
@@ -425,13 +427,13 @@ const Tasks: React.FC<TasksProps> = ({
                   />
                   <p className="font-bold">|</p>
                 </div>
-                <div className="flex">
+                <div className="flex items-center">
                   <input
                     type="text"
                     id="TeamCode"
                     className=" w-5 font-bold text-xl "
                   />
-                  <p className="font-bold">|</p>
+                  <img src={ClosingB} alt="" className="h-6" />
                 </div>
               </div>
               <button
