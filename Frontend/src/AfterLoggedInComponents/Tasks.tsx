@@ -383,7 +383,7 @@ const Tasks: React.FC<TasksProps> = ({
           </div>
 
           {/* Side Panel */}
-          <div className="w-full lg:w-96 xl:w-[35rem] 2xl:w-[43rem]  min-h-[20rem] sm:min-h-[24rem] md:min-h-[15rem] lg:min-h-[32rem] xl:min-h-[36rem] bg-white/20 backdrop-blur-md shadow-lg rounded-xl border border-white/10 p-4 sm:p-6 ">
+          <div className="w-full lg:w-96 xl:w-140 2xl:w-172  h-80 sm:min-h-96 md:h-60 lg:h-128 xl:h-144 2xl:h-180 bg-white/20 backdrop-blur-md shadow-lg rounded-xl border border-white/10 p-4 sm:p-6 ">
             <h1 className="text-center font-bold text-white  text-2xl ">
               Your Teams
             </h1>
@@ -405,7 +405,7 @@ const Tasks: React.FC<TasksProps> = ({
             </div>
             {/* Add your content here */}
             {/* Task List */}
-            <div className="space-y-3 sm:space-y-4 max-h-[calc(100vh-20rem)] pr-2 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-transparent overflow-y-scroll ">
+            <div className="space-y-3 sm:space-y-4 max-h-[60%] pr-2 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-transparent overflow-y-scroll ">
               {uniqueTeams.map((Task: TeamData) => (
                 <div
                   key={Task.Team_Id}
@@ -440,7 +440,7 @@ const Tasks: React.FC<TasksProps> = ({
             <div
               id="teamTasks"
               className={` bg-[#101820] backdrop-blur-md shadow-lg rounded-xl border border-white/10 p-4 sm:p-6 scale-0 transition pointer-events-auto 
-          ${focused ? "absolute inset-0 z-1000 scale-100 pointer-events-auto" : ""}`}
+          ${focused ? "absolute inset-0 z-1000 scale-100 pointer-events-auto" : "min-h-80 sm:min-h-96 md:min-h-60 lg:min-h-128 xl:min-h-144"}`}
             >
               <button
                 onClick={() => {
