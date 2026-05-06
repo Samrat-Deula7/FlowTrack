@@ -230,10 +230,9 @@ const FlowtrackState: React.FC<{ children: React.ReactNode }> = ({
         body: JSON.stringify({ Team_code: Team_code }),
       });
       const result = await response.json();
-      if (result.success) {
-        return result.success;
+      if (result) {
+        return result;
       }
-      return [];
     } catch (error: any) {
       alert(error.message);
       return [];

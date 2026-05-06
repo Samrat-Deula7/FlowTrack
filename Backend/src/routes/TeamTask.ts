@@ -107,6 +107,9 @@ router.post(
       if (Completed == undefined) {
         Completed = 0;
       }
+      if (Team_Tasks == null) {
+        Team_Tasks = "";
+      }
       const payload = req.user as { user: { id: string } };
       const id = parseInt(payload.user.id);
 
@@ -123,16 +126,7 @@ router.post(
           // Query failed or result is undefined
           return res.status(200).send({ fail: "No such team exists" });
         } else {
-          const TeamName: any = await pool
-            .request()
-            .input("Team_Name", sql.NVarChar(sql.MAX), parseInt(Team_Name))
-            .query("SELECT 1 FROM Team_Table WHERE Team_Name = @Team_Name");
-
-          if (TeamName.recordset.length > 0) {
-            res.status(400).json({
-              error: "Team name already exists! please pick another name",
-            });
-          } else {
+         
             // Insert query with bound parameters
             await pool
               .request()
@@ -147,13 +141,8 @@ router.post(
               .input("Team_code", sql.NVarChar(sql.MAX), Team_code).query(`
               INSERT INTO Team_Table VALUES (@User_Id, @Team_Name, @Team_Tasks, @Completed,@Team_code)
             `);
-            res
-              .status(200)
-              .send([
-                { success: "Team Has been created !" },
-                { Team_Name: Team_Name.recordset[0].Team_Name },
-              ]);
-          }
+           res.status(200).send({ success: "Team joined successfully !" });
+          
         }
     } catch (error) {
       console.error(error);

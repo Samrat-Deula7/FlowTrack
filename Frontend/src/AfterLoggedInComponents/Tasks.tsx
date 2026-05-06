@@ -202,49 +202,48 @@ const Tasks: React.FC<TasksProps> = ({
     CodeInputArray.map((code: any) => TeamCode.push(parseInt(code.value)));
     console.log(JSON.stringify(TeamCode));
     let data:any = await joinTeamWithCode(JSON.stringify(TeamCode));
-    console.log(data.success)
-    console.log(data.fail)
-    if (data.success) {
-      setAlertPopUp({
-        ...AlertPopUp,
-        alert: true,
-        type: "success",
-        msg: data.success,
-      });
+    console.log(data)
+    // if (data.success) {
+    //   setAlertPopUp({
+    //     ...AlertPopUp,
+    //     alert: true,
+    //     type: "success",
+    //     msg: data.success,
+    //   });
 
-      setTimeout(() => {
-        getTasks();
-        setAlertPopUp({
-          ...AlertPopUp,
-          alert: false,
-          type: "success",
-          msg: data.success,
-        });
-      }, 2000);
-    } else {
-      setAlertPopUp({
-        ...AlertPopUp,
-        alert: true,
-        type: "failure",
-        msg: data.fail,
-      });
+    //   setTimeout(() => {
+    //     getTasks();
+    //     setAlertPopUp({
+    //       ...AlertPopUp,
+    //       alert: false,
+    //       type: "success",
+    //       msg: data.success,
+    //     });
+    //   }, 2000);
+    // } else {
+    //   setAlertPopUp({
+    //     ...AlertPopUp,
+    //     alert: true,
+    //     type: "failure",
+    //     msg: data.fail,
+    //   });
 
-      setTimeout(() => {
-        getTasks();
-        setAlertPopUp({
-          ...AlertPopUp,
-          alert: false,
-          type: "failure",
-          msg: data.fail,
-        });
-      }, 2000);
-      setTeamTask({
-        Team_Name: "",
-        TeamTask: "",
-        Completed: false,
-        Team_code: "",
-      });
-    }
+    //   setTimeout(() => {
+    //     getTasks();
+    //     setAlertPopUp({
+    //       ...AlertPopUp,
+    //       alert: false,
+    //       type: "failure",
+    //       msg: data.fail,
+    //     });
+    //   }, 2000);
+    //   setTeamTask({
+    //     Team_Name: "",
+    //     TeamTask: "",
+    //     Completed: false,
+    //     Team_code: "",
+    //   });
+    // }
   };
 
   const AddTeamTask = async () => {
