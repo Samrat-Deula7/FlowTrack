@@ -195,7 +195,7 @@ const Tasks: React.FC<TasksProps> = ({
     CodeInputArray.map((code: any) => TeamCode.push(parseInt(code.value)));
     console.log(JSON.stringify(TeamCode));
     let data: any = await joinTeamWithCode(JSON.stringify(TeamCode));
-    
+    getTeamData();
     if (data.success) {
       setAlertPopUp({
         ...AlertPopUp,
@@ -357,7 +357,7 @@ const Tasks: React.FC<TasksProps> = ({
   return (
     <>
       <div className="min-h-auto  w-full px-3 sm:px-4 md:px-6 lg:px-8 xl:px-10  pt-4  ">
-        <div className="flex flex-col lg:flex-row justify-center items-center lg:items-start gap-6 sm:gap-8 lg:gap-10 xl:gap-12 max-w-[95rem] mx-auto">
+        <div className="flex flex-col lg:flex-row justify-center items-center lg:items-start gap-6 sm:gap-8 lg:gap-10 xl:gap-12 max-w-380` mx-auto">
           {/* Tasks Section */}
           <div className="w-full lg:flex-1 lg:max-w-1xl xl:max-w-2xl">
             <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-3xl xl:text-4xl text-white mb-6 sm:mb-8 font-semibold">
@@ -378,7 +378,7 @@ const Tasks: React.FC<TasksProps> = ({
               />
               <button
                 onClick={addTask}
-                className={`w-9 h-9 sm:w-10 sm:h-10 md:w-12 md:h-12 cursor-pointer bg-gray-700 hover:bg-gray-800 active:bg-gray-900 text-white rounded-full flex items-center justify-center transition-all duration-200 flex-shrink-0 shadow-md hover:shadow-lg${TaskInInput ? "" : "cursor-not-allowed"}`}
+                className={`w-9 h-9 sm:w-10 sm:h-10 md:w-12 md:h-12 cursor-pointer bg-gray-700 hover:bg-gray-800 active:bg-gray-900 text-white rounded-full flex items-center justify-center transition-all duration-200 shrink-0 shadow-md hover:shadow-lg${TaskInInput ? "" : "cursor-not-allowed"}`}
               >
                 <img
                   src={Add}
@@ -397,7 +397,7 @@ const Tasks: React.FC<TasksProps> = ({
                 >
                   <button
                     onClick={() => UpdateState(Task.Task_Id, Task.Completed)}
-                    className="flex-shrink-0 w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 border-2  cursor-pointer border-gray-400 rounded flex items-center justify-center hover:bg-gray-50 hover:border-gray-500 transition-all duration-200"
+                    className="shrink-0 w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 border-2  cursor-pointer border-gray-400 rounded flex items-center justify-center hover:bg-gray-50 hover:border-gray-500 transition-all duration-200"
                   >
                     {Task.Completed && (
                       <img
@@ -408,7 +408,7 @@ const Tasks: React.FC<TasksProps> = ({
                     )}
                   </button>
                   <span
-                    className={`flex-1 text-sm sm:text-base md:text-lg break-words leading-relaxed ${
+                    className={`flex-1 text-sm sm:text-base md:text-lg wrap-break-word leading-relaxed ${
                       Task.Completed
                         ? "text-gray-400 line-through"
                         : "text-gray-700"
@@ -419,7 +419,7 @@ const Tasks: React.FC<TasksProps> = ({
 
                   <button
                     onClick={() => HandleDelete(Task.Task_Id)}
-                    className="flex-shrink-0 text-gray-400 hover:text-red-500 transition-colors duration-200  cursor-pointer"
+                    className="shrink-0 text-gray-400 hover:text-red-500 transition-colors duration-200  cursor-pointer"
                   >
                     <img
                       src={Delete}
@@ -497,7 +497,7 @@ const Tasks: React.FC<TasksProps> = ({
               {uniqueTeams.map((Task: TeamData) => (
                 <div
                   key={Task.Team_Id}
-                  className="flex flex-col w-[100%] h-auto items-center gap-3 sm:gap-4 p-3 sm:p-4 md:p-5 bg-white border-2 border-gray-200 rounded-xl hover:border-gray-300 hover:shadow-md cursor-pointer hover:-translate-y-1 duration-300 hover:border-none hover:bg-transparent cursor-pointer"
+                  className="flex flex-col w-full h-auto items-center gap-3 sm:gap-4 p-3 sm:p-4 md:p-5 bg-white border-2 border-gray-200 rounded-xl hover:border-gray-300 hover:shadow-md  hover:-translate-y-1 duration-300 hover:border-none hover:bg-transparent cursor-pointer"
                   onClick={() => {
                     focusOnTeamData(
                       Task.Team_Id,
@@ -507,7 +507,7 @@ const Tasks: React.FC<TasksProps> = ({
                     setFocused(true);
                   }}
                 >
-                  <div className="flex w-[100%] h-auto justify-around  items-center">
+                  <div className="flex w-full h-auto justify-around  items-center">
                     <h2 className="text-black font-medium">
                       Team:
                       <span className="font-bold text-green-500">
@@ -557,7 +557,7 @@ const Tasks: React.FC<TasksProps> = ({
                   />
                   <button
                     onClick={AddTeamTask}
-                    className={`w-9 h-9 sm:w-10 sm:h-10 md:w-12 md:h-12 cursor-pointer bg-gray-700 hover:bg-gray-800 active:bg-gray-900 text-white rounded-full flex items-center justify-center transition-all duration-200 flex-shrink-0 shadow-md hover:shadow-lg${TaskInInput ? "" : "cursor-not-allowed"}`}
+                    className={`w-9 h-9 sm:w-10 sm:h-10 md:w-12 md:h-12 cursor-pointer bg-gray-700 hover:bg-gray-800 active:bg-gray-900 text-white rounded-full flex items-center justify-center transition-all duration-200 shrink-0 shadow-md hover:shadow-lg${TaskInInput ? "" : "cursor-not-allowed"}`}
                   >
                     <img
                       src={Add}
@@ -578,7 +578,7 @@ const Tasks: React.FC<TasksProps> = ({
                         onClick={() => {
                           UpdateTeamtableState(tasks.Team_Id, tasks.Completed);
                         }}
-                        className="flex-shrink-0 w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 border-2  cursor-pointer border-gray-400 rounded flex items-center justify-center hover:bg-gray-50 hover:border-gray-500 transition-all duration-200"
+                        className="shrink-0 w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7 border-2  cursor-pointer border-gray-400 rounded flex items-center justify-center hover:bg-gray-50 hover:border-gray-500 transition-all duration-200"
                       >
                         {tasks.Completed && (
                           <img
@@ -589,7 +589,7 @@ const Tasks: React.FC<TasksProps> = ({
                         )}
                       </button>
                       <span
-                        className={`flex-1 text-sm sm:text-base md:text-lg break-words leading-relaxed ${
+                        className={`flex-1 text-sm sm:text-base md:text-lg wrap-break-word leading-relaxed ${
                           tasks.Completed
                             ? "text-gray-400 line-through"
                             : "text-gray-700"
@@ -598,7 +598,7 @@ const Tasks: React.FC<TasksProps> = ({
                         {tasks.Name}
                       </span>
                       <span
-                        className={`flex-1 text-sm sm:text-base md:text-lg break-words leading-relaxed ${
+                        className={`flex-1 text-sm sm:text-base md:text-lg wrap-break-word leading-relaxed ${
                           tasks.Completed
                             ? "text-gray-400 line-through"
                             : "text-gray-700"
@@ -611,7 +611,7 @@ const Tasks: React.FC<TasksProps> = ({
                         onClick={() =>
                           HandleDeleteTeamData(IndividualTeamTask.Team_Id)
                         }
-                        className="flex-shrink-0 text-gray-400 hover:text-red-500 transition-colors duration-200  cursor-pointer"
+                        className="shrink-0 text-gray-400 hover:text-red-500 transition-colors duration-200  cursor-pointer"
                       >
                         <img
                           src={Delete}
