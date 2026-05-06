@@ -83,8 +83,9 @@ const Signup: React.FC<SignupPorps> = ({
             msg: result.success,
           });
           setSignupbtn(false);
+          setLoginbtn(true);
           setTimeout(() => {
-            setLoginbtn(true);
+            
             // I am still setting the type and msg because if i dont then for a sec the alert show failure.
             setAlertPopUp({
               ...AlertPopUp,

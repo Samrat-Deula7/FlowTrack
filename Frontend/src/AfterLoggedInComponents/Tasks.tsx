@@ -105,7 +105,6 @@ const Tasks: React.FC<TasksProps> = ({
     let updateResponse: any = await UpdateTeamTableCompleteState(id, completed);
     let teamTasks = await GetTeamTasks(IndividualTeamTask.Team_code);
     setTeamTasks(teamTasks);
-    // getEachTeamData();
     if (updateResponse[0] == 0) {
       setAlertPopUp({
         ...AlertPopUp,
@@ -185,13 +184,6 @@ const Tasks: React.FC<TasksProps> = ({
     });
   };
 
-  // const onJoinTeamChanged = ()=>{
-  //   const Code = document.getElementById("TeamCode");
-  //   console.log(Code)
-  //   // TeamCode.push;
-  //   // console.log(TeamCode)
-  // }
-
  
 
   const joinWithCode = async () => {
@@ -203,7 +195,7 @@ const Tasks: React.FC<TasksProps> = ({
     CodeInputArray.map((code: any) => TeamCode.push(parseInt(code.value)));
     console.log(JSON.stringify(TeamCode));
     let data: any = await joinTeamWithCode(JSON.stringify(TeamCode));
-    console.log(data);
+    
     if (data.success) {
       setAlertPopUp({
         ...AlertPopUp,
@@ -239,7 +231,6 @@ const Tasks: React.FC<TasksProps> = ({
         });
       }, 2000);
       CodeInputArray.map((input:any)=>(input.value=""));
-     
     }
   };
 
