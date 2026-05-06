@@ -115,39 +115,51 @@ router.post(
         .input("Team_code", sql.NVarChar(sql.MAX), Team_code)
         .query("select Team_Name from Team_Table WHERE Team_code = @Team_code");
 
-      const TeamName: any = await pool
-        .request()
-        .input("Team_Name", sql.NVarChar(sql.MAX), parseInt(Team_Name))
-        .query("SELECT 1 FROM Team_Table WHERE Team_Name = @Team_Name");
+        if (
+          !Team_Name ||
+          !Team_Name.recordset ||
+          Team_Name.recordset.length === 0
+        ) {
+          // Query failed or result is undefined
+          return res.status(200).send({ fail: "No such team exists" });
+        } else {
+          const TeamName: any = await pool
+            .request()
+            .input("Team_Name", sql.NVarChar(sql.MAX), parseInt(Team_Name))
+            .query("SELECT 1 FROM Team_Table WHERE Team_Name = @Team_Name");
 
-      if (TeamName.recordset.length > 0) {
-        res.status(400).json({
-          error: "Team name already exists! please pick another name",
-        });
-      } else {
-        // Insert query with bound parameters
-        await pool
-          .request()
-          .input("User_Id", sql.Int, id)
-          .input("Team_Name", sql.VarChar(70), Team_Name.recordset[0].Team_Name)
-          .input("Team_Tasks", sql.VarChar(150), Team_Tasks)
-          .input("Completed", sql.Bit, Completed)
-          .input("Team_code", sql.NVarChar(sql.MAX), Team_code).query(`
+          if (TeamName.recordset.length > 0) {
+            res.status(400).json({
+              error: "Team name already exists! please pick another name",
+            });
+          } else {
+            // Insert query with bound parameters
+            await pool
+              .request()
+              .input("User_Id", sql.Int, id)
+              .input(
+                "Team_Name",
+                sql.VarChar(70),
+                Team_Name.recordset[0].Team_Name,
+              )
+              .input("Team_Tasks", sql.VarChar(150), Team_Tasks)
+              .input("Completed", sql.Bit, Completed)
+              .input("Team_code", sql.NVarChar(sql.MAX), Team_code).query(`
               INSERT INTO Team_Table VALUES (@User_Id, @Team_Name, @Team_Tasks, @Completed,@Team_code)
             `);
-        res
-          .status(200)
-          .send([
-            { success: "Team Has been created !" },
-            { Team_Name: Team_Name.recordset[0].Team_Name },
-          ]);
-      }
+            res
+              .status(200)
+              .send([
+                { success: "Team Has been created !" },
+                { Team_Name: Team_Name.recordset[0].Team_Name },
+              ]);
+          }
+        }
     } catch (error) {
       console.error(error);
     }
   },
 );
-
 router.get(
   "/GetTeamData",
   authenticateuser,
