@@ -6,6 +6,7 @@ type SignupPorps = {
   setAlertPopUp: React.Dispatch<React.SetStateAction<AlertType>>;
   AddTeambtn: boolean;
   AlertPopUp: AlertType;
+ 
 };
 
 const Signup: React.FC<SignupPorps> = ({
