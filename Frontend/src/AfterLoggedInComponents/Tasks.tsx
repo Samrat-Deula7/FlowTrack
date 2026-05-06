@@ -192,58 +192,55 @@ const Tasks: React.FC<TasksProps> = ({
   //   // console.log(TeamCode)
   // }
 
-  let CodeInput = document.getElementsByClassName(
-    "CodeInput",
-  ) as HTMLCollectionOf<HTMLInputElement>;
+ 
 
-  let CodeInputArray = Array.from(CodeInput);
+  const joinWithCode = async () => {
+     let CodeInput = document.getElementsByClassName(
+       "CodeInput",
+     ) as HTMLCollectionOf<HTMLInputElement>;
 
-  const showCodeArray = async () => {
+     let CodeInputArray = Array.from(CodeInput);
     CodeInputArray.map((code: any) => TeamCode.push(parseInt(code.value)));
     console.log(JSON.stringify(TeamCode));
-    let data:any = await joinTeamWithCode(JSON.stringify(TeamCode));
-    console.log(data)
-    // if (data.success) {
-    //   setAlertPopUp({
-    //     ...AlertPopUp,
-    //     alert: true,
-    //     type: "success",
-    //     msg: data.success,
-    //   });
+    let data: any = await joinTeamWithCode(JSON.stringify(TeamCode));
+    console.log(data);
+    if (data.success) {
+      setAlertPopUp({
+        ...AlertPopUp,
+        alert: true,
+        type: "success",
+        msg: data.success,
+      });
 
-    //   setTimeout(() => {
-    //     getTasks();
-    //     setAlertPopUp({
-    //       ...AlertPopUp,
-    //       alert: false,
-    //       type: "success",
-    //       msg: data.success,
-    //     });
-    //   }, 2000);
-    // } else {
-    //   setAlertPopUp({
-    //     ...AlertPopUp,
-    //     alert: true,
-    //     type: "failure",
-    //     msg: data.fail,
-    //   });
+      setTimeout(() => {
+        getTasks();
+        setAlertPopUp({
+          ...AlertPopUp,
+          alert: false,
+          type: "success",
+          msg: data.success,
+        });
+      }, 2000);
+    } else {
+      setAlertPopUp({
+        ...AlertPopUp,
+        alert: true,
+        type: "failure",
+        msg: data.fail,
+      });
 
-    //   setTimeout(() => {
-    //     getTasks();
-    //     setAlertPopUp({
-    //       ...AlertPopUp,
-    //       alert: false,
-    //       type: "failure",
-    //       msg: data.fail,
-    //     });
-    //   }, 2000);
-    //   setTeamTask({
-    //     Team_Name: "",
-    //     TeamTask: "",
-    //     Completed: false,
-    //     Team_code: "",
-    //   });
-    // }
+      setTimeout(() => {
+        getTasks();
+        setAlertPopUp({
+          ...AlertPopUp,
+          alert: false,
+          type: "failure",
+          msg: data.fail,
+        });
+      }, 2000);
+      CodeInputArray.map((input:any)=>(input.value=""));
+     
+    }
   };
 
   const AddTeamTask = async () => {
@@ -492,7 +489,7 @@ const Tasks: React.FC<TasksProps> = ({
                 // onClick={handleSearch}
                 className="bg-green-500 hover:bg-green-600 text-white px-3 sm:px-5 lg:px-6 py-2 rounded-full ml-2 transition-colors cursor-pointer text-xs sm:text-sm lg:text-base whitespace-nowrap"
                 // onClick={onJoinTeamChanged}
-                onClick={showCodeArray}
+                onClick={joinWithCode}
               >
                 Join
               </button>
