@@ -17,7 +17,7 @@ export type TeamData = {
 };
 
 export type TeamTasks = {
-  Team_Id:number;
+  Team_Id: number;
   Name: string;
   Team_Tasks: string;
   Completed: boolean;
@@ -27,7 +27,7 @@ export type addTeamTask = {
   Team_Name: string;
   TeamTask: string;
   Completed: false;
-  Team_code:string;
+  Team_code: string;
 };
 const FlowtrackState: React.FC<{ children: React.ReactNode }> = ({
   children,
@@ -123,7 +123,7 @@ const FlowtrackState: React.FC<{ children: React.ReactNode }> = ({
     const FlowTrackAuthtoken = localStorage.getItem("FlowTrackToken");
     const url = "http://localhost:3000/api/teamtasks/DeleteTeamTask";
     try {
-      const response =await fetch(url, {
+      const response = await fetch(url, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -135,7 +135,7 @@ const FlowtrackState: React.FC<{ children: React.ReactNode }> = ({
       return result;
     } catch (error: any) {
       alert(error.message);
-      return {}
+      return {};
     }
   };
 
@@ -202,8 +202,32 @@ const FlowtrackState: React.FC<{ children: React.ReactNode }> = ({
           Team_Name: TeamTask.Team_Name,
           TeamTask: TeamTask.TeamTask,
           Completed: TeamTask.Completed,
-          Team_code:TeamTask.Team_code,
+          Team_code: TeamTask.Team_code,
         }),
+      });
+      const result = await response.json();
+      if (result.success) {
+        return result.success;
+      }
+      return [];
+    } catch (error: any) {
+      alert(error.message);
+      return [];
+    }
+  };
+
+  const joinTeamWithCode = async (Team_code: string) => {
+    const FlowTrackAuthtoken = localStorage.getItem("FlowTrackToken");
+    const url = "http://localhost:3000/api/teamtasks/joinTeamWithCode";
+
+    try {
+      const response = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          FlowTrackAuthtoken: FlowTrackAuthtoken || "",
+        },
+        body: JSON.stringify({ Team_code: Team_code }),
       });
       const result = await response.json();
       if (result.success) {
@@ -226,6 +250,7 @@ const FlowtrackState: React.FC<{ children: React.ReactNode }> = ({
         GetTeamData,
         GetTeamTasks,
         addTeamTask,
+        joinTeamWithCode,
       }}
     >
       {children}

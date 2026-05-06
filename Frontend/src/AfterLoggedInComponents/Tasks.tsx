@@ -2,8 +2,8 @@ import React, { useState, useContext, useEffect } from "react";
 import Add from "../assets/add.png";
 import Tick from "../assets/check-mark.png";
 import Delete from "../assets/trash.png";
-import OpeningB from "../assets/open-bracket.png"
-import ClosingB from "../assets/close-bracket.png"
+import OpeningB from "../assets/open-bracket.png";
+import ClosingB from "../assets/close-bracket.png";
 import FlowTrackContext from "../../context/FlowtrackContext";
 import { type AlertType } from "../Alert";
 import {
@@ -40,7 +40,7 @@ const Tasks: React.FC<TasksProps> = ({
     Team_code: "",
   });
   // const [TeamCode, setTeamCode]=useState({TeamCode:[]});
-  const TeamCode:Array<string>=[]
+  const TeamCode: Array<number> = [];
   const [AllTasks, setAllTasks] = useState<Data[]>([]);
   const [AllTeamData, setAllTeamData] = useState<TeamData[]>([]);
   const [IndividualTeamTask, setIndividualTeamTask] =
@@ -60,6 +60,7 @@ const Tasks: React.FC<TasksProps> = ({
     GetTeamData,
     GetTeamTasks,
     addTeamTask,
+    joinTeamWithCode,
   } = useContext(FlowTrackContext);
   const [focused, setFocused] = useState(false);
 
@@ -98,7 +99,7 @@ const Tasks: React.FC<TasksProps> = ({
     UpdateCompletedState(id, completed);
     getTasks();
   };
-  
+
   const UpdateTeamtableState = async (id: any, completed: any) => {
     completed = !completed;
     let updateResponse: any = await UpdateTeamTableCompleteState(id, completed);
@@ -144,9 +145,9 @@ const Tasks: React.FC<TasksProps> = ({
       });
     }, 2000);
   };
-  const HandleDeleteTeamData =async (id: any) => {
-    let resData=await DeleteTeamTask(id);
-    console.log(resData)
+  const HandleDeleteTeamData = async (id: any) => {
+    let resData = await DeleteTeamTask(id);
+    console.log(resData);
     setAlertPopUp({
       ...AlertPopUp,
       alert: true,
@@ -170,8 +171,6 @@ const Tasks: React.FC<TasksProps> = ({
     getTeamData();
   }, []);
 
- 
-
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTask({ ...Task, [e.target.name]: e.target.value });
   };
@@ -193,6 +192,60 @@ const Tasks: React.FC<TasksProps> = ({
   //   // console.log(TeamCode)
   // }
 
+  let CodeInput = document.getElementsByClassName(
+    "CodeInput",
+  ) as HTMLCollectionOf<HTMLInputElement>;
+
+  let CodeInputArray = Array.from(CodeInput);
+
+  const showCodeArray = async () => {
+    CodeInputArray.map((code: any) => TeamCode.push(parseInt(code.value)));
+    console.log(JSON.stringify(TeamCode));
+    let data:any = await joinTeamWithCode(JSON.stringify(TeamCode));
+    console.log(data.success)
+    console.log(data.fail)
+    if (data.success) {
+      setAlertPopUp({
+        ...AlertPopUp,
+        alert: true,
+        type: "success",
+        msg: data.success,
+      });
+
+      setTimeout(() => {
+        getTasks();
+        setAlertPopUp({
+          ...AlertPopUp,
+          alert: false,
+          type: "success",
+          msg: data.success,
+        });
+      }, 2000);
+    } else {
+      setAlertPopUp({
+        ...AlertPopUp,
+        alert: true,
+        type: "failure",
+        msg: data.fail,
+      });
+
+      setTimeout(() => {
+        getTasks();
+        setAlertPopUp({
+          ...AlertPopUp,
+          alert: false,
+          type: "failure",
+          msg: data.fail,
+        });
+      }, 2000);
+      setTeamTask({
+        Team_Name: "",
+        TeamTask: "",
+        Completed: false,
+        Team_code: "",
+      });
+    }
+  };
 
   const AddTeamTask = async () => {
     if (TeamTask.TeamTask != "") TaskInInput = true;
@@ -407,7 +460,7 @@ const Tasks: React.FC<TasksProps> = ({
                   <input
                     type="text"
                     id="TeamCode"
-                    className=" w-5 font-bold text-xl "
+                    className=" w-8 font-bold text-xl CodeInput"
                   />
                   <p className="font-bold">|</p>
                 </div>
@@ -415,7 +468,7 @@ const Tasks: React.FC<TasksProps> = ({
                   <input
                     type="text"
                     id="TeamCode"
-                    className=" w-5 font-bold text-xl "
+                    className=" w-8 font-bold text-xl CodeInput"
                   />
                   <p className="font-bold">|</p>
                 </div>
@@ -423,7 +476,7 @@ const Tasks: React.FC<TasksProps> = ({
                   <input
                     type="text"
                     id="TeamCode"
-                    className=" w-5 font-bold text-xl "
+                    className=" w-8 font-bold text-xl CodeInput"
                   />
                   <p className="font-bold">|</p>
                 </div>
@@ -431,7 +484,7 @@ const Tasks: React.FC<TasksProps> = ({
                   <input
                     type="text"
                     id="TeamCode"
-                    className=" w-5 font-bold text-xl "
+                    className=" w-8 font-bold text-xl CodeInput"
                   />
                   <img src={ClosingB} alt="" className="h-6" />
                 </div>
@@ -440,6 +493,7 @@ const Tasks: React.FC<TasksProps> = ({
                 // onClick={handleSearch}
                 className="bg-green-500 hover:bg-green-600 text-white px-3 sm:px-5 lg:px-6 py-2 rounded-full ml-2 transition-colors cursor-pointer text-xs sm:text-sm lg:text-base whitespace-nowrap"
                 // onClick={onJoinTeamChanged}
+                onClick={showCodeArray}
               >
                 Join
               </button>
