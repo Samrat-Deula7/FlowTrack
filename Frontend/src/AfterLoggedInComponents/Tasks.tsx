@@ -18,6 +18,7 @@ type TasksProps = {
   setAddTeambtn: React.Dispatch<React.SetStateAction<boolean>>;
   setAlertPopUp: React.Dispatch<React.SetStateAction<AlertType>>;
   AlertPopUp: AlertType;
+  AddTeambtn: boolean;
 };
 
 type IndividualTeamTaskElements = {
@@ -30,7 +31,17 @@ const Tasks: React.FC<TasksProps> = ({
   setAlertPopUp,
   AlertPopUp,
   setAddTeambtn,
+  AddTeambtn,
 }) => {
+  useEffect(() => {
+    getTasks();
+    getTeamData();
+  }, []);
+
+  useEffect(() => {
+    getTeamData();
+  }, [AddTeambtn]);
+
   let TaskInInput = false;
   const [Task, setTask] = useState({ task: "", completed: false });
   const [TeamTask, setTeamTask] = useState({
@@ -165,11 +176,6 @@ const Tasks: React.FC<TasksProps> = ({
     }, 2000);
   };
 
-  useEffect(() => {
-    getTasks();
-    getTeamData();
-  }, []);
-
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTask({ ...Task, [e.target.name]: e.target.value });
   };
@@ -184,14 +190,12 @@ const Tasks: React.FC<TasksProps> = ({
     });
   };
 
- 
-
   const joinWithCode = async () => {
-     let CodeInput = document.getElementsByClassName(
-       "CodeInput",
-     ) as HTMLCollectionOf<HTMLInputElement>;
+    let CodeInput = document.getElementsByClassName(
+      "CodeInput",
+    ) as HTMLCollectionOf<HTMLInputElement>;
 
-     let CodeInputArray = Array.from(CodeInput);
+    let CodeInputArray = Array.from(CodeInput);
     CodeInputArray.map((code: any) => TeamCode.push(parseInt(code.value)));
     console.log(JSON.stringify(TeamCode));
     let data: any = await joinTeamWithCode(JSON.stringify(TeamCode));
@@ -230,7 +234,7 @@ const Tasks: React.FC<TasksProps> = ({
           msg: data.fail,
         });
       }, 2000);
-      CodeInputArray.map((input:any)=>(input.value=""));
+      CodeInputArray.map((input: any) => (input.value = ""));
     }
   };
 
@@ -488,7 +492,9 @@ const Tasks: React.FC<TasksProps> = ({
                 src={Addbtn}
                 alt="add team"
                 className="w-16 cursor-pointer"
-                onClick={() => setAddTeambtn(true)}
+                onClick={() => {
+                  setAddTeambtn(true);
+                }}
               />
             </div>
             {/* Add your content here */}

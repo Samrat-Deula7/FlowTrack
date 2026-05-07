@@ -117,6 +117,7 @@ function App() {
                   setAlertPopUp={setAlertPopUp}
                   AlertPopUp={AlertPopUp}
                   setAddTeambtn={setAddTeambtn}
+                  AddTeambtn={AddTeambtn}
                 />
               </>
             }

@@ -6,7 +6,6 @@ type SignupPorps = {
   setAlertPopUp: React.Dispatch<React.SetStateAction<AlertType>>;
   AddTeambtn: boolean;
   AlertPopUp: AlertType;
- 
 };
 
 const Signup: React.FC<SignupPorps> = ({
@@ -15,7 +14,6 @@ const Signup: React.FC<SignupPorps> = ({
   AlertPopUp,
   AddTeambtn,
 }) => {
-   
   const [validationError, setValidationError] = useState({
     Team_Name: "",
     Team_Tasks: "",
@@ -40,7 +38,7 @@ const Signup: React.FC<SignupPorps> = ({
       // API Call
       const url = "http://localhost:3000/api/teamtasks/createTeam";
       const { Team_Name, Team_Tasks, Completed } = credentials;
-          const FlowTrackAuthtoken = localStorage.getItem("FlowTrackToken");
+      const FlowTrackAuthtoken = localStorage.getItem("FlowTrackToken");
 
       const response = await fetch(url, {
         method: "POST",
@@ -55,7 +53,6 @@ const Signup: React.FC<SignupPorps> = ({
         }),
       });
       const result = await response.json();
-      console.log(result);
       if (result[0].success) {
         // Save the auth token and redirect
         setCredentials({
@@ -73,7 +70,7 @@ const Signup: React.FC<SignupPorps> = ({
           ...AlertPopUp,
           alert: true,
           type: "success",
-          msg: result[0].success +"Code= "+ result[1].Code,
+          msg: result[0].success + "Code= " + result[1].Code,
         });
         setAddTeambtn(false);
         setTimeout(() => {
@@ -82,7 +79,7 @@ const Signup: React.FC<SignupPorps> = ({
             ...AlertPopUp,
             alert: false,
             type: "success",
-            msg: result[0].success +"Code= "+ result[1].Code,
+            msg: result[0].success + "Code= " + result[1].Code,
           });
         }, 3000);
       } else {
