@@ -149,6 +149,7 @@ router.post(
     }
   },
 );
+
 router.get(
   "/GetTeamData",
   authenticateuser,
@@ -289,9 +290,7 @@ router.delete(
                 `);
       res.send(sqlResponse.rowsAffected);
 
-      res.status(200).send("The connection is fucking established");
     } catch (err) {
-      console.error(err);
       res.status(500).send("Failed to add Team Task");
     }
   },

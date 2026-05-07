@@ -618,9 +618,7 @@ const Tasks: React.FC<TasksProps> = ({
                       </span>
 
                       <button
-                        onClick={() =>
-                          HandleDeleteTeamData(IndividualTeamTask.Team_Id)
-                        }
+                        onClick={() => HandleDeleteTeamData(tasks.Team_Id)}
                         className="shrink-0 text-gray-400 hover:text-red-500 transition-colors duration-200  cursor-pointer"
                       >
                         <img
