@@ -18,7 +18,7 @@ type TasksProps = {
   setAddTeambtn: React.Dispatch<React.SetStateAction<boolean>>;
   setAlertPopUp: React.Dispatch<React.SetStateAction<AlertType>>;
   AlertPopUp: AlertType;
-  AddTeambtn: boolean;
+  AddTeambtn:boolean;
 };
 
 type IndividualTeamTaskElements = {
@@ -33,14 +33,15 @@ const Tasks: React.FC<TasksProps> = ({
   setAddTeambtn,
   AddTeambtn,
 }) => {
-  useEffect(() => {
-    getTasks();
-    getTeamData();
-  }, []);
 
-  useEffect(() => {
-    getTeamData();
-  }, [AddTeambtn]);
+    useEffect(() => {
+      getTasks();
+      getTeamData();
+    }, []);
+    
+    useEffect(() => {
+      getTeamData();
+    }, [AddTeambtn]);
 
   let TaskInInput = false;
   const [Task, setTask] = useState({ task: "", completed: false });
@@ -79,6 +80,7 @@ const Tasks: React.FC<TasksProps> = ({
     (team, index, self) =>
       index === self.findIndex((t) => t.Team_Name === team.Team_Name),
   );
+ 
 
   const focusOnTeamData = async (
     Team_Id: number,
@@ -175,6 +177,8 @@ const Tasks: React.FC<TasksProps> = ({
       });
     }, 2000);
   };
+
+
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTask({ ...Task, [e.target.name]: e.target.value });
@@ -637,4 +641,4 @@ const Tasks: React.FC<TasksProps> = ({
   );
 };
 
-export default Tasks;
+export default Tasks ;
